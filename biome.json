@@ -1,7 +1,7 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "files": {
-    "ignore": ["src/global.d.ts", "dev-dist", "src/modules/supabase/types.ts"]
+    "ignore": ["src/ui/styled/utils/create-style-context.tsx"]
   },
   "organizeImports": {
     "enabled": true
@@ -25,7 +25,7 @@
         "useHookAtTopLevel": "off",
         "useImportExtensions": "off",
         "useJsxKeyInIterable": "off",
-        "noUndeclaredDependencies": { "level": "off" }
+        "noUndeclaredDependencies": "off"
       },
       "suspicious": {
         "noConsole": "off"
@@ -33,6 +33,7 @@
       "style": {
         "noDefaultExport": "off",
         "noNamespaceImport": "off",
+        "noImplicitBoolean": "off",
         "useFilenamingConvention": {
           "level": "error",
           "options": {
