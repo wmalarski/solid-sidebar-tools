@@ -1,1 +1,2 @@
-export { Link, type LinkProps } from './styled/link'
+// biome-ignore lint/performance/noBarrelFile: <explanation>
+export { Link, type LinkProps } from "./styled/link";

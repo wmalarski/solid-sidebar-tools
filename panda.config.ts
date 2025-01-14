@@ -15,4 +15,10 @@ export default defineConfig({
   include: ["./src/**/*.{js,jsx,ts,tsx,vue}"],
   jsxFramework: "solid",
   outdir: "styled-system",
+  conditions: {
+    extend: {
+      dark: '.dark &, [data-theme="dark"] &',
+      light: ".light &",
+    },
+  },
 });
