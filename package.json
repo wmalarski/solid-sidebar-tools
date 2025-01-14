@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "prepare": "panda codegen",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
@@ -12,6 +13,7 @@
     "format-and-lint:fix": "biome check . --write"
   },
   "dependencies": {
+    "@ark-ui/solid": "^4.9.0",
     "@solid-primitives/i18n": "2.1.1",
     "decode-formdata": "0.8.0",
     "solid-js": "^1.9.4",
@@ -19,6 +21,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@pandacss/dev": "^0.51.1",
+    "@park-ui/panda-preset": "^0.43.1",
     "@types/chrome": "^0.0.296",
     "sonda": "^0.7.1",
     "typescript": "~5.7.3",

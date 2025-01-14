@@ -24,7 +24,8 @@
       "correctness": {
         "useHookAtTopLevel": "off",
         "useImportExtensions": "off",
-        "useJsxKeyInIterable": "off"
+        "useJsxKeyInIterable": "off",
+        "noUndeclaredDependencies": { "level": "off" }
       },
       "suspicious": {
         "noConsole": "off"
