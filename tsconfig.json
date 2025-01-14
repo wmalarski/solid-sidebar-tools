@@ -6,6 +6,7 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "strict": true,

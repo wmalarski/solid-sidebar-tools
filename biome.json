@@ -30,6 +30,10 @@
       "suspicious": {
         "noConsole": "off"
       },
+      "performance": {
+        "noBarrelFile": "off",
+        "noReExportAll": "off"
+      },
       "style": {
         "noDefaultExport": "off",
         "noNamespaceImport": "off",

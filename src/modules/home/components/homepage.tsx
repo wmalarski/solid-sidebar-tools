@@ -1,4 +1,4 @@
-import { For, type Component } from "solid-js";
+import { type Component, For } from "solid-js";
 import { CookiesPanel } from "~/modules/cookies/components/cookies-panel";
 import { Tabs } from "~/ui/tabs";
 
