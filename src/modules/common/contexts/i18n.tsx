@@ -20,8 +20,15 @@ const enDict = {
     madeBy: "Made by wmalarski",
     title: "Solid Side",
   },
-  dialog: {
-    close: "Close dialog",
+  common: {
+    closeDialog: "Close dialog",
+    clear: "Clear",
+  },
+  cookies: {
+    form: {
+      name: "Name",
+      delete: "Delete ",
+    },
   },
 };
 
