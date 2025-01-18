@@ -1,5 +1,6 @@
 import { type Assign, Tooltip } from "@ark-ui/solid";
-import type { ComponentProps } from "solid-js";
+import type { Component, ComponentProps, ParentProps } from "solid-js";
+import { css } from "styled-system/css";
 import { type TooltipVariantProps, tooltip } from "styled-system/recipes";
 import type { HTMLStyledProps } from "styled-system/types";
 import { createStyleContext } from "./utils/create-style-context";
@@ -35,5 +36,21 @@ export const Positioner = withContext<
 export const Trigger = withContext<
   Assign<HTMLStyledProps<"button">, Tooltip.TriggerBaseProps>
 >(Tooltip.Trigger, "trigger");
+
+type SimpleTooltipProps = ParentProps<{
+  asChild: Tooltip.TriggerProps["asChild"];
+}>;
+
+export const SimpleTooltip: Component<SimpleTooltipProps> = (props) => (
+  <Tooltip.Root>
+    <Tooltip.Trigger asChild={props.asChild} />
+    <Tooltip.Positioner>
+      <Tooltip.Arrow class={css({ zIndex: "tooltip" })}>
+        <Tooltip.ArrowTip />
+      </Tooltip.Arrow>
+      <Tooltip.Content>{props.children}</Tooltip.Content>
+    </Tooltip.Positioner>
+  </Tooltip.Root>
+);
 
 export { TooltipContext as Context } from "@ark-ui/solid";

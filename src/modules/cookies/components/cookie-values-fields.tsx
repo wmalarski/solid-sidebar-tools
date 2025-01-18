@@ -6,6 +6,7 @@ import { Field } from "~/ui/field";
 import { IconButton } from "~/ui/icon-button";
 import { PlusIcon } from "~/ui/icons/plus-icon";
 import { TrashIcon } from "~/ui/icons/trash-icon";
+import { SimpleTooltip } from "~/ui/styled/tooltip";
 
 const createCookieInputsState = (initialValues: string[] = []) => {
   const nonEmptyInitialValues =
@@ -75,15 +76,21 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
         fontWeight="semibold"
       >
         {t("cookies.form.cookies")}
-        <IconButton
-          type="button"
-          disabled={shouldDisableAdd()}
-          onClick={onAddValueClick}
-          variant="outline"
-          aria-label={t("cookies.form.addCookieValue")}
+        <SimpleTooltip
+          asChild={(tooltipProps) => (
+            <IconButton
+              type="button"
+              disabled={shouldDisableAdd()}
+              variant="outline"
+              aria-label={t("cookies.form.addCookieValue")}
+              {...tooltipProps({ onClick: onAddValueClick })}
+            >
+              <PlusIcon />
+            </IconButton>
+          )}
         >
-          <PlusIcon />
-        </IconButton>
+          {t("cookies.form.addCookieValue")}
+        </SimpleTooltip>
       </Grid>
       <VStack ref={setParent} gap="4" w="full">
         <For each={inputsState().entries()}>
@@ -99,15 +106,23 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
                   name={`values[${index()}]`}
                   autocomplete="off"
                 />
-                <IconButton
-                  colorPalette="red"
-                  type="button"
-                  disabled={shouldDisableDelete()}
-                  onClick={onDeleteClickFactory(entry.id)}
-                  aria-label={t("cookies.form.delete")}
+                <SimpleTooltip
+                  asChild={(tooltipProps) => (
+                    <IconButton
+                      colorPalette="red"
+                      type="button"
+                      disabled={shouldDisableDelete()}
+                      aria-label={t("cookies.form.delete")}
+                      {...tooltipProps({
+                        onClick: onDeleteClickFactory(entry.id),
+                      })}
+                    >
+                      <TrashIcon />
+                    </IconButton>
+                  )}
                 >
-                  <TrashIcon />
-                </IconButton>
+                  {t("cookies.form.delete")}
+                </SimpleTooltip>
               </HStack>
             </Field.Root>
           )}
