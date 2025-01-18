@@ -29,7 +29,9 @@ const enDict = {
   },
   cookies: {
     form: {
-      addNewCookie: "Add New Cookie",
+      addNewCookie: "Add new cookie",
+      addCookieValue: "Add cookie value",
+      cookies: "Cookie values:",
       name: "Cookie name",
       selectName: "Select cookie name",
       delete: "Delete value",
