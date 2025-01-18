@@ -39,6 +39,7 @@ const enDict = {
       delete: "Delete value",
       value: "Value {{index}}:",
       cookieValue: "Cookie value",
+      updateCookie: "Update cookie",
     },
     list: {
       cookies: "Cookies",
@@ -46,6 +47,7 @@ const enDict = {
       cardDescription: "Set '{{name}}' cookie value",
       options: "Card options",
       delete: "Delete",
+      update: "Update",
     },
   },
 };

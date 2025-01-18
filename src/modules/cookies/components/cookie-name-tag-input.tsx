@@ -13,7 +13,13 @@ const data = [
   { label: "Vue", value: "vue" },
 ];
 
-export const CookieNameTagInput: Component = () => {
+type CookieNameTagInputProps = {
+  initialValue?: string;
+};
+
+export const CookieNameTagInput: Component<CookieNameTagInputProps> = (
+  props,
+) => {
   const { t } = useI18n();
 
   //
@@ -37,6 +43,7 @@ export const CookieNameTagInput: Component = () => {
       onInputValueChange={handleChange}
       collection={collection}
       allowCustomValue
+      inputValue={props.initialValue}
     >
       <Combobox.Label>{t("cookies.form.name")}</Combobox.Label>
       <Combobox.Control>
@@ -44,6 +51,7 @@ export const CookieNameTagInput: Component = () => {
           placeholder={t("cookies.form.selectName")}
           asChild={(inputProps) => <Input {...inputProps()} />}
           name="name"
+          autofocus
         />
         <Combobox.Trigger
           asChild={(triggerProps) => (

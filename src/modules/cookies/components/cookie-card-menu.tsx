@@ -5,13 +5,21 @@ import { IconButton } from "~/ui/icon-button";
 import { EllipsisVertical } from "~/ui/icons/ellipsis-vertical-icon";
 import { TrashIcon } from "~/ui/icons/trash-icon";
 import { Menu } from "~/ui/menu";
+import type { CookieFormData } from "./cookie-form";
+import { UpdateCookieDialog } from "./update-cookie-dialog";
 
 const DELETE_VALUE = "delete";
+const UPDATE_VALUE = "update";
 
-export const CookieCardMenu: Component = () => {
+type CookieCardMenuProps = {
+  cookie: CookieFormData;
+};
+
+export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
   const { t } = useI18n();
 
   const [isDeleteOpen, setIsDeleteOpen] = createSignal(false);
+  const [isUpdateOpen, setIsUpdateOpen] = createSignal(false);
 
   const onSelect: ComponentProps<typeof Menu.Root>["onSelect"] = (details) => {
     switch (details.value) {
@@ -19,13 +27,21 @@ export const CookieCardMenu: Component = () => {
         setIsDeleteOpen(true);
         return;
       }
+      case UPDATE_VALUE: {
+        setIsUpdateOpen(true);
+        return;
+      }
       default:
     }
   };
 
+  const onUpdateSubmit = (cookie: CookieFormData) => {
+    console.log("cookie", cookie);
+  };
+
   return (
     <>
-      <Menu.Root onSelect={onSelect}>
+      <Menu.Root onSelect={onSelect} lazyMount unmountOnExit>
         <Menu.Trigger
           asChild={(triggerProps) => (
             <IconButton
@@ -39,6 +55,12 @@ export const CookieCardMenu: Component = () => {
         />
         <Menu.Positioner>
           <Menu.Content>
+            <Menu.Item value={UPDATE_VALUE}>
+              <HStack gap="2">
+                <TrashIcon />
+                {t("cookies.list.update")}
+              </HStack>
+            </Menu.Item>
             <Menu.Item value={DELETE_VALUE}>
               <HStack gap="2">
                 <TrashIcon />
@@ -48,6 +70,12 @@ export const CookieCardMenu: Component = () => {
           </Menu.Content>
         </Menu.Positioner>
       </Menu.Root>
+      <UpdateCookieDialog
+        initialData={props.cookie}
+        isOpen={isUpdateOpen()}
+        onIsOpenChange={setIsUpdateOpen}
+        onSubmit={onUpdateSubmit}
+      />
     </>
   );
 };

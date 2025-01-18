@@ -64,7 +64,7 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
             {t("cookies.list.cardDescription", { name: props.cookie.name })}
           </Card.Description>
         </Flex>
-        <CookieCardMenu />
+        <CookieCardMenu cookie={props.cookie} />
       </Card.Header>
       <Card.Body>
         <form

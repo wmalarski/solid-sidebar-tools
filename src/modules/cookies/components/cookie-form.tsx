@@ -40,7 +40,7 @@ export const CookieForm: Component<CookieFormProps> = (props) => {
       id={props.id}
       class={flex({ flexDirection: "column", gap: 4 })}
     >
-      <CookieNameTagInput />
+      <CookieNameTagInput initialValue={props.initialData?.name} />
       <CookieValuesFields initialValues={props.initialData?.values} />
     </form>
   );
