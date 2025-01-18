@@ -32,6 +32,7 @@ export const CookieForm: Component<CookieFormProps> = (props) => {
     }
 
     props.onSubmit(parsed.output);
+    event.currentTarget.reset();
   };
 
   return (

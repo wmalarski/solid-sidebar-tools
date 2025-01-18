@@ -8,7 +8,11 @@ import { PlusIcon } from "~/ui/icons/plus-icon";
 import type { OpenChangeDetails } from "~/ui/styled/combobox";
 import { CookieForm, type CookieFormData } from "./cookie-form";
 
-export const AddCookieDialog: Component = () => {
+type AddCookieDialogProps = {
+  onSubmit: (data: CookieFormData) => void;
+};
+
+export const AddCookieDialog: Component<AddCookieDialogProps> = (props) => {
   const { t } = useI18n();
 
   const formId = "add-cookie-form";
@@ -20,7 +24,7 @@ export const AddCookieDialog: Component = () => {
   };
 
   const onSubmit = (data: CookieFormData) => {
-    console.log("Data", data);
+    props.onSubmit(data);
     setIsOpen(false);
   };
 

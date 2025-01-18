@@ -1,3 +1,4 @@
+import { createAutoAnimate } from "@formkit/auto-animate/solid";
 import { createMemo, createSignal, For, type Component } from "solid-js";
 import { Grid, HStack, VStack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
@@ -38,6 +39,8 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
 ) => {
   const { t } = useI18n();
 
+  const [setParent] = createAutoAnimate({ duration: 100 });
+
   const inputsState = createMemo(() =>
     createCookieInputsState(props?.initialValues),
   );
@@ -76,7 +79,7 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
           <PlusIcon />
         </IconButton>
       </Grid>
-      <VStack gap="4" w="full">
+      <VStack ref={setParent} gap="4" w="full">
         <For each={inputsState().entries()}>
           {(entry, index) => (
             <Field.Root required w="full">
@@ -88,9 +91,11 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
                   placeholder={t("cookies.form.cookieValue")}
                   value={entry.value}
                   name={`values[${index()}]`}
+                  autocomplete="off"
                 />
                 <IconButton
                   colorPalette="red"
+                  type="button"
                   disabled={shouldDisableDelete()}
                   onClick={onDeleteClickFactory(entry.id)}
                   aria-label={t("cookies.form.delete")}
