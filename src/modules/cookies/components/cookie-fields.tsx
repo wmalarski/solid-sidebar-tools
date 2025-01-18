@@ -1,8 +1,8 @@
 import { createMemo, createSignal, For, type Component } from "solid-js";
-import { Flex } from "styled-system/jsx";
+import { Flex, VStack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import { FormLabel } from "~/ui/form-label";
-import { Input } from "~/ui/input";
+import { Button } from "~/ui/button";
+import { Field } from "~/ui/field";
 import { CookieNameTagInput } from "./cookie-name-tag-input";
 
 type CookieFieldsData = {
@@ -15,10 +15,13 @@ type CookieFieldProps = {
 };
 
 const createCookieInputsState = (initialValues: string[] = []) => {
-  const [inputId, setInputId] = createSignal(initialValues.length);
+  const nonEmptyInitialValues =
+    initialValues.length === 0 ? [""] : initialValues;
+
+  const [inputId, setInputId] = createSignal(nonEmptyInitialValues.length);
 
   const [entries, setEntries] = createSignal(
-    initialValues.map((value, index) => ({ value, id: index })),
+    nonEmptyInitialValues.map((value, index) => ({ value, id: index })),
   );
 
   const addInput = () => {
@@ -41,31 +44,31 @@ export const CookieFields: Component<CookieFieldProps> = (props) => {
     createCookieInputsState(props.initialReview?.values),
   );
 
+  const onDeleteClickFactory = (id: number) => () => {
+    inputsState().removeInput(id);
+  };
+
   return (
     <Flex flexDirection="column" padding="4">
       <CookieNameTagInput />
       <For each={inputsState().entries()}>
-        {(entry) => (
-          <FormLabel>
-            {t("ReviewForm.textLabel")}
-            <Input name="text" value={props.initialReview?.text ?? ""} />
-          </FormLabel>
+        {(entry, index) => (
+          <VStack>
+            <Field.Root required>
+              <Field.Label>
+                {t("cookies.form.value", { index: index() })}
+              </Field.Label>
+              <Field.Input
+                placeholder={t("cookies.form.cookieValue")}
+                value={entry.value}
+              />
+            </Field.Root>
+            <Button onClick={onDeleteClickFactory(entry.id)}>
+              {t("cookies.form.delete")}
+            </Button>
+          </VStack>
         )}
       </For>
-      {/* <FormLabel>
-        {t("ReviewForm.textLabel")}
-        <Input name="text" value={props.initialReview?.text ?? ""} />
-      </FormLabel>
-      <FormLabel>
-        {t("ReviewForm.rateLabel")}
-        <NumberInput
-          name="rate"
-          min={0}
-          max={10}
-          step={0.1}
-          value={String(props.initialReview?.rate ?? 5)}
-        />
-      </FormLabel> */}
     </Flex>
   );
 };

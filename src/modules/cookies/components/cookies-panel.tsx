@@ -1,5 +1,10 @@
 import type { Component } from "solid-js";
+import { AddCookieDialog } from "./add-cookie-dialog";
 
 export const CookiesPanel: Component = () => {
-  return <span>CookiesPanel</span>;
+  return (
+    <span>
+      <AddCookieDialog />
+    </span>
+  );
 };

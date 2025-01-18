@@ -24,12 +24,17 @@ const enDict = {
     closeDialog: "Close dialog",
     clear: "Clear",
     open: "Open",
+    cancel: "Cancel",
+    confirm: "Confirm",
   },
   cookies: {
     form: {
+      addNewCookie: "Add New Cookie",
       name: "Cookie name",
       selectName: "Select cookie name",
-      delete: "Delete ",
+      delete: "Delete value",
+      value: "Value {{index}}:",
+      cookieValue: "Cookie value",
     },
   },
 };
