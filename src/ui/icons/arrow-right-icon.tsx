@@ -1,6 +1,6 @@
 import type { Component, ComponentProps } from "solid-js";
 
-export const ChevronsUpDownIcon: Component<ComponentProps<"svg">> = (props) => {
+export const ArrowRightIcon: Component<ComponentProps<"svg">> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -14,8 +14,8 @@ export const ChevronsUpDownIcon: Component<ComponentProps<"svg">> = (props) => {
       stroke-linejoin="round"
       {...props}
     >
-      <path d="m7 15 5 5 5-5" />
-      <path d="m7 9 5-5 5 5" />
+      <path d="M5 12h14" />
+      <path d="m12 5 7 7-7 7" />
     </svg>
   );
 };

@@ -23,10 +23,12 @@ const enDict = {
   common: {
     closeDialog: "Close dialog",
     clear: "Clear",
+    open: "Open",
   },
   cookies: {
     form: {
-      name: "Name",
+      name: "Cookie name",
+      selectName: "Select cookie name",
       delete: "Delete ",
     },
   },

@@ -1,8 +1,9 @@
-import { createAsync } from "@solidjs/router";
 import { type Component, createSignal, For } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Combobox, createListCollection } from "~/ui/combobox";
 import { IconButton } from "~/ui/icon-button";
+import { CheckIcon } from "~/ui/icons/check-icon";
+import { ChevronsUpDownIcon } from "~/ui/icons/chevrons-up-down-icon";
 import { Input } from "~/ui/input";
 
 const data = [
@@ -15,9 +16,10 @@ const data = [
 export const CookieNameTagInput: Component = () => {
   const { t } = useI18n();
 
-  const cookies = createAsync(() => {
-    return Promise.resolve(["test-cookie-123"]);
-  });
+  //
+  // const cookies = createAsync(() => {
+  //   return Promise.resolve(["test-cookie-123", "test-cookie-456"]);
+  // });
 
   const [items, setItems] = createSignal(data);
   const collection = createListCollection({ items: data });
@@ -35,17 +37,17 @@ export const CookieNameTagInput: Component = () => {
       onInputValueChange={handleChange}
       collection={collection}
     >
-      <Combobox.Label>Framework</Combobox.Label>
+      <Combobox.Label>{t("cookies.form.name")}</Combobox.Label>
       <Combobox.Control>
         <Combobox.Input
-          placeholder="Select a Framework"
+          placeholder={t("cookies.form.selectName")}
           asChild={(inputProps) => <Input {...inputProps()} />}
         />
         <Combobox.Trigger
           asChild={(triggerProps) => (
             <IconButton
               variant="link"
-              aria-label="open"
+              aria-label={t("common.open")}
               size="xs"
               {...triggerProps()}
             >
@@ -57,7 +59,9 @@ export const CookieNameTagInput: Component = () => {
       <Combobox.Positioner>
         <Combobox.Content>
           <Combobox.ItemGroup>
-            <Combobox.ItemGroupLabel>Frameworks</Combobox.ItemGroupLabel>
+            <Combobox.ItemGroupLabel>
+              {t("cookies.form.name")}
+            </Combobox.ItemGroupLabel>
             <For each={items()}>
               {(item) => (
                 <Combobox.Item item={item}>
