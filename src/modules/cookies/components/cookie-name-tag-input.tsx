@@ -36,12 +36,14 @@ export const CookieNameTagInput: Component = () => {
       width="2xs"
       onInputValueChange={handleChange}
       collection={collection}
+      allowCustomValue
     >
       <Combobox.Label>{t("cookies.form.name")}</Combobox.Label>
       <Combobox.Control>
         <Combobox.Input
           placeholder={t("cookies.form.selectName")}
           asChild={(inputProps) => <Input {...inputProps()} />}
+          name="name"
         />
         <Combobox.Trigger
           asChild={(triggerProps) => (

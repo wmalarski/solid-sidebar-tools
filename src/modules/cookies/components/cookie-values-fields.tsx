@@ -81,12 +81,13 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
           {(entry, index) => (
             <Field.Root required w="full">
               <Field.Label>
-                {t("cookies.form.value", { index: index() })}
+                {t("cookies.form.value", { index: index() + 1 })}
               </Field.Label>
               <HStack alignItems="center" justifyContent="center">
                 <Field.Input
                   placeholder={t("cookies.form.cookieValue")}
                   value={entry.value}
+                  name={`values[${index()}]`}
                 />
                 <IconButton
                   colorPalette="red"

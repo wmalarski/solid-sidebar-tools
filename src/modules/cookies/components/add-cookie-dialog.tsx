@@ -1,29 +1,27 @@
-import { type ComponentProps, createSignal } from "solid-js";
+import { createSignal, type Component } from "solid-js";
 import { Grid, Stack } from "styled-system/jsx";
-import { stack } from "styled-system/patterns";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button";
 import { Dialog } from "~/ui/dialog";
 import { IconButton } from "~/ui/icon-button";
 import { PlusIcon } from "~/ui/icons/plus-icon";
 import type { OpenChangeDetails } from "~/ui/styled/combobox";
-import { CookieFields } from "./cookie-fields";
+import { CookieForm, type CookieFormData } from "./cookie-form";
 
-export const AddCookieDialog = () => {
+export const AddCookieDialog: Component = () => {
   const { t } = useI18n();
+
+  const formId = "add-cookie-form";
 
   const [isOpen, setIsOpen] = createSignal(false);
 
-  const onSubmit: ComponentProps<"form">["onSubmit"] = (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(event.currentTarget);
-
-    console.log(Object.fromEntries(formData.entries()));
-  };
-
   const onOpenChange = (details: OpenChangeDetails) => {
     setIsOpen(details.open);
+  };
+
+  const onSubmit = (data: CookieFormData) => {
+    console.log("Data", data);
+    setIsOpen(false);
   };
 
   return (
@@ -45,16 +43,16 @@ export const AddCookieDialog = () => {
       <Dialog.Backdrop />
       <Dialog.Positioner>
         <Dialog.Content>
-          <form class={stack({ gap: 8, p: 6 })} onSubmit={onSubmit}>
-            <Stack gap="1">
-              <Dialog.Title>{t("cookies.form.addNewCookie")}</Dialog.Title>
-            </Stack>
-            <CookieFields />
+          <Stack gap="8" p="6">
+            <Dialog.Title>{t("cookies.form.addNewCookie")}</Dialog.Title>
+            <CookieForm onSubmit={onSubmit} id={formId} />
             <Grid gap="3" gridTemplateColumns="1fr 1fr" width="full">
               <Dialog.Cancel />
-              <Button type="submit">{t("common.confirm")}</Button>
+              <Button form={formId} type="submit">
+                {t("common.confirm")}
+              </Button>
             </Grid>
-          </form>
+          </Stack>
           <Dialog.XClose />
         </Dialog.Content>
       </Dialog.Positioner>

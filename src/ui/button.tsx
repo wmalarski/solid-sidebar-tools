@@ -1,4 +1,4 @@
-import type { JSX } from "solid-js";
+import type { Component, JSX } from "solid-js";
 import { Show, splitProps } from "solid-js";
 import { Center, styled } from "styled-system/jsx";
 import { Spinner } from "./spinner";
@@ -38,7 +38,7 @@ export const Button = (props: ButtonProps) => {
   );
 };
 
-const ButtonSpinner = () => (
+const ButtonSpinner: Component = () => (
   <Center
     inline
     position="absolute"
