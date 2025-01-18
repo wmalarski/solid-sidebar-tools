@@ -1,4 +1,5 @@
 import { type Component, For } from "solid-js";
+import { CookiesContextProvider } from "~/modules/cookies/components/cookies-context";
 import { CookiesPanel } from "~/modules/cookies/components/cookies-panel";
 import { Tabs } from "~/ui/tabs";
 
@@ -24,7 +25,9 @@ export const Homepage: Component = () => {
           <Tabs.Indicator />
         </Tabs.List>
         <Tabs.Content value="react">
-          <CookiesPanel />
+          <CookiesContextProvider>
+            <CookiesPanel />
+          </CookiesContextProvider>
         </Tabs.Content>
         <Tabs.Content value="solid">Know Solid? Check out Svelte!</Tabs.Content>
         <Tabs.Content value="svelte">Know Svelte? Check out Vue!</Tabs.Content>

@@ -7,15 +7,14 @@ import { IconButton } from "~/ui/icon-button";
 import { PlusIcon } from "~/ui/icons/plus-icon";
 import type { OpenChangeDetails } from "~/ui/styled/combobox";
 import { CookieForm, type CookieFormData } from "./cookie-form";
+import { useCookiesContext } from "./cookies-context";
 
-type AddCookieDialogProps = {
-  onSubmit: (data: CookieFormData) => void;
-};
-
-export const AddCookieDialog: Component<AddCookieDialogProps> = (props) => {
+export const AddCookieDialog: Component = () => {
   const { t } = useI18n();
 
   const formId = "add-cookie-form";
+
+  const cookiesContext = useCookiesContext();
 
   const [isOpen, setIsOpen] = createSignal(false);
 
@@ -24,7 +23,7 @@ export const AddCookieDialog: Component<AddCookieDialogProps> = (props) => {
   };
 
   const onSubmit = (data: CookieFormData) => {
-    props.onSubmit(data);
+    cookiesContext().addCookie(data);
     setIsOpen(false);
   };
 

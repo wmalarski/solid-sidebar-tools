@@ -1,4 +1,5 @@
 import { createSignal, type Component, type ComponentProps } from "solid-js";
+import { css } from "styled-system/css";
 import { HStack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { IconButton } from "~/ui/icon-button";
@@ -6,13 +7,14 @@ import { EllipsisVertical } from "~/ui/icons/ellipsis-vertical-icon";
 import { TrashIcon } from "~/ui/icons/trash-icon";
 import { Menu } from "~/ui/menu";
 import type { CookieFormData } from "./cookie-form";
+import { useCookiesContext, type CookieValue } from "./cookies-context";
 import { UpdateCookieDialog } from "./update-cookie-dialog";
 
 const DELETE_VALUE = "delete";
 const UPDATE_VALUE = "update";
 
 type CookieCardMenuProps = {
-  cookie: CookieFormData;
+  cookie: CookieValue;
 };
 
 export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
@@ -20,6 +22,8 @@ export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
 
   const [isDeleteOpen, setIsDeleteOpen] = createSignal(false);
   const [isUpdateOpen, setIsUpdateOpen] = createSignal(false);
+
+  const cookiesContext = useCookiesContext();
 
   const onSelect: ComponentProps<typeof Menu.Root>["onSelect"] = (details) => {
     switch (details.value) {
@@ -36,7 +40,8 @@ export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
   };
 
   const onUpdateSubmit = (cookie: CookieFormData) => {
-    console.log("cookie", cookie);
+    cookiesContext().updateCookie(props.cookie.id, cookie);
+    setIsUpdateOpen(false);
   };
 
   return (
@@ -45,7 +50,19 @@ export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
         <Menu.Trigger
           asChild={(triggerProps) => (
             <IconButton
-              {...triggerProps()}
+              {...triggerProps({
+                class: css({
+                  "& svg": {
+                    transitionDuration: "100ms",
+                    transitionProperty: "rotate",
+                  },
+                  _open: {
+                    "& svg": {
+                      rotate: "90deg",
+                    },
+                  },
+                }),
+              })}
               variant="ghost"
               aria-label={t("cookies.list.options")}
             >

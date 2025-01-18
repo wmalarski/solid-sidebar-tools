@@ -1,34 +1,18 @@
-import { createMemo, createSignal, For, type Component } from "solid-js";
+import { createAutoAnimate } from "@formkit/auto-animate/solid";
+import { For, type Component } from "solid-js";
 import { Flex, Grid } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Text } from "~/ui/text";
 import { AddCookieDialog } from "./add-cookie-dialog";
 import { CookieCard } from "./cookie-card";
-import type { CookieFormData } from "./cookie-form";
-
-const createCookies = () => {
-  const [cookies, setCookies] = createSignal<CookieFormData[]>([
-    {
-      name: "Initial",
-      values: ["react", "solid", "vue"],
-    },
-  ]);
-
-  const addCookie = (data: CookieFormData) => {
-    setCookies((current) => [...current, data]);
-  };
-
-  return { cookies, addCookie };
-};
+import { useCookiesContext } from "./cookies-context";
 
 export const CookiesPanel: Component = () => {
   const { t } = useI18n();
 
-  const cookies = createMemo(() => createCookies());
+  const [setParent] = createAutoAnimate({ duration: 100 });
 
-  const onAddCookieSubmit = (data: CookieFormData) => {
-    cookies().addCookie(data);
-  };
+  const cookiesContext = useCookiesContext();
 
   return (
     <Flex flexDirection="column" px={4} gap={4}>
@@ -36,10 +20,10 @@ export const CookiesPanel: Component = () => {
         <Text fontWeight="semibold" fontSize="md">
           {t("cookies.list.cookies")}
         </Text>
-        <AddCookieDialog onSubmit={onAddCookieSubmit} />
+        <AddCookieDialog />
       </Grid>
-      <Flex flexDirection="column" gap={4}>
-        <For each={cookies().cookies()}>
+      <Flex ref={setParent} flexDirection="column" gap={4}>
+        <For each={cookiesContext().cookies}>
           {(cookie) => <CookieCard cookie={cookie} />}
         </For>
       </Flex>

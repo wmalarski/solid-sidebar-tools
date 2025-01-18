@@ -15,11 +15,12 @@ import { Field } from "~/ui/field";
 import { RadioGroup } from "~/ui/radio-group";
 import { CookieCardMenu } from "./cookie-card-menu";
 import type { CookieFormData } from "./cookie-form";
+import type { CookieValue } from "./cookies-context";
 
 const CUSTOM_VALUE = "__custom__";
 
 type CookieCardProps = {
-  cookie: CookieFormData;
+  cookie: CookieValue;
 };
 
 export const CookieCard: Component<CookieCardProps> = (props) => {
@@ -98,13 +99,13 @@ const CookieRadioValues: Component<CookieRadioValuesProps> = (props) => {
         <RadioGroup.Item value={option}>
           <RadioGroup.ItemControl />
           <RadioGroup.ItemText>{option}</RadioGroup.ItemText>
-          <RadioGroup.ItemHiddenInput />
+          <RadioGroup.ItemHiddenInput required />
         </RadioGroup.Item>
       ))}
       <RadioGroup.Item value={CUSTOM_VALUE}>
         <RadioGroup.ItemControl />
         <RadioGroup.ItemText>{t("cookies.list.custom")}</RadioGroup.ItemText>
-        <RadioGroup.ItemHiddenInput />
+        <RadioGroup.ItemHiddenInput required />
       </RadioGroup.Item>
     </RadioGroup.Root>
   );
