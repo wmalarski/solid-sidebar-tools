@@ -1,4 +1,4 @@
-import { type Component, createSignal, For } from "solid-js";
+import { type Component, For, createSignal } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Combobox, createListCollection } from "~/ui/combobox";
 import { IconButton } from "~/ui/icon-button";

@@ -1,4 +1,4 @@
-import { type Component, createMemo, For } from "solid-js";
+import { type Component, For, createMemo } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { CookiesContextProvider } from "~/modules/cookies/components/cookies-context";
 import { CookiesPanel } from "~/modules/cookies/components/cookies-panel";

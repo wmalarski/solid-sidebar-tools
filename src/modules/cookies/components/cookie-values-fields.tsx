@@ -1,5 +1,5 @@
 import { createAutoAnimate } from "@formkit/auto-animate/solid";
-import { createMemo, createSignal, For, type Component } from "solid-js";
+import { type Component, For, createMemo, createSignal } from "solid-js";
 import { Grid, HStack, VStack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Field } from "~/ui/field";

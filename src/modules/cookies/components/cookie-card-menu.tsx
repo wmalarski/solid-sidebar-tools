@@ -1,4 +1,4 @@
-import { createSignal, type Component, type ComponentProps } from "solid-js";
+import { type Component, type ComponentProps, createSignal } from "solid-js";
 import { HStack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { AlertDialog } from "~/ui/alert-dialog";
@@ -6,7 +6,7 @@ import { PencilIcon } from "~/ui/icons/pencil-icon";
 import { TrashIcon } from "~/ui/icons/trash-icon";
 import { Menu } from "~/ui/menu";
 import type { CookieFormData } from "./cookie-form";
-import { useCookiesContext, type CookieValue } from "./cookies-context";
+import { type CookieValue, useCookiesContext } from "./cookies-context";
 import { UpdateCookieDialog } from "./update-cookie-dialog";
 
 const DELETE_VALUE = "delete";

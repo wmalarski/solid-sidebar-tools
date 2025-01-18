@@ -1,9 +1,9 @@
 import {
   type Accessor,
   type Component,
+  type ParentProps,
   createContext,
   createMemo,
-  type ParentProps,
   useContext,
 } from "solid-js";
 import { Button } from "./button";

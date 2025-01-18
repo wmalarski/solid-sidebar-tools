@@ -1,4 +1,4 @@
-import { createMemo, type Component } from "solid-js";
+import { type Component, createMemo } from "solid-js";
 import { Grid, Stack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button";
