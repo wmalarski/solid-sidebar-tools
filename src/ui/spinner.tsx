@@ -5,7 +5,7 @@ import {
   type SpinnerProps as StyledSpinnerProps,
 } from "./styled/spinner";
 
-export interface SpinnerProps extends StyledSpinnerProps {
+interface SpinnerProps extends StyledSpinnerProps {
   /**
    * For accessibility, it is important to add a fallback loading text.
    * This text will be visible to screen readers.

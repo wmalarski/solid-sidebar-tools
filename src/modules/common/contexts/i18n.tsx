@@ -55,13 +55,13 @@ const enDict = {
   },
 };
 
-export type Locale = "en";
+type Locale = "en";
 
 const dictionaries = { en: enDict };
 
 type Accessed<T> = T extends Accessor<infer A> ? A : never;
 
-export const createI18nValue = () => {
+const createI18nValue = () => {
   const [locale, setLocale] = createSignal<Locale>("en");
 
   const translate = createMemo(() => {
@@ -78,7 +78,7 @@ export const createI18nValue = () => {
 
 type I18nContextValue = ReturnType<typeof createI18nValue>;
 
-export const I18nContext = createContext<I18nContextValue>({
+const I18nContext = createContext<I18nContextValue>({
   locale: () => "en" as const,
   setLocale: () => void 0,
   t: () => {

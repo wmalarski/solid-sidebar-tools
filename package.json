@@ -10,22 +10,25 @@
     "preview": "vite preview",
     "=== LINTERS ===": "",
     "format-and-lint": "biome check .",
-    "format-and-lint:fix": "biome check . --write"
+    "format-and-lint:fix": "biome check . --write",
+    "knip": "knip"
   },
   "dependencies": {
     "@ark-ui/solid": "^4.9.0",
-    "@formkit/auto-animate": "^1.0.0-beta.6",
+    "@formkit/auto-animate": "1.0.0-beta.6",
     "@solid-primitives/i18n": "2.1.1",
     "@solidjs/router": "^0.15.3",
     "decode-formdata": "0.8.0",
     "solid-js": "^1.9.4",
-    "valibot": "1.0.0-beta.11"
+    "valibot": "1.0.0-beta.12"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@pandacss/dev": "^0.51.1",
     "@park-ui/panda-preset": "^0.43.1",
-    "@types/chrome": "^0.0.296",
+    "@types/chrome": "^0.0.297",
+    "@types/node": "^22.10.7",
+    "knip": "^5.42.2",
     "sonda": "^0.7.1",
     "typescript": "~5.7.3",
     "vite": "^6.0.7",
