@@ -41,6 +41,8 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
 
   const [setParent] = createAutoAnimate({ duration: 100 });
 
+  const [listRef, setListRef] = createSignal<HTMLElement>();
+
   const inputsState = createMemo(() =>
     createCookieInputsState(props?.initialValues),
   );
@@ -51,6 +53,10 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
 
   const onAddValueClick = () => {
     inputsState().addInput();
+
+    const allInputs = listRef()?.querySelectorAll("input");
+    const lastInput = allInputs?.values().toArray().at(-1);
+    lastInput?.focus();
   };
 
   const shouldDisableDelete = createMemo(
@@ -60,7 +66,7 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
   const shouldDisableAdd = createMemo(() => inputsState().entries().length > 9);
 
   return (
-    <VStack w="full">
+    <VStack ref={setListRef} w="full">
       <Grid
         gap="4"
         w="full"

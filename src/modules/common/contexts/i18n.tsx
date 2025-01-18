@@ -26,6 +26,8 @@ const enDict = {
     open: "Open",
     cancel: "Cancel",
     confirm: "Confirm",
+    save: "Save",
+    reset: "Reset",
   },
   cookies: {
     form: {
@@ -37,6 +39,10 @@ const enDict = {
       delete: "Delete value",
       value: "Value {{index}}:",
       cookieValue: "Cookie value",
+    },
+    list: {
+      custom: "Custom value",
+      cardDescription: "Set '{{name}}' cookie value",
     },
   },
 };

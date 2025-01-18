@@ -33,6 +33,8 @@ export const AddCookieDialog: Component<AddCookieDialogProps> = (props) => {
       open={isOpen()}
       onOpenChange={onOpenChange}
       closeOnInteractOutside={false}
+      unmountOnExit
+      lazyMount
     >
       <Dialog.Trigger
         asChild={(triggerProps) => (
