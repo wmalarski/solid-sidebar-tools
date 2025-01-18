@@ -5,6 +5,7 @@ import {
   type Component,
   type ComponentProps,
 } from "solid-js";
+import { Flex } from "styled-system/jsx";
 import { flex } from "styled-system/patterns";
 import * as v from "valibot";
 import { useI18n } from "~/modules/common/contexts/i18n";
@@ -12,6 +13,7 @@ import { Button } from "~/ui/button";
 import { Card } from "~/ui/card";
 import { Field } from "~/ui/field";
 import { RadioGroup } from "~/ui/radio-group";
+import { CookieCardMenu } from "./cookie-card-menu";
 import type { CookieFormData } from "./cookie-form";
 
 const CUSTOM_VALUE = "__custom__";
@@ -55,11 +57,14 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
 
   return (
     <Card.Root>
-      <Card.Header>
-        <Card.Title>{props.cookie.name}</Card.Title>
-        <Card.Description>
-          {t("cookies.list.cardDescription", { name: props.cookie.name })}
-        </Card.Description>
+      <Card.Header display="grid" gridTemplateColumns="1fr auto">
+        <Flex flexDirection="column" gap="2">
+          <Card.Title>{props.cookie.name}</Card.Title>
+          <Card.Description>
+            {t("cookies.list.cardDescription", { name: props.cookie.name })}
+          </Card.Description>
+        </Flex>
+        <CookieCardMenu />
       </Card.Header>
       <Card.Body>
         <form

@@ -41,8 +41,11 @@ const enDict = {
       cookieValue: "Cookie value",
     },
     list: {
+      cookies: "Cookies",
       custom: "Custom value",
       cardDescription: "Set '{{name}}' cookie value",
+      options: "Card options",
+      delete: "Delete",
     },
   },
 };
