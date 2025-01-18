@@ -28,6 +28,7 @@ const enDict = {
     confirm: "Confirm",
     save: "Save",
     reset: "Reset",
+    success: "Success",
   },
   cookies: {
     form: {
@@ -49,6 +50,7 @@ const enDict = {
       delete: "Delete",
       update: "Update",
       deleteDescription: "Delete cookie",
+      updateSuccess: "Cookie updated",
     },
   },
 };
