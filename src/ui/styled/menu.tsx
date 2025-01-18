@@ -1,7 +1,11 @@
 import { type Assign, Menu } from "@ark-ui/solid";
-import type { ComponentProps } from "solid-js";
+import type { Component, ComponentProps } from "solid-js";
+import { css } from "styled-system/css";
 import { type MenuVariantProps, menu } from "styled-system/recipes";
 import type { HTMLStyledProps } from "styled-system/types";
+import { useI18n } from "~/modules/common/contexts/i18n";
+import { EllipsisVertical } from "../icons/ellipsis-vertical-icon";
+import { IconButton } from "./icon-button";
 import { createStyleContext } from "./utils/create-style-context";
 
 const { withRootProvider, withContext } = createStyleContext(menu);
@@ -83,5 +87,35 @@ export const TriggerItem = withContext<
 export const Trigger = withContext<
   Assign<HTMLStyledProps<"button">, Menu.TriggerBaseProps>
 >(Menu.Trigger, "trigger");
+
+export const IconTrigger: Component = () => {
+  const { t } = useI18n();
+
+  return (
+    <Menu.Trigger
+      asChild={(triggerProps) => (
+        <IconButton
+          {...triggerProps({
+            class: css({
+              "& svg": {
+                transitionDuration: "100ms",
+                transitionProperty: "rotate",
+              },
+              _open: {
+                "& svg": {
+                  rotate: "90deg",
+                },
+              },
+            }),
+          })}
+          variant="ghost"
+          aria-label={t("cookies.list.options")}
+        >
+          <EllipsisVertical />
+        </IconButton>
+      )}
+    />
+  );
+};
 
 export { MenuContext as Context } from "@ark-ui/solid";

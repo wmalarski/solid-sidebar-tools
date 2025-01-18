@@ -48,6 +48,7 @@ const enDict = {
       options: "Card options",
       delete: "Delete",
       update: "Update",
+      deleteDescription: "Delete cookie",
     },
   },
 };

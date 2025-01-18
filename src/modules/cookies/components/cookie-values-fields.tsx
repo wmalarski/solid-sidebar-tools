@@ -39,7 +39,7 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
 ) => {
   const { t } = useI18n();
 
-  const [setParent] = createAutoAnimate({ duration: 100 });
+  const [setParent] = createAutoAnimate({ duration: 150 });
 
   const [listRef, setListRef] = createSignal<HTMLElement>();
 

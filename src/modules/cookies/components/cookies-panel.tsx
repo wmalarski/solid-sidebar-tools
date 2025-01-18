@@ -1,4 +1,3 @@
-import { createAutoAnimate } from "@formkit/auto-animate/solid";
 import { For, type Component } from "solid-js";
 import { Flex, Grid } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
@@ -10,8 +9,6 @@ import { useCookiesContext } from "./cookies-context";
 export const CookiesPanel: Component = () => {
   const { t } = useI18n();
 
-  const [setParent] = createAutoAnimate({ duration: 100 });
-
   const cookiesContext = useCookiesContext();
 
   return (
@@ -22,7 +19,7 @@ export const CookiesPanel: Component = () => {
         </Text>
         <AddCookieDialog />
       </Grid>
-      <Flex ref={setParent} flexDirection="column" gap={4}>
+      <Flex flexDirection="column" gap={4}>
         <For each={cookiesContext().cookies}>
           {(cookie) => <CookieCard cookie={cookie} />}
         </For>

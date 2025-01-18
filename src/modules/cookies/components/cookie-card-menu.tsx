@@ -1,9 +1,8 @@
 import { createSignal, type Component, type ComponentProps } from "solid-js";
-import { css } from "styled-system/css";
 import { HStack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import { IconButton } from "~/ui/icon-button";
-import { EllipsisVertical } from "~/ui/icons/ellipsis-vertical-icon";
+import { AlertDialog } from "~/ui/alert-dialog";
+import { PencilIcon } from "~/ui/icons/pencil-icon";
 import { TrashIcon } from "~/ui/icons/trash-icon";
 import { Menu } from "~/ui/menu";
 import type { CookieFormData } from "./cookie-form";
@@ -44,37 +43,20 @@ export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
     setIsUpdateOpen(false);
   };
 
+  const onDeleteConfirm = () => {
+    cookiesContext().removeCookie(props.cookie.id);
+    setIsDeleteOpen(false);
+  };
+
   return (
     <>
       <Menu.Root onSelect={onSelect} lazyMount unmountOnExit>
-        <Menu.Trigger
-          asChild={(triggerProps) => (
-            <IconButton
-              {...triggerProps({
-                class: css({
-                  "& svg": {
-                    transitionDuration: "100ms",
-                    transitionProperty: "rotate",
-                  },
-                  _open: {
-                    "& svg": {
-                      rotate: "90deg",
-                    },
-                  },
-                }),
-              })}
-              variant="ghost"
-              aria-label={t("cookies.list.options")}
-            >
-              <EllipsisVertical />
-            </IconButton>
-          )}
-        />
+        <Menu.IconTrigger />
         <Menu.Positioner>
           <Menu.Content>
             <Menu.Item value={UPDATE_VALUE}>
               <HStack gap="2">
-                <TrashIcon />
+                <PencilIcon />
                 {t("cookies.list.update")}
               </HStack>
             </Menu.Item>
@@ -92,6 +74,14 @@ export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
         isOpen={isUpdateOpen()}
         onIsOpenChange={setIsUpdateOpen}
         onSubmit={onUpdateSubmit}
+      />
+      <AlertDialog
+        description={t("cookies.list.deleteDescription")}
+        isOpen={isDeleteOpen()}
+        onConfirm={onDeleteConfirm}
+        onIsOpenChange={setIsDeleteOpen}
+        colorPalette="red"
+        title={t("cookies.list.delete")}
       />
     </>
   );
