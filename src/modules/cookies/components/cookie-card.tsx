@@ -29,6 +29,7 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
   const formId = createMemo(() => `cookie-form-${props.cookie.name}`);
   const [formRef, setFormRef] = createSignal<HTMLFormElement>();
 
+  const [isDirty, setIsDirty] = createSignal(false);
   const [isCustomSelected, setIsCustomSelected] = createSignal(false);
 
   const onFormChange: ComponentProps<"form">["onChange"] = (event) => {
@@ -41,6 +42,8 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
         ?.querySelector<HTMLInputElement>("input[name='custom']")
         ?.focus();
     }
+
+    setIsDirty(true);
   };
 
   const onFormSubmit: ComponentProps<"form">["onChange"] = (event) => {
@@ -52,6 +55,8 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
       v.object({ value: v.string(), custom: v.optional(v.string()) }),
       decode(formData),
     );
+
+    setIsDirty(false);
 
     console.log("parsed", parsed);
   };
@@ -80,7 +85,9 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
         </form>
       </Card.Body>
       <Card.Footer gap="3">
-        <Button form={formId()}>{t("common.save")}</Button>
+        <Button disabled={!isDirty()} form={formId()}>
+          {t("common.save")}
+        </Button>
       </Card.Footer>
     </Card.Root>
   );
