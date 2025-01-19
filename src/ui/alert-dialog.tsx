@@ -1,8 +1,8 @@
 import type { Component } from "solid-js";
-import { Grid, Stack } from "styled-system/jsx";
+import {} from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button, type ButtonProps } from "./button";
-import { Dialog } from "./dialog";
+import { Drawer } from "./drawer";
 import type { OpenChangeDetails } from "./styled/combobox";
 
 type AlertDialogProps = {
@@ -26,34 +26,34 @@ export const AlertDialog: Component<AlertDialogProps> = (props) => {
   };
 
   return (
-    <Dialog.Root
+    <Drawer.Root
       open={props.isOpen}
       onOpenChange={onOpenChange}
       closeOnInteractOutside={false}
       unmountOnExit
       lazyMount
     >
-      <Dialog.Backdrop />
-      <Dialog.Positioner>
-        <Dialog.Content>
-          <Stack gap="2" p="6">
-            <Dialog.Title>{props.title}</Dialog.Title>
-            <Dialog.Description>{props.description}</Dialog.Description>
-            <Grid gap="3" pt="4" gridTemplateColumns="1fr 1fr" width="full">
-              <Dialog.Cancel />
-              <Button
-                size="xs"
-                type="button"
-                onClick={onConfirm}
-                colorPalette={props.colorPalette}
-              >
-                {t("common.confirm")}
-              </Button>
-            </Grid>
-          </Stack>
-          <Dialog.XClose />
-        </Dialog.Content>
-      </Dialog.Positioner>
-    </Dialog.Root>
+      <Drawer.Backdrop />
+      <Drawer.Positioner>
+        <Drawer.Content>
+          <Drawer.Header>
+            <Drawer.Title>{props.title}</Drawer.Title>
+            <Drawer.Description>{props.description}</Drawer.Description>
+            <Drawer.XClose />
+          </Drawer.Header>
+          <Drawer.Footer gap="3">
+            <Drawer.Cancel />
+            <Button
+              size="xs"
+              type="button"
+              onClick={onConfirm}
+              colorPalette={props.colorPalette}
+            >
+              {t("common.confirm")}
+            </Button>
+          </Drawer.Footer>
+        </Drawer.Content>
+      </Drawer.Positioner>
+    </Drawer.Root>
   );
 };

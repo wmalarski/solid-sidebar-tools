@@ -1,9 +1,8 @@
 import { type Component, type ParentProps, createSignal } from "solid-js";
 import { css } from "styled-system/css";
-import { Grid, Stack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button";
-import { Dialog } from "~/ui/dialog";
+import { Drawer } from "~/ui/drawer";
 import { IconButton } from "~/ui/icon-button";
 import { PlusIcon } from "~/ui/icons/plus-icon";
 import type { OpenChangeDetails } from "~/ui/styled/combobox";
@@ -20,7 +19,7 @@ export const IconButtonAddCookieDialog: Component = () => {
     <CookieDialogNoTrigger formId={formId}>
       <Tooltip.SimpleTooltip
         asChild={(tooltipProps) => (
-          <Dialog.Trigger
+          <Drawer.Trigger
             asChild={(triggerProps) => (
               <IconButton
                 size="xs"
@@ -46,7 +45,7 @@ export const CardButtonAddCookieDialog: Component = () => {
 
   return (
     <CookieDialogNoTrigger formId={formId}>
-      <Dialog.Trigger
+      <Drawer.Trigger
         asChild={(triggerProps) => (
           <Button
             variant="subtle"
@@ -85,7 +84,7 @@ const CookieDialogNoTrigger: Component<CookieDialogNoTriggerProps> = (
   };
 
   return (
-    <Dialog.Root
+    <Drawer.Root
       open={isOpen()}
       onOpenChange={onOpenChange}
       closeOnInteractOutside={false}
@@ -93,22 +92,24 @@ const CookieDialogNoTrigger: Component<CookieDialogNoTriggerProps> = (
       lazyMount
     >
       {props.children}
-      <Dialog.Backdrop />
-      <Dialog.Positioner>
-        <Dialog.Content>
-          <Stack gap="6" p="4">
-            <Dialog.Title>{t("cookies.form.addNewCookie")}</Dialog.Title>
+      <Drawer.Backdrop />
+      <Drawer.Positioner>
+        <Drawer.Content>
+          <Drawer.Header>
+            <Drawer.Title>{t("cookies.form.addNewCookie")}</Drawer.Title>
+            <Drawer.XClose />
+          </Drawer.Header>
+          <Drawer.Body>
             <CookieForm onSubmit={onSubmit} id={props.formId} />
-            <Grid gap="3" gridTemplateColumns="1fr 1fr" width="full">
-              <Dialog.Cancel />
-              <Button form={props.formId} size="xs" type="submit">
-                {t("common.confirm")}
-              </Button>
-            </Grid>
-          </Stack>
-          <Dialog.XClose />
-        </Dialog.Content>
-      </Dialog.Positioner>
-    </Dialog.Root>
+          </Drawer.Body>
+          <Drawer.Footer gap="3">
+            <Drawer.Cancel />
+            <Button form={props.formId} size="xs" type="submit">
+              {t("common.confirm")}
+            </Button>
+          </Drawer.Footer>
+        </Drawer.Content>
+      </Drawer.Positioner>
+    </Drawer.Root>
   );
 };

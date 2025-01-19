@@ -50,7 +50,7 @@ export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
 
   return (
     <>
-      <Menu.Root size="xs" onSelect={onSelect} lazyMount unmountOnExit>
+      <Menu.Root onSelect={onSelect} lazyMount unmountOnExit>
         <Menu.IconTrigger />
         <Menu.Positioner>
           <Menu.Content>

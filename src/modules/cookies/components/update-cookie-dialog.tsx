@@ -1,8 +1,8 @@
 import { type Component, createMemo } from "solid-js";
-import { Grid, Stack } from "styled-system/jsx";
+import {} from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button";
-import { Dialog } from "~/ui/dialog";
+import { Drawer } from "~/ui/drawer";
 import type { OpenChangeDetails } from "~/ui/styled/combobox";
 import { CookieForm, type CookieFormData } from "./cookie-form";
 
@@ -27,33 +27,35 @@ export const UpdateCookieDialog: Component<UpdateCookieDialogProps> = (
   };
 
   return (
-    <Dialog.Root
+    <Drawer.Root
       open={props.isOpen}
       onOpenChange={onOpenChange}
       closeOnInteractOutside={false}
       unmountOnExit
       lazyMount
     >
-      <Dialog.Backdrop />
-      <Dialog.Positioner>
-        <Dialog.Content>
-          <Stack gap="8" p="6">
-            <Dialog.Title>{t("cookies.form.updateCookie")}</Dialog.Title>
+      <Drawer.Backdrop />
+      <Drawer.Positioner>
+        <Drawer.Content>
+          <Drawer.Header>
+            <Drawer.Title>{t("cookies.form.updateCookie")}</Drawer.Title>
+            <Drawer.XClose />
+          </Drawer.Header>
+          <Drawer.Body>
             <CookieForm
               initialData={props.initialData}
               onSubmit={props.onSubmit}
               id={formId()}
             />
-            <Grid gap="3" gridTemplateColumns="1fr 1fr" width="full">
-              <Dialog.Cancel />
-              <Button size="xs" form={formId()} type="submit">
-                {t("common.confirm")}
-              </Button>
-            </Grid>
-          </Stack>
-          <Dialog.XClose />
-        </Dialog.Content>
-      </Dialog.Positioner>
-    </Dialog.Root>
+          </Drawer.Body>
+          <Drawer.Footer gap="3">
+            <Drawer.Cancel />
+            <Button form={formId()} size="xs" type="submit">
+              {t("common.confirm")}
+            </Button>
+          </Drawer.Footer>
+        </Drawer.Content>
+      </Drawer.Positioner>
+    </Drawer.Root>
   );
 };
