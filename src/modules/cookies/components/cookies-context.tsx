@@ -4,10 +4,18 @@ import {
   type ParentProps,
   createContext,
   createMemo,
+  createResource,
   createSignal,
+  onCleanup,
   useContext,
 } from "solid-js";
 import { createStore, produce } from "solid-js/store";
+import {
+  getChromeTabCookies,
+  getCurrentChromeCookies,
+  isExtension,
+  onCurrentUrlChange,
+} from "../services/chrome";
 import type { CookieFormData } from "./cookie-form";
 
 export type CookieValue = {
@@ -17,6 +25,15 @@ export type CookieValue = {
 };
 
 const createCookiesContext = () => {
+  const [tabCookies, { mutate }] = createResource(() => {
+    return isExtension() ? getCurrentChromeCookies() : [];
+  });
+
+  const subscriber = onCurrentUrlChange(async (url) =>
+    mutate(await getChromeTabCookies(url)),
+  );
+  onCleanup(() => subscriber());
+
   const initialData: CookieFormData[] = [
     { name: "Initial", values: ["react", "solid", "vue"] },
   ];
@@ -55,7 +72,7 @@ const createCookiesContext = () => {
     );
   };
 
-  return { cookies, addCookie, updateCookie, removeCookie };
+  return { cookies, tabCookies, addCookie, updateCookie, removeCookie };
 };
 
 const CookiesContext = createContext<

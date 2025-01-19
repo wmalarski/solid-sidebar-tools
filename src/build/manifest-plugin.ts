@@ -22,14 +22,7 @@ export const manifestPlugin = (): NonNullable<UserConfig["plugins"]>[0] => {
         side_panel: {
           default_path: "index.html",
         },
-        permissions: [
-          "scripting",
-          "tabs",
-          "activeTab",
-          "contextMenus",
-          "storage",
-          "sidePanel",
-        ],
+        permissions: ["sidePanel", "cookies", "tabs"],
         host_permissions: ["https://*/*", "http://*/*"],
         icons: {
           "16": "images/16x16.png",

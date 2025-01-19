@@ -1,17 +1,11 @@
-import { type Component, For, createSignal } from "solid-js";
+import { type Component, For, createMemo, createSignal } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Combobox, createListCollection } from "~/ui/combobox";
 import { IconButton } from "~/ui/icon-button";
 import { CheckIcon } from "~/ui/icons/check-icon";
 import { ChevronsUpDownIcon } from "~/ui/icons/chevrons-up-down-icon";
 import { Input } from "~/ui/input";
-
-const data = [
-  { label: "React", value: "react" },
-  { label: "Solid", value: "solid" },
-  { label: "Svelte", value: "svelte", disabled: true },
-  { label: "Vue", value: "vue" },
-];
+import { useCookiesContext } from "./cookies-context";
 
 type CookieNameTagInputProps = {
   initialValue?: string;
@@ -22,26 +16,36 @@ export const CookieNameTagInput: Component<CookieNameTagInputProps> = (
 ) => {
   const { t } = useI18n();
 
-  //
-  // const cookies = createAsync(() => {
-  //   return Promise.resolve(["test-cookie-123", "test-cookie-456"]);
-  // });
+  const cookiesContext = useCookiesContext();
 
-  const [items, setItems] = createSignal(data);
-  const collection = createListCollection({ items: data });
+  const data = createMemo(() => {
+    const cookies = cookiesContext().tabCookies() ?? [];
+    return cookies.map((entry) => ({ label: entry.name, value: entry.name }));
+  });
 
-  const handleChange = (e: Combobox.InputValueChangeDetails) => {
-    const filtered = data.filter((item) =>
-      item.label.toLowerCase().includes(e.inputValue.toLowerCase()),
+  const items = createMemo(() => {
+    const [items, setItems] = createSignal(data());
+    return { get: items, set: setItems };
+  });
+
+  const collection = createMemo(() => createListCollection({ items: data() }));
+
+  const handleChange = (event: Combobox.InputValueChangeDetails) => {
+    const untrackedData = data();
+    const query = event.inputValue.toLowerCase();
+
+    const filtered = untrackedData.filter((item) =>
+      item.label.toLowerCase().includes(query),
     );
-    setItems(filtered.length > 0 ? filtered : data);
+    items().set(filtered.length > 0 ? filtered : untrackedData);
   };
 
   return (
     <Combobox.Root
       width="2xs"
+      size="sm"
       onInputValueChange={handleChange}
-      collection={collection}
+      collection={collection()}
       allowCustomValue
       inputValue={props.initialValue}
     >
@@ -69,21 +73,16 @@ export const CookieNameTagInput: Component<CookieNameTagInputProps> = (
       </Combobox.Control>
       <Combobox.Positioner>
         <Combobox.Content>
-          <Combobox.ItemGroup>
-            <Combobox.ItemGroupLabel>
-              {t("cookies.form.name")}
-            </Combobox.ItemGroupLabel>
-            <For each={items()}>
-              {(item) => (
-                <Combobox.Item item={item}>
-                  <Combobox.ItemText>{item.label}</Combobox.ItemText>
-                  <Combobox.ItemIndicator>
-                    <CheckIcon />
-                  </Combobox.ItemIndicator>
-                </Combobox.Item>
-              )}
-            </For>
-          </Combobox.ItemGroup>
+          <For each={items().get()}>
+            {(item) => (
+              <Combobox.Item item={item}>
+                <Combobox.ItemText>{item.label}</Combobox.ItemText>
+                <Combobox.ItemIndicator>
+                  <CheckIcon />
+                </Combobox.ItemIndicator>
+              </Combobox.Item>
+            )}
+          </For>
         </Combobox.Content>
       </Combobox.Positioner>
     </Combobox.Root>
