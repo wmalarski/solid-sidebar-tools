@@ -13,7 +13,6 @@ import { Button } from "~/ui/button";
 import { Card } from "~/ui/card";
 import { Field } from "~/ui/field";
 import { RadioGroup } from "~/ui/radio-group";
-import { useToaster } from "~/ui/toaster";
 import { CookieCardMenu } from "./cookie-card-menu";
 import type { CookieFormData } from "./cookie-form";
 import type { CookieValue } from "./cookies-context";
@@ -26,8 +25,6 @@ type CookieCardProps = {
 
 export const CookieCard: Component<CookieCardProps> = (props) => {
   const { t } = useI18n();
-
-  const toaster = useToaster();
 
   const formId = createMemo(() => `cookie-form-${props.cookie.name}`);
   const [formRef, setFormRef] = createSignal<HTMLFormElement>();
@@ -60,11 +57,6 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
     );
 
     setIsDirty(false);
-
-    toaster().success({
-      description: t("cookies.list.updateSuccess"),
-      title: t("common.success"),
-    });
 
     // biome-ignore lint/suspicious/noConsoleLog: <explanation>
     console.log("parsed", parsed);
