@@ -42,6 +42,7 @@ export const AlertDialog: Component<AlertDialogProps> = (props) => {
             <Grid gap="3" pt="4" gridTemplateColumns="1fr 1fr" width="full">
               <Dialog.Cancel />
               <Button
+                size="xs"
                 type="button"
                 onClick={onConfirm}
                 colorPalette={props.colorPalette}

@@ -64,7 +64,7 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
 
   return (
     <Card.Root>
-      <Card.Header display="grid" gridTemplateColumns="1fr auto">
+      <Card.Header p={3} display="grid" gridTemplateColumns="1fr auto">
         <Flex flexDirection="column" gap="2">
           <Card.Title>{props.cookie.name}</Card.Title>
           <Card.Description>
@@ -73,7 +73,7 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
         </Flex>
         <CookieCardMenu cookie={props.cookie} />
       </Card.Header>
-      <Card.Body>
+      <Card.Body px={3} pb={2}>
         <form
           id={formId()}
           ref={setFormRef}
@@ -85,8 +85,8 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
           <CustomValueField isCustom={isCustomSelected()} />
         </form>
       </Card.Body>
-      <Card.Footer gap="3">
-        <Button disabled={!isDirty()} form={formId()}>
+      <Card.Footer px={3} pt={1} pb={3} gap="3">
+        <Button size="xs" disabled={!isDirty()} form={formId()}>
           {t("common.save")}
         </Button>
       </Card.Footer>
@@ -102,7 +102,7 @@ const CookieRadioValues: Component<CookieRadioValuesProps> = (props) => {
   const { t } = useI18n();
 
   return (
-    <RadioGroup.Root name="value">
+    <RadioGroup.Root name="value" size="sm">
       {props.cookie.values.map((option) => (
         <RadioGroup.Item value={option}>
           <RadioGroup.ItemControl />
@@ -131,6 +131,7 @@ const CustomValueField: Component<CustomValueFieldProps> = (props) => {
       <Field.Input
         placeholder={t("cookies.form.cookieValue")}
         name="custom"
+        size="xs"
         aria-label={t("cookies.list.custom")}
         autocomplete="off"
         disabled={!props.isCustom}

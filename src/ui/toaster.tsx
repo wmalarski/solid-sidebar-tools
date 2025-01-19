@@ -38,14 +38,14 @@ export const ToasterProvider: Component<ParentProps> = (props) => {
             <Toast.Description>{toast().description}</Toast.Description>
             <Toast.ActionTrigger
               asChild={(actionProps) => (
-                <Button {...actionProps()} variant="link" size="sm">
+                <Button {...actionProps()} variant="link" size="xs">
                   {toast().action?.label}
                 </Button>
               )}
             />
             <Toast.CloseTrigger
               asChild={(closeProps) => (
-                <IconButton {...closeProps()} size="sm" variant="link">
+                <IconButton {...closeProps()} size="xs" variant="link">
                   <XIcon />
                 </IconButton>
               )}

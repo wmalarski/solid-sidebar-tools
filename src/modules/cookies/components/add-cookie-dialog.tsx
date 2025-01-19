@@ -23,6 +23,7 @@ export const IconButtonAddCookieDialog: Component = () => {
           <Dialog.Trigger
             asChild={(triggerProps) => (
               <IconButton
+                size="xs"
                 aria-label={t("cookies.form.addNewCookie")}
                 {...triggerProps(tooltipProps())}
               >
@@ -49,6 +50,7 @@ export const CardButtonAddCookieDialog: Component = () => {
         asChild={(triggerProps) => (
           <Button
             variant="subtle"
+            size="xs"
             {...triggerProps({ class: css({ h: "32" }) })}
           >
             <PlusIcon />
@@ -94,12 +96,12 @@ const CookieDialogNoTrigger: Component<CookieDialogNoTriggerProps> = (
       <Dialog.Backdrop />
       <Dialog.Positioner>
         <Dialog.Content>
-          <Stack gap="8" p="6">
+          <Stack gap="6" p="4">
             <Dialog.Title>{t("cookies.form.addNewCookie")}</Dialog.Title>
             <CookieForm onSubmit={onSubmit} id={props.formId} />
             <Grid gap="3" gridTemplateColumns="1fr 1fr" width="full">
               <Dialog.Cancel />
-              <Button form={props.formId} type="submit">
+              <Button form={props.formId} size="xs" type="submit">
                 {t("common.confirm")}
               </Button>
             </Grid>

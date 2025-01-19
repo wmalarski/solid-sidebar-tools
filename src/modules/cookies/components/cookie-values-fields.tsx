@@ -80,6 +80,7 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
           asChild={(tooltipProps) => (
             <IconButton
               type="button"
+              size="xs"
               disabled={shouldDisableAdd()}
               variant="outline"
               aria-label={t("cookies.form.addCookieValue")}
@@ -101,6 +102,7 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
               </Field.Label>
               <HStack alignItems="center" justifyContent="center">
                 <Field.Input
+                  size="xs"
                   placeholder={t("cookies.form.cookieValue")}
                   value={entry.value}
                   name={`values[${index()}]`}
@@ -111,6 +113,7 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
                     <IconButton
                       colorPalette="red"
                       type="button"
+                      size="xs"
                       disabled={shouldDisableDelete()}
                       aria-label={t("cookies.form.delete")}
                       {...tooltipProps({

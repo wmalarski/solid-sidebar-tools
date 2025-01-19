@@ -46,7 +46,7 @@ export const UpdateCookieDialog: Component<UpdateCookieDialogProps> = (
             />
             <Grid gap="3" gridTemplateColumns="1fr 1fr" width="full">
               <Dialog.Cancel />
-              <Button form={formId()} type="submit">
+              <Button size="xs" form={formId()} type="submit">
                 {t("common.confirm")}
               </Button>
             </Grid>

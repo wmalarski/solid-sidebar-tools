@@ -29,7 +29,9 @@ export const ErrorFallback = (err: unknown, reset: VoidFunction) => {
             {/* biome-ignore lint/suspicious/noExplicitAny: <explanation> */}
             {t("error.description", { message: (err as any)?.message })}
           </span>
-          <Button onClick={reset}>{t("error.reload")}</Button>
+          <Button size="xs" onClick={reset}>
+            {t("error.reload")}
+          </Button>
           <Link href={paths.home}>{t("error.home")}</Link>
         </Card.Body>
       </Card.Root>

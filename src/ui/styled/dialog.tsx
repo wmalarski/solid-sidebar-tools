@@ -38,7 +38,7 @@ export const XClose: Component = () => {
           {...closeTriggerProps()}
           aria-label={t("common.closeDialog")}
           variant="ghost"
-          size="sm"
+          size="xs"
           position="absolute"
           top="2"
           right="2"
@@ -56,7 +56,7 @@ export const Cancel: Component = () => {
   return (
     <Dialog.CloseTrigger
       asChild={(closeTriggerProps) => (
-        <Button {...closeTriggerProps()} variant="outline">
+        <Button {...closeTriggerProps()} size="xs" variant="outline">
           {t("common.cancel")}
         </Button>
       )}

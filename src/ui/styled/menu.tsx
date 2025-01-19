@@ -109,6 +109,7 @@ export const IconTrigger: Component = () => {
             }),
           })}
           variant="ghost"
+          size="xs"
           aria-label={t("cookies.list.options")}
         >
           <EllipsisVertical />
