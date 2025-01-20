@@ -6,18 +6,13 @@ const getCurrentChromeTab = async () => {
   return tab;
 };
 
-export const getChromeTabCookies = (url: string) => {
-  return chrome.cookies.getAll({ url });
+export const getCurrentChromeTabUrl = async () => {
+  const tab = await getCurrentChromeTab();
+  return tab.url;
 };
 
-export const getCurrentChromeCookies = async () => {
-  const tab = await getCurrentChromeTab();
-
-  if (!tab.url) {
-    return [];
-  }
-
-  return getChromeTabCookies(tab.url);
+export const getChromeTabCookies = (url: string) => {
+  return chrome.cookies.getAll({ url });
 };
 
 type OnUpdatedListener = Parameters<
@@ -51,6 +46,17 @@ export const onCurrentUrlChange = (callback: (url: string) => void) => {
   };
 };
 
-export const isExtension = () => {
-  return typeof chrome !== "undefined";
+export type SavedCookie = {
+  name: string;
+  values: string[];
+};
+
+export const getSavedCookies = async (url: string) => {
+  const data = await chrome.storage.local.get(url);
+  console.log({ data });
+  return data as SavedCookie[];
+};
+
+export const setSavedCookies = (url: string, data: SavedCookie[]) => {
+  return chrome.storage.local.set({ [url]: data });
 };
