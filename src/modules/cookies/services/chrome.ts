@@ -52,7 +52,7 @@ export type SavedCookie = {
 };
 
 export const getSavedCookies = async (url: string) => {
-  const data = await chrome.storage.local.get(url);
+  const data = await chrome.storage.local.get([url]);
   console.log({ data });
   return data as SavedCookie[];
 };

@@ -15,6 +15,7 @@ import {
   getCurrentChromeTabUrl,
   getSavedCookies,
   onCurrentUrlChange,
+  setSavedCookies,
 } from "../services/chrome";
 import type { CookieFormData } from "./cookie-form";
 
@@ -51,12 +52,17 @@ const createCookiesContext = () => {
   });
 
   const addCookie = (data: CookieFormData) => {
+    const resolvedUrl = url();
     const resolvedStore = store();
     const id = resolvedStore.idCounter();
     resolvedStore.setCookies(
       produce((current) => current.push({ id, ...data })),
     );
     resolvedStore.setIdCounter((current) => current + 1);
+
+    if (resolvedUrl) {
+      setSavedCookies(resolvedUrl, [data]);
+    }
   };
 
   const updateCookie = (id: number, data: CookieFormData) => {
