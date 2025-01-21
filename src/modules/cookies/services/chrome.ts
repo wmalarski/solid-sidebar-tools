@@ -1,4 +1,4 @@
-import { createResource } from "solid-js";
+import { type Accessor, createResource } from "solid-js";
 
 const getCurrentChromeTab = async () => {
   const [tab] = await chrome.tabs.query({
@@ -68,4 +68,25 @@ export const getSavedCookies = async (url: string) => {
 
 export const setSavedCookies = (url: string, cookies: SavedCookie[]) => {
   return chrome.storage.local.set({ [url]: { cookies } });
+};
+
+type OnChangeListener = Parameters<
+  typeof chrome.storage.local.onChanged.addListener
+>[0];
+
+export const onSavedCookiesChange = (
+  url: Accessor<string>,
+  callback: (cookies: SavedCookie[]) => void,
+) => {
+  const listener: OnChangeListener = (changes) => {
+    const resolvedUrl = url();
+    const currentChanges = changes[resolvedUrl];
+
+    if (currentChanges) {
+      callback(changes[resolvedUrl].newValue.cookies as SavedCookie[]);
+    }
+  };
+
+  chrome.storage.local.onChanged.addListener(listener);
+  return () => chrome.storage.local.onChanged.removeListener(listener);
 };

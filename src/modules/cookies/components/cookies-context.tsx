@@ -12,6 +12,7 @@ import {
   getChromeTabCookies,
   getSavedCookies,
   onCurrentUrlChange,
+  onSavedCookiesChange,
   setSavedCookies,
 } from "../services/chrome";
 import type { CookieFormData } from "./cookie-form";
@@ -49,27 +50,25 @@ const createCookiesContext = () => {
 
   const addCookie = async (data: CookieFormData) => {
     const id = idCounter();
-    const newEntry = { id, ...data };
-    setCookies((current) => [...current, newEntry]);
     setIdCounter((current) => current + 1);
-
-    await setSavedCookies(url(), cookies());
+    const updated = [...cookies(), { id, ...data }];
+    await setSavedCookies(url(), updated);
   };
 
   const updateCookie = async (id: number, data: CookieFormData) => {
-    const updatedEntry = { id, ...data };
-    setCookies((current) =>
-      current.map((entry) => (entry.id === id ? updatedEntry : entry)),
+    const newEntry = { id, ...data };
+    await setSavedCookies(
+      url(),
+      cookies().map((entry) => (entry.id === id ? newEntry : entry)),
     );
-
-    await setSavedCookies(url(), cookies());
   };
 
   const removeCookie = async (id: number) => {
-    setCookies((current) => current.filter((entry) => entry.id !== id));
-
-    await setSavedCookies(url(), cookies());
+    const updated = cookies().filter((entry) => entry.id !== id);
+    await setSavedCookies(url(), updated);
   };
+
+  onSavedCookiesChange(url, setCookies);
 
   return {
     cookies,
