@@ -1,3 +1,5 @@
+import { createResource } from "solid-js";
+
 const getCurrentChromeTab = async () => {
   const [tab] = await chrome.tabs.query({
     active: true,
@@ -40,6 +42,11 @@ export const onCurrentUrlChange = (callback: (url: string) => void) => {
   chrome.tabs.onActivated.addListener(onActivatedListener);
   chrome.tabs.onUpdated.addListener(onUpdatedListener);
 
+  createResource(async () => {
+    const url = await getCurrentChromeTabUrl();
+    url && callback(url);
+  });
+
   return () => {
     chrome.tabs.onActivated.removeListener(onActivatedListener);
     chrome.tabs.onUpdated.removeListener(onUpdatedListener);
@@ -54,9 +61,9 @@ export type SavedCookie = {
 export const getSavedCookies = async (url: string) => {
   const data = await chrome.storage.local.get([url]);
   console.log({ data });
-  return data as SavedCookie[];
+  return data?.cookies as SavedCookie[] | undefined;
 };
 
-export const setSavedCookies = (url: string, data: SavedCookie[]) => {
-  return chrome.storage.local.set({ [url]: data });
+export const setSavedCookies = (url: string, cookies: SavedCookie[]) => {
+  return chrome.storage.local.set({ [url]: { cookies } });
 };

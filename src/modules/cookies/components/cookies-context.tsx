@@ -4,7 +4,6 @@ import {
   type ParentProps,
   createContext,
   createMemo,
-  createResource,
   createSignal,
   onCleanup,
   useContext,
@@ -12,7 +11,6 @@ import {
 import { createStore, produce } from "solid-js/store";
 import {
   getChromeTabCookies,
-  getCurrentChromeTabUrl,
   getSavedCookies,
   onCurrentUrlChange,
   setSavedCookies,
@@ -26,48 +24,44 @@ export type CookieValue = {
 };
 
 const createCookiesContext = () => {
-  const [url, { mutate }] = createResource(() => getCurrentChromeTabUrl());
-  const subscription = onCurrentUrlChange(mutate);
+  const [url, setUrl] = createSignal<string>();
+  const [tabCookies, setTabCookies] = createSignal<chrome.cookies.Cookie[]>([]);
+  const [idCounter, setIdCounter] = createSignal(0);
+  const [cookies, setCookies] = createStore<CookieValue[]>([]);
+
+  const subscription = onCurrentUrlChange(async (url) => {
+    const [tabCookies, savedCookies] = await Promise.all([
+      getChromeTabCookies(url),
+      getSavedCookies(url),
+    ]);
+
+    const saved = savedCookies ?? [];
+    const initialCookies = saved.map((entry, index) => ({
+      id: index,
+      ...entry,
+    }));
+
+    setUrl(url);
+    setTabCookies(tabCookies);
+    setCookies(initialCookies);
+    setIdCounter(initialCookies.length);
+  });
+
   onCleanup(() => subscription());
 
-  const [tabCookies] = createResource(() => {
-    const resolvedUrl = url();
-    return resolvedUrl ? getChromeTabCookies(resolvedUrl) : [];
-  });
-
-  const [savedCookies] = createResource(() => {
-    const resolvedUrl = url();
-    return resolvedUrl ? getSavedCookies(resolvedUrl) : [];
-  });
-
-  const store = createMemo(() => {
-    const initialData = savedCookies() ?? [];
-    const [idCounter, setIdCounter] = createSignal(initialData.length);
-
-    const [cookies, setCookies] = createStore<CookieValue[]>(
-      initialData.map((entry, index) => ({ id: index, ...entry })),
-    );
-
-    return { idCounter, setIdCounter, cookies, setCookies };
-  });
-
   const addCookie = (data: CookieFormData) => {
-    const resolvedUrl = url();
-    const resolvedStore = store();
-    const id = resolvedStore.idCounter();
-    resolvedStore.setCookies(
-      produce((current) => current.push({ id, ...data })),
-    );
-    resolvedStore.setIdCounter((current) => current + 1);
+    const id = idCounter();
+    setCookies(produce((current) => current.push({ id, ...data })));
+    setIdCounter((current) => current + 1);
 
+    const resolvedUrl = url();
     if (resolvedUrl) {
       setSavedCookies(resolvedUrl, [data]);
     }
   };
 
   const updateCookie = (id: number, data: CookieFormData) => {
-    const resolvedStore = store();
-    resolvedStore.setCookies(
+    setCookies(
       produce((current) => {
         const entry = current.find((entry) => entry.id === id);
         if (entry) {
@@ -79,8 +73,7 @@ const createCookiesContext = () => {
   };
 
   const removeCookie = (id: number) => {
-    const resolvedStore = store();
-    resolvedStore.setCookies(
+    setCookies(
       produce((current) => {
         const entryIndex = current.findIndex((entry) => entry.id === id);
         if (entryIndex >= 0) {
@@ -91,9 +84,7 @@ const createCookiesContext = () => {
   };
 
   return {
-    get cookies() {
-      return store().cookies;
-    },
+    cookies,
     tabCookies,
     addCookie,
     updateCookie,
