@@ -61,20 +61,11 @@ export type SavedCookie = {
 
 export const getSavedCookies = async (url: string) => {
   const data = await chrome.storage.local.get(url);
-
   const mapping = data?.[url]?.cookies ?? {};
-
   const result = Array.from(Object.values(mapping));
-
   return result as SavedCookie[];
 };
 
-export const setSavedCookie = (url: string, cookie: SavedCookie) => {
-  return chrome.storage.local.set({
-    [url]: { cookies: { [cookie.id]: cookie } },
-  });
-};
-
-export const removeSavedCookie = (url: string, cookieId: number) => {
-  return chrome.storage.local.remove([url, "cookies", cookieId]);
+export const setSavedCookies = (url: string, cookies: SavedCookie[]) => {
+  return chrome.storage.local.set({ [url]: { cookies } });
 };
