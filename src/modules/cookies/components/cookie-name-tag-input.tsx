@@ -1,4 +1,5 @@
 import { type Component, For, createMemo, createSignal } from "solid-js";
+import { css } from "styled-system/css";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Combobox, createListCollection } from "~/ui/combobox";
 import { IconButton } from "~/ui/icon-button";
@@ -60,12 +61,8 @@ export const CookieNameTagInput: Component<CookieNameTagInputProps> = (
         />
         <Combobox.Trigger
           asChild={(triggerProps) => (
-            <IconButton
-              variant="link"
-              aria-label={t("common.open")}
-              size="xs"
-              {...triggerProps()}
-            >
+            <IconButton variant="link" size="xs" {...triggerProps()}>
+              <span class={css({ srOnly: true })}>{t("common.open")}</span>
               <ChevronsUpDownIcon />
             </IconButton>
           )}

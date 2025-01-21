@@ -1,5 +1,6 @@
 import { createAutoAnimate } from "@formkit/auto-animate/solid";
 import { type Component, For, createMemo, createSignal } from "solid-js";
+import { css } from "styled-system/css";
 import { Grid, HStack, VStack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Field } from "~/ui/field";
@@ -83,9 +84,11 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
               size="xs"
               disabled={shouldDisableAdd()}
               variant="outline"
-              aria-label={t("cookies.form.addCookieValue")}
               {...tooltipProps({ onClick: onAddValueClick })}
             >
+              <span class={css({ srOnly: true })}>
+                {t("cookies.form.addCookieValue")}
+              </span>
               <PlusIcon />
             </IconButton>
           )}
@@ -115,11 +118,13 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
                       type="button"
                       size="xs"
                       disabled={shouldDisableDelete()}
-                      aria-label={t("cookies.form.delete")}
                       {...tooltipProps({
                         onClick: onDeleteClickFactory(entry.id),
                       })}
                     >
+                      <span class={css({ srOnly: true })}>
+                        {t("cookies.form.delete")}
+                      </span>
                       <TrashIcon />
                     </IconButton>
                   )}

@@ -18,11 +18,10 @@ export const IconButtonAddCookieDialog: Component = () => {
     <CookieDialogNoTrigger formId={formId}>
       <Drawer.Trigger
         asChild={(triggerProps) => (
-          <IconButton
-            size="xs"
-            aria-label={t("cookies.form.addNewCookie")}
-            {...triggerProps()}
-          >
+          <IconButton size="xs" {...triggerProps()}>
+            <span class={css({ srOnly: true })}>
+              {t("cookies.form.addNewCookie")}
+            </span>
             <PlusIcon />
           </IconButton>
         )}

@@ -29,6 +29,7 @@ const enDict = {
     save: "Save",
     reset: "Reset",
     success: "Success",
+    options: "Options",
   },
   cookies: {
     form: {

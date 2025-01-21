@@ -1,5 +1,6 @@
 import { type Assign, Dialog, type PolymorphicProps, ark } from "@ark-ui/solid";
 import type { Component, ComponentProps } from "solid-js";
+import { css } from "styled-system/css";
 import { type DrawerVariantProps, drawer } from "styled-system/recipes";
 import type { HTMLStyledProps } from "styled-system/types";
 import { useI18n } from "~/modules/common/contexts/i18n";
@@ -52,13 +53,13 @@ export const XClose: Component = () => {
       asChild={(closeTriggerProps) => (
         <IconButton
           {...closeTriggerProps()}
-          aria-label={t("common.closeDialog")}
           variant="ghost"
           size="xs"
           position="absolute"
           top="2"
           right="2"
         >
+          <span class={css({ srOnly: true })}>{t("common.closeDialog")}</span>
           <XIcon />
         </IconButton>
       )}

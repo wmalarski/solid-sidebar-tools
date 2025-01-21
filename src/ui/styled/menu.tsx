@@ -110,8 +110,8 @@ export const IconTrigger: Component = () => {
           })}
           variant="ghost"
           size="xs"
-          aria-label={t("cookies.list.options")}
         >
+          <span class={css({ srOnly: true })}>{t("common.options")}</span>
           <EllipsisVertical />
         </IconButton>
       )}
