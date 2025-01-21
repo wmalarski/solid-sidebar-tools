@@ -22,7 +22,7 @@ export const CookiesPanel: Component = () => {
       </Grid>
       <Flex flexDirection="column" gap={4}>
         <For
-          each={cookiesContext().cookies}
+          each={cookiesContext().cookies()}
           fallback={<CardButtonAddCookieDialog />}
         >
           {(cookie) => <CookieCard cookie={cookie} />}

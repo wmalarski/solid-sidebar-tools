@@ -6,7 +6,6 @@ import { Drawer } from "~/ui/drawer";
 import { IconButton } from "~/ui/icon-button";
 import { PlusIcon } from "~/ui/icons/plus-icon";
 import type { OpenChangeDetails } from "~/ui/styled/combobox";
-import { Tooltip } from "~/ui/tooltip";
 import { CookieForm, type CookieFormData } from "./cookie-form";
 import { useCookiesContext } from "./cookies-context";
 
@@ -17,23 +16,17 @@ export const IconButtonAddCookieDialog: Component = () => {
 
   return (
     <CookieDialogNoTrigger formId={formId}>
-      <Tooltip.SimpleTooltip
-        asChild={(tooltipProps) => (
-          <Drawer.Trigger
-            asChild={(triggerProps) => (
-              <IconButton
-                size="xs"
-                aria-label={t("cookies.form.addNewCookie")}
-                {...triggerProps(tooltipProps())}
-              >
-                <PlusIcon />
-              </IconButton>
-            )}
-          />
+      <Drawer.Trigger
+        asChild={(triggerProps) => (
+          <IconButton
+            size="xs"
+            aria-label={t("cookies.form.addNewCookie")}
+            {...triggerProps()}
+          >
+            <PlusIcon />
+          </IconButton>
         )}
-      >
-        {t("cookies.form.addNewCookie")}
-      </Tooltip.SimpleTooltip>
+      />
     </CookieDialogNoTrigger>
   );
 };

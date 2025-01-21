@@ -8,12 +8,12 @@ import {
   onCleanup,
   useContext,
 } from "solid-js";
-import { createStore, produce } from "solid-js/store";
 import {
   getChromeTabCookies,
   getSavedCookies,
   onCurrentUrlChange,
-  setSavedCookies,
+  removeSavedCookie,
+  setSavedCookie,
 } from "../services/chrome";
 import type { CookieFormData } from "./cookie-form";
 
@@ -27,7 +27,7 @@ const createCookiesContext = () => {
   const [url, setUrl] = createSignal<string>("");
   const [tabCookies, setTabCookies] = createSignal<chrome.cookies.Cookie[]>([]);
   const [idCounter, setIdCounter] = createSignal(0);
-  const [cookies, setCookies] = createStore<CookieValue[]>([]);
+  const [cookies, setCookies] = createSignal<CookieValue[]>([]);
 
   const subscription = onCurrentUrlChange(async (url) => {
     const [tabCookies, savedCookies] = await Promise.all([
@@ -35,16 +35,10 @@ const createCookiesContext = () => {
       getSavedCookies(url),
     ]);
 
-    console.log({ tabCookies, savedCookies });
-
-    console.log({ tabCookies, savedCookies, url });
-
     const maxId = savedCookies.reduce(
       (previous, current) => Math.max(previous, current.id),
       0,
     );
-
-    console.log({ maxId });
 
     setUrl(url);
     setTabCookies(tabCookies);
@@ -56,49 +50,26 @@ const createCookiesContext = () => {
 
   const addCookie = async (data: CookieFormData) => {
     const id = idCounter();
-    setCookies(produce((current) => current.push({ id, ...data })));
+    const newEntry = { id, ...data };
+    setCookies((current) => [...current, newEntry]);
     setIdCounter((current) => current + 1);
 
-    await setSavedCookies(url(), cookies);
-    console.log("cookies", JSON.stringify(cookies, null, 2));
-
-    const saved = await getSavedCookies(url());
-    console.log("saved", saved);
+    await setSavedCookie(url(), newEntry);
   };
 
   const updateCookie = async (id: number, data: CookieFormData) => {
-    setCookies(
-      produce((current) => {
-        const entry = current.find((entry) => entry.id === id);
-        if (entry) {
-          entry.name = data.name;
-          entry.values = data.values;
-        }
-      }),
+    const updatedEntry = { id, ...data };
+    setCookies((current) =>
+      current.map((entry) => (entry.id === id ? updatedEntry : entry)),
     );
 
-    await setSavedCookies(url(), cookies);
-    console.log("cookies", JSON.stringify(cookies, null, 2));
-
-    const saved = await getSavedCookies(url());
-    console.log("saved", saved);
+    await setSavedCookie(url(), updatedEntry);
   };
 
   const removeCookie = async (id: number) => {
-    setCookies(
-      produce((current) => {
-        const entryIndex = current.findIndex((entry) => entry.id === id);
-        if (entryIndex >= 0) {
-          current.splice(entryIndex, 1);
-        }
-      }),
-    );
+    setCookies((current) => current.filter((entry) => entry.id !== id));
 
-    await setSavedCookies(url(), cookies);
-    console.log("cookies", JSON.stringify(cookies, null, 2));
-
-    const saved = await getSavedCookies(url());
-    console.log("saved", saved);
+    await removeSavedCookie(url(), id);
   };
 
   return {
