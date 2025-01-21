@@ -54,16 +54,39 @@ export const onCurrentUrlChange = (callback: (url: string) => void) => {
 };
 
 export type SavedCookie = {
+  id: number;
   name: string;
   values: string[];
 };
 
 export const getSavedCookies = async (url: string) => {
-  const data = await chrome.storage.local.get([url]);
-  console.log({ data });
-  return data?.cookies as SavedCookie[] | undefined;
+  const data = await chrome.storage.local.get(url);
+
+  console.log("data", data);
+
+  console.log("data?.[url]", data?.[url]);
+
+  console.log("data?.[url]?.cookies", data?.[url]?.cookies);
+
+  const mapping = data?.[url]?.cookies ?? {};
+
+  console.log("mapping", mapping);
+
+  const result = Array.from(Object.values(mapping));
+
+  console.log("result", result);
+
+  return result as SavedCookie[];
 };
 
 export const setSavedCookies = (url: string, cookies: SavedCookie[]) => {
   return chrome.storage.local.set({ [url]: { cookies } });
+};
+
+export const setSavedCookie = (url: string, cookie: SavedCookie) => {
+  return chrome.storage.local.set({ [url]: { [cookie.id]: cookie } });
+};
+
+export const removeSavedCookie = (url: string, cookie: SavedCookie) => {
+  return chrome.storage.local.remove([url, cookie.id]);
 };

@@ -24,7 +24,7 @@ export type CookieValue = {
 };
 
 const createCookiesContext = () => {
-  const [url, setUrl] = createSignal<string>();
+  const [url, setUrl] = createSignal<string>("");
   const [tabCookies, setTabCookies] = createSignal<chrome.cookies.Cookie[]>([]);
   const [idCounter, setIdCounter] = createSignal(0);
   const [cookies, setCookies] = createStore<CookieValue[]>([]);
@@ -35,32 +35,38 @@ const createCookiesContext = () => {
       getSavedCookies(url),
     ]);
 
-    const saved = savedCookies ?? [];
-    const initialCookies = saved.map((entry, index) => ({
-      id: index,
-      ...entry,
-    }));
+    console.log({ tabCookies, savedCookies });
+
+    console.log({ tabCookies, savedCookies, url });
+
+    const maxId = savedCookies.reduce(
+      (previous, current) => Math.max(previous, current.id),
+      0,
+    );
+
+    console.log({ maxId });
 
     setUrl(url);
     setTabCookies(tabCookies);
-    setCookies(initialCookies);
-    setIdCounter(initialCookies.length);
+    setCookies(savedCookies);
+    setIdCounter(maxId + 1);
   });
 
   onCleanup(() => subscription());
 
-  const addCookie = (data: CookieFormData) => {
+  const addCookie = async (data: CookieFormData) => {
     const id = idCounter();
     setCookies(produce((current) => current.push({ id, ...data })));
     setIdCounter((current) => current + 1);
 
-    const resolvedUrl = url();
-    if (resolvedUrl) {
-      setSavedCookies(resolvedUrl, [data]);
-    }
+    await setSavedCookies(url(), cookies);
+    console.log("cookies", JSON.stringify(cookies, null, 2));
+
+    const saved = await getSavedCookies(url());
+    console.log("saved", saved);
   };
 
-  const updateCookie = (id: number, data: CookieFormData) => {
+  const updateCookie = async (id: number, data: CookieFormData) => {
     setCookies(
       produce((current) => {
         const entry = current.find((entry) => entry.id === id);
@@ -70,9 +76,15 @@ const createCookiesContext = () => {
         }
       }),
     );
+
+    await setSavedCookies(url(), cookies);
+    console.log("cookies", JSON.stringify(cookies, null, 2));
+
+    const saved = await getSavedCookies(url());
+    console.log("saved", saved);
   };
 
-  const removeCookie = (id: number) => {
+  const removeCookie = async (id: number) => {
     setCookies(
       produce((current) => {
         const entryIndex = current.findIndex((entry) => entry.id === id);
@@ -81,6 +93,12 @@ const createCookiesContext = () => {
         }
       }),
     );
+
+    await setSavedCookies(url(), cookies);
+    console.log("cookies", JSON.stringify(cookies, null, 2));
+
+    const saved = await getSavedCookies(url());
+    console.log("saved", saved);
   };
 
   return {
