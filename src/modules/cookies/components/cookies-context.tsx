@@ -71,6 +71,7 @@ const createCookiesContext = () => {
   onSavedCookiesChange(url, setCookies);
 
   return {
+    url,
     cookies,
     tabCookies,
     addCookie,

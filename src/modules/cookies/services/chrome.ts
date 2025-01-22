@@ -8,13 +8,27 @@ const getCurrentChromeTab = async () => {
   return tab;
 };
 
-export const getCurrentChromeTabUrl = async () => {
+const getCurrentChromeTabUrl = async () => {
   const tab = await getCurrentChromeTab();
   return tab.url;
 };
 
 export const getChromeTabCookies = (url: string) => {
   return chrome.cookies.getAll({ url });
+};
+
+export const saveCookie = (
+  url: string,
+  cookie: Pick<chrome.cookies.SetDetails, "name" | "value">,
+) => {
+  chrome.cookies.set({
+    ...cookie,
+    url,
+    httpOnly: false,
+    path: "/",
+    sameSite: "lax",
+    secure: true,
+  });
 };
 
 type OnUpdatedListener = Parameters<

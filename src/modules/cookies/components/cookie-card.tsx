@@ -1,9 +1,9 @@
 import { decode } from "decode-formdata";
 import {
-  type Component,
-  type ComponentProps,
   createMemo,
   createSignal,
+  type Component,
+  type ComponentProps,
 } from "solid-js";
 import { Flex } from "styled-system/jsx";
 import { flex } from "styled-system/patterns";
@@ -13,9 +13,10 @@ import { Button } from "~/ui/button";
 import { Card } from "~/ui/card";
 import { Field } from "~/ui/field";
 import { RadioGroup } from "~/ui/radio-group";
+import { saveCookie } from "../services/chrome";
 import { CookieCardMenu } from "./cookie-card-menu";
 import type { CookieFormData } from "./cookie-form";
-import type { CookieValue } from "./cookies-context";
+import { useCookiesContext, type CookieValue } from "./cookies-context";
 
 const CUSTOM_VALUE = "__custom__";
 
@@ -26,6 +27,7 @@ type CookieCardProps = {
 export const CookieCard: Component<CookieCardProps> = (props) => {
   const { t } = useI18n();
 
+  const cookiesContext = useCookiesContext();
   const formId = createMemo(() => `cookie-form-${props.cookie.name}`);
   const [formRef, setFormRef] = createSignal<HTMLFormElement>();
 
@@ -46,7 +48,7 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
     setIsDirty(true);
   };
 
-  const onFormSubmit: ComponentProps<"form">["onChange"] = (event) => {
+  const onFormSubmit: ComponentProps<"form">["onChange"] = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -58,8 +60,25 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
 
     setIsDirty(false);
 
-    // biome-ignore lint/suspicious/noConsoleLog: <explanation>
-    console.log("parsed", parsed);
+    if (!parsed.success) {
+      return;
+    }
+
+    const context = cookiesContext();
+
+    const resolvedUrl = context.url();
+
+    const cookie = cookiesContext()
+      .tabCookies()
+      .find((entry) => entry.name === props.cookie.name);
+
+    console.log("parsed", parsed, cookie);
+
+    saveCookie(resolvedUrl, {
+      ...cookie,
+      name: props.cookie.name,
+      value: parsed.output.value,
+    });
   };
 
   return (
