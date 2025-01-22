@@ -69,11 +69,20 @@ export type SavedCookie = {
   values: string[];
 };
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+const objectToArray = <T>(object: any) => {
+  return Array.from<T>(Object.values(object));
+};
+
 export const getSavedCookies = async (url: string) => {
   const data = await chrome.storage.local.get(url);
   const mapping = data?.[url]?.cookies ?? {};
-  const result = Array.from(Object.values(mapping));
-  return result as SavedCookie[];
+  const result = objectToArray<SavedCookie>(mapping);
+
+  return result.map<SavedCookie>((entry) => ({
+    ...entry,
+    values: objectToArray(entry.values),
+  }));
 };
 
 export const setSavedCookies = (url: string, cookies: SavedCookie[]) => {
