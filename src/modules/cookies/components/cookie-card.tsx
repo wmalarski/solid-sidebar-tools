@@ -13,15 +13,17 @@ import { Button } from "~/ui/button";
 import { Card } from "~/ui/card";
 import { Field } from "~/ui/field";
 import { RadioGroup } from "~/ui/radio-group";
-import { reloadChromeTab, saveCookie } from "../services/chrome";
+import { saveCookie } from "../services/cookies";
+import type { SavedCookie } from "../services/storage";
+import { reloadChromeTab } from "../services/tabs";
 import { CookieCardMenu } from "./cookie-card-menu";
 import type { CookieFormData } from "./cookie-form";
-import { useCookiesContext, type CookieValue } from "./cookies-context";
+import { useCookiesContext } from "./cookies-context";
 
 const CUSTOM_VALUE = "__custom__";
 
 type CookieCardProps = {
-  cookie: CookieValue;
+  cookie: SavedCookie;
   tabCookie?: chrome.cookies.Cookie;
 };
 

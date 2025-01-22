@@ -1,33 +1,28 @@
 import type { Component } from "solid-js";
 import {
   type Accessor,
-  type ParentProps,
   createContext,
   createMemo,
   createSignal,
   onCleanup,
+  type ParentProps,
   useContext,
 } from "solid-js";
+import { getChromeTabCookies } from "../services/cookies";
 import {
-  getChromeTabCookies,
   getSavedCookies,
-  onCurrentUrlChange,
   onSavedCookiesChange,
+  type SavedCookie,
   setSavedCookies,
-} from "../services/chrome";
+} from "../services/storage";
+import { onCurrentUrlChange } from "../services/tabs";
 import type { CookieFormData } from "./cookie-form";
-
-export type CookieValue = {
-  id: number;
-  name: string;
-  values: string[];
-};
 
 const createCookiesContext = () => {
   const [url, setUrl] = createSignal<string>("");
   const [tabCookies, setTabCookies] = createSignal<chrome.cookies.Cookie[]>([]);
   const [idCounter, setIdCounter] = createSignal(0);
-  const [cookies, setCookies] = createSignal<CookieValue[]>([]);
+  const [cookies, setCookies] = createSignal<SavedCookie[]>([]);
 
   const subscription = onCurrentUrlChange(async (url) => {
     const [tabCookies, savedCookies] = await Promise.all([

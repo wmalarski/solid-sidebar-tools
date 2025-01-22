@@ -1,0 +1,54 @@
+import { createResource } from "solid-js";
+
+export const reloadChromeTab = async () => {
+  await chrome.tabs.reload();
+};
+
+const getCurrentChromeTab = async () => {
+  const [tab] = await chrome.tabs.query({
+    active: true,
+    lastFocusedWindow: true,
+  });
+  return tab;
+};
+
+const getCurrentChromeTabUrl = async () => {
+  const tab = await getCurrentChromeTab();
+  return tab.url;
+};
+
+type OnUpdatedListener = Parameters<
+  typeof chrome.tabs.onUpdated.addListener
+>[0];
+
+type OnActivatedListener = Parameters<
+  typeof chrome.tabs.onActivated.addListener
+>[0];
+
+export const onCurrentUrlChange = (callback: (url: string) => void) => {
+  const onUpdatedListener: OnUpdatedListener = (_tabId, changeInfo, tab) => {
+    if (changeInfo.url && tab.active) {
+      callback(changeInfo.url);
+    }
+  };
+
+  const onActivatedListener: OnActivatedListener = async (activeInfo) => {
+    const tab = await chrome.tabs.get(activeInfo.tabId);
+    if (tab.url && tab.active) {
+      callback(tab.url);
+    }
+  };
+
+  chrome.tabs.onActivated.addListener(onActivatedListener);
+  chrome.tabs.onUpdated.addListener(onUpdatedListener);
+
+  createResource(async () => {
+    const url = await getCurrentChromeTabUrl();
+    url && callback(url);
+  });
+
+  return () => {
+    chrome.tabs.onActivated.removeListener(onActivatedListener);
+    chrome.tabs.onUpdated.removeListener(onUpdatedListener);
+  };
+};

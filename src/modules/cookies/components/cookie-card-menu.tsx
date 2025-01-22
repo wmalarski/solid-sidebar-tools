@@ -5,15 +5,16 @@ import { AlertDialog } from "~/ui/alert-dialog";
 import { PencilIcon } from "~/ui/icons/pencil-icon";
 import { TrashIcon } from "~/ui/icons/trash-icon";
 import { Menu } from "~/ui/menu";
+import type { SavedCookie } from "../services/storage";
 import type { CookieFormData } from "./cookie-form";
-import { type CookieValue, useCookiesContext } from "./cookies-context";
+import { useCookiesContext } from "./cookies-context";
 import { UpdateCookieDialog } from "./update-cookie-dialog";
 
 const DELETE_VALUE = "delete";
 const UPDATE_VALUE = "update";
 
 type CookieCardMenuProps = {
-  cookie: CookieValue;
+  cookie: SavedCookie;
 };
 
 export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
