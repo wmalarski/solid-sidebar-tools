@@ -13,7 +13,7 @@ import { Button } from "~/ui/button";
 import { Card } from "~/ui/card";
 import { Field } from "~/ui/field";
 import { RadioGroup } from "~/ui/radio-group";
-import { saveCookie } from "../services/chrome";
+import { reloadChromeTab, saveCookie } from "../services/chrome";
 import { CookieCardMenu } from "./cookie-card-menu";
 import type { CookieFormData } from "./cookie-form";
 import { useCookiesContext, type CookieValue } from "./cookies-context";
@@ -22,6 +22,7 @@ const CUSTOM_VALUE = "__custom__";
 
 type CookieCardProps = {
   cookie: CookieValue;
+  tabCookie?: chrome.cookies.Cookie;
 };
 
 export const CookieCard: Component<CookieCardProps> = (props) => {
@@ -64,21 +65,13 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
       return;
     }
 
-    const context = cookiesContext();
-
-    const resolvedUrl = context.url();
-
-    const cookie = cookiesContext()
-      .tabCookies()
-      .find((entry) => entry.name === props.cookie.name);
-
-    console.log("parsed", parsed, cookie);
-
-    saveCookie(resolvedUrl, {
-      ...cookie,
+    await saveCookie({
+      url: cookiesContext().url(),
       name: props.cookie.name,
       value: parsed.output.value,
     });
+
+    await reloadChromeTab();
   };
 
   return (
@@ -100,8 +93,14 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
           onChange={onFormChange}
           onSubmit={onFormSubmit}
         >
-          <CookieRadioValues cookie={props.cookie} />
-          <CustomValueField isCustom={isCustomSelected()} />
+          <CookieRadioValues
+            cookie={props.cookie}
+            tabCookie={props.tabCookie}
+          />
+          <CustomValueField
+            isCustom={isCustomSelected()}
+            tabCookie={props.tabCookie}
+          />
         </form>
       </Card.Body>
       <Card.Footer px={3} pt={1} pb={3} gap="3">
@@ -115,13 +114,24 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
 
 type CookieRadioValuesProps = {
   cookie: CookieFormData;
+  tabCookie?: chrome.cookies.Cookie;
 };
 
 const CookieRadioValues: Component<CookieRadioValuesProps> = (props) => {
   const { t } = useI18n();
 
+  const value = createMemo(() => {
+    const value = props.tabCookie?.value;
+    if (!value) {
+      return null;
+    }
+
+    const isPredefined = props.cookie.values.includes(value);
+    return isPredefined ? value : CUSTOM_VALUE;
+  });
+
   return (
-    <RadioGroup.Root name="value" size="sm">
+    <RadioGroup.Root name="value" size="sm" value={value()}>
       {props.cookie.values.map((option) => (
         <RadioGroup.Item value={option}>
           <RadioGroup.ItemControl />
@@ -140,6 +150,7 @@ const CookieRadioValues: Component<CookieRadioValuesProps> = (props) => {
 
 type CustomValueFieldProps = {
   isCustom: boolean;
+  tabCookie?: chrome.cookies.Cookie;
 };
 
 const CustomValueField: Component<CustomValueFieldProps> = (props) => {
@@ -155,6 +166,7 @@ const CustomValueField: Component<CustomValueFieldProps> = (props) => {
         autocomplete="off"
         disabled={!props.isCustom}
         required={props.isCustom}
+        value={props.isCustom ? props.tabCookie?.value : undefined}
       />
     </Field.Root>
   );

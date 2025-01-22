@@ -1,4 +1,4 @@
-import { type Component, For } from "solid-js";
+import { type Component, createMemo, For } from "solid-js";
 import { Flex, Grid } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Heading } from "~/ui/heading";
@@ -14,6 +14,12 @@ export const CookiesPanel: Component = () => {
 
   const cookiesContext = useCookiesContext();
 
+  const tabCookiesMap = createMemo(() => {
+    const tabCookies = cookiesContext().tabCookies();
+    const entries = tabCookies.map((cookie) => [cookie.name, cookie] as const);
+    return new Map(entries);
+  });
+
   return (
     <Flex flexDirection="column" px={2} gap={4}>
       <Grid gridTemplateColumns="1fr auto" gap={4} alignItems="center">
@@ -25,7 +31,12 @@ export const CookiesPanel: Component = () => {
           each={cookiesContext().cookies()}
           fallback={<CardButtonAddCookieDialog />}
         >
-          {(cookie) => <CookieCard cookie={cookie} />}
+          {(cookie) => (
+            <CookieCard
+              cookie={cookie}
+              tabCookie={tabCookiesMap().get(cookie.name)}
+            />
+          )}
         </For>
       </Flex>
     </Flex>

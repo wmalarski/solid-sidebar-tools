@@ -18,17 +18,9 @@ export const getChromeTabCookies = (url: string) => {
 };
 
 export const saveCookie = (
-  url: string,
-  cookie: Pick<chrome.cookies.SetDetails, "name" | "value">,
+  cookie: Pick<chrome.cookies.SetDetails, "name" | "value" | "url">,
 ) => {
-  chrome.cookies.set({
-    ...cookie,
-    url,
-    httpOnly: false,
-    path: "/",
-    sameSite: "lax",
-    secure: true,
-  });
+  return chrome.cookies.set(cookie);
 };
 
 type OnUpdatedListener = Parameters<
@@ -65,6 +57,10 @@ export const onCurrentUrlChange = (callback: (url: string) => void) => {
     chrome.tabs.onActivated.removeListener(onActivatedListener);
     chrome.tabs.onUpdated.removeListener(onUpdatedListener);
   };
+};
+
+export const reloadChromeTab = async () => {
+  await chrome.tabs.reload();
 };
 
 export type SavedCookie = {
