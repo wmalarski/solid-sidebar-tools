@@ -18,7 +18,7 @@ const enDict = {
   },
   info: {
     madeBy: "Made by wmalarski",
-    title: "Solid Side",
+    title: "Sidebar Tools",
   },
   common: {
     closeDialog: "Close dialog",

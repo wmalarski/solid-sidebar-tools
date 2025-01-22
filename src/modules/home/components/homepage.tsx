@@ -1,8 +1,10 @@
 import { type Component, For, createMemo } from "solid-js";
+import { css } from "styled-system/css";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { CookiesContextProvider } from "~/modules/cookies/components/cookies-context";
 import { CookiesPanel } from "~/modules/cookies/components/cookies-panel";
 import { Heading } from "~/ui/heading";
+import { PocketKnifeIcon } from "~/ui/icons/pocket-knife-icon";
 import { Tabs } from "~/ui/tabs";
 
 export const Homepage: Component = () => {
@@ -16,7 +18,17 @@ export const Homepage: Component = () => {
     <main>
       <Tabs.Root defaultValue="cookies" pt={2}>
         <Tabs.List>
-          <Heading as="h1" flexGrow={1} pl={2} fontSize="xl">
+          <Heading
+            as="h1"
+            flexGrow={1}
+            display="flex"
+            gap={2}
+            pl={2}
+            pb={2}
+            alignItems="center"
+            fontSize="xl"
+          >
+            <PocketKnifeIcon class={css({ color: "colorPalette.default" })} />
             {t("info.title")}
           </Heading>
           <For each={options()}>

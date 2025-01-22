@@ -23,7 +23,7 @@ export const CookiesPanel: Component = () => {
   return (
     <Flex flexDirection="column" px={2} gap={4}>
       <Grid gridTemplateColumns="1fr auto" gap={4} alignItems="center">
-        <Heading>{t("cookies.list.cookies")}</Heading>
+        <Heading fontSize="lg">{t("cookies.list.cookies")}</Heading>
         <IconButtonAddCookieDialog />
       </Grid>
       <Flex flexDirection="column" gap={4}>

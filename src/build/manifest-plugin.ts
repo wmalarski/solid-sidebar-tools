@@ -10,7 +10,7 @@ export const manifestPlugin = (): NonNullable<UserConfig["plugins"]>[0] => {
 
       const manifest = {
         manifest_version: 3,
-        name: "solid-side",
+        name: "Solid Sidebar Tools",
         version: "1.0",
         description: "",
         action: {

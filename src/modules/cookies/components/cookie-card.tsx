@@ -166,7 +166,7 @@ const CustomValueField: Component<CustomValueFieldProps> = (props) => {
         autocomplete="off"
         disabled={!props.isCustom}
         required={props.isCustom}
-        value={props.isCustom ? props.tabCookie?.value : undefined}
+        value={props.isCustom ? props.tabCookie?.value : ""}
       />
     </Field.Root>
   );
