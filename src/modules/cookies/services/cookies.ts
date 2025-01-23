@@ -3,7 +3,7 @@ export const getChromeTabCookies = (url: string) => {
 };
 
 export const saveCookie = (
-  cookie: Pick<chrome.cookies.SetDetails, "name" | "value" | "url">,
+  cookie: Omit<chrome.cookies.SetDetails, "partitionKey" | "storeId">,
 ) => {
   return chrome.cookies.set(cookie);
 };

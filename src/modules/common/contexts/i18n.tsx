@@ -54,6 +54,12 @@ const enDict = {
       hideAdvanced: "Hide advanced",
       deleteDescription: "Delete cookie",
       updateSuccess: "Cookie updated",
+      domain: "Domain",
+      expirationDate: "Expiration date",
+      httpOnly: "HttpOnly",
+      path: "Path",
+      sameSite: "SameSite",
+      secure: "Secure",
     },
   },
 };
