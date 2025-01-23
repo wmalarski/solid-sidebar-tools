@@ -16,6 +16,7 @@ import { RadioGroup } from "~/ui/radio-group";
 import { saveCookie } from "../services/cookies";
 import type { SavedCookie } from "../services/storage";
 import { reloadChromeTab } from "../services/tabs";
+import { CookieAdvancedFields } from "./cookie-advanced-fields";
 import { CookieCardMenu } from "./cookie-card-menu";
 import type { CookieFormData } from "./cookie-form";
 import { useCookiesContext } from "./cookies-context";
@@ -111,6 +112,10 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
           <CustomValueField
             isCustom={isCustomSelected()}
             tabCookie={props.tabCookie}
+          />
+          <CookieAdvancedFields
+            isOpen={showAdvanced()}
+            onOpenChange={setShowAdvanced}
           />
         </form>
       </Card.Body>
