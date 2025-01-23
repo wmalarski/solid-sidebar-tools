@@ -4,6 +4,10 @@ export const reloadChromeTab = async () => {
   await chrome.tabs.reload();
 };
 
+const getUrlOrigin = (url: string) => {
+  return new URL(url).origin;
+};
+
 const getCurrentChromeTab = async () => {
   const [tab] = await chrome.tabs.query({
     active: true,
@@ -28,14 +32,14 @@ type OnActivatedListener = Parameters<
 export const onCurrentUrlChange = (callback: (url: string) => void) => {
   const onUpdatedListener: OnUpdatedListener = (_tabId, changeInfo, tab) => {
     if (changeInfo.url && tab.active) {
-      callback(changeInfo.url);
+      callback(getUrlOrigin(changeInfo.url));
     }
   };
 
   const onActivatedListener: OnActivatedListener = async (activeInfo) => {
     const tab = await chrome.tabs.get(activeInfo.tabId);
     if (tab.url && tab.active) {
-      callback(tab.url);
+      callback(getUrlOrigin(tab.url));
     }
   };
 
@@ -44,7 +48,7 @@ export const onCurrentUrlChange = (callback: (url: string) => void) => {
 
   createResource(async () => {
     const url = await getCurrentChromeTabUrl();
-    url && callback(url);
+    url && callback(getUrlOrigin(url));
   });
 
   return () => {
