@@ -50,6 +50,8 @@ const enDict = {
       options: "Card options",
       delete: "Delete",
       update: "Update",
+      showAdvanced: "Show advanced",
+      hideAdvanced: "Hide advanced",
       deleteDescription: "Delete cookie",
       updateSuccess: "Cookie updated",
     },

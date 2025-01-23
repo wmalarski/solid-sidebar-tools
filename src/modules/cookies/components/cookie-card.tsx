@@ -36,6 +36,7 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
 
   const [isDirty, setIsDirty] = createSignal(false);
   const [isCustomSelected, setIsCustomSelected] = createSignal(false);
+  const [showAdvanced, setShowAdvanced] = createSignal(false);
 
   const onFormChange: ComponentProps<"form">["onChange"] = (event) => {
     const formData = new FormData(event.currentTarget);
@@ -76,6 +77,10 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
     await reloadChromeTab();
   };
 
+  const onShowAdvancedClick = () => {
+    setShowAdvanced((current) => !current);
+  };
+
   return (
     <Card.Root>
       <Card.Header p={3} display="grid" gridTemplateColumns="1fr auto">
@@ -85,7 +90,11 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
             {t("cookies.list.cardDescription", { name: props.cookie.name })}
           </Card.Description>
         </Flex>
-        <CookieCardMenu cookie={props.cookie} />
+        <CookieCardMenu
+          cookie={props.cookie}
+          onShowAdvancedClick={onShowAdvancedClick}
+          showAdvanced={showAdvanced()}
+        />
       </Card.Header>
       <Card.Body px={3} pb={2}>
         <form
