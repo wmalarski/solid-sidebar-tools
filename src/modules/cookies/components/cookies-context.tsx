@@ -1,18 +1,18 @@
 import type { Component } from "solid-js";
 import {
   type Accessor,
+  type ParentProps,
   createContext,
   createMemo,
   createSignal,
   onCleanup,
-  type ParentProps,
   useContext,
 } from "solid-js";
 import { getChromeTabCookies } from "../services/cookies";
 import {
+  type SavedCookie,
   getSavedCookies,
   onSavedCookiesChange,
-  type SavedCookie,
   setSavedCookies,
 } from "../services/storage";
 import { onCurrentUrlChange } from "../services/tabs";

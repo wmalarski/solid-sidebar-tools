@@ -1,4 +1,4 @@
-import { type Component, createMemo, For } from "solid-js";
+import { type Component, For, createMemo } from "solid-js";
 import { Flex, Grid } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Heading } from "~/ui/heading";
