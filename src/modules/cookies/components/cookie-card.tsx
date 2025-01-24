@@ -9,19 +9,15 @@ import { Flex } from "styled-system/jsx";
 import { flex } from "styled-system/patterns";
 import * as v from "valibot";
 import { useI18n } from "~/modules/common/contexts/i18n";
+import { ConfigFields } from "~/modules/configs/components/config-fields";
 import { Button } from "~/ui/button";
 import { Card } from "~/ui/card";
-import { Field } from "~/ui/field";
-import { RadioGroup } from "~/ui/radio-group";
 import { saveCookie } from "../services/cookies";
 import type { SavedCookie } from "../services/storage";
 import { reloadChromeTab } from "../services/tabs";
 import { CookieAdvancedFields } from "./cookie-advanced-fields";
 import { CookieCardMenu } from "./cookie-card-menu";
-import type { CookieFormData } from "./cookie-form";
 import { useCookiesContext } from "./cookies-context";
-
-const CUSTOM_VALUE = "__custom__";
 
 type CookieCardProps = {
   cookie: SavedCookie;
@@ -92,7 +88,7 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
           onChange={onFormChange}
           onSubmit={onFormSubmit}
         >
-          <CookieCardFields cookie={props.cookie} tabCookie={props.tabCookie} />
+          <ConfigFields cookie={props.cookie} value={props.tabCookie?.value} />
           <CookieAdvancedFields
             isOpen={showAdvanced()}
             onOpenChange={setShowAdvanced}
@@ -105,112 +101,5 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
         </Button>
       </Card.Footer>
     </Card.Root>
-  );
-};
-
-type CookieCardFieldsProps = {
-  cookie: SavedCookie;
-  tabCookie?: chrome.cookies.Cookie;
-};
-
-const CookieCardFields: Component<CookieCardFieldsProps> = (props) => {
-  const [inputRef, setInputRef] = createSignal<HTMLInputElement>();
-
-  const [isCustomSelected, setIsCustomSelected] = createSignal(false);
-
-  const onValueChange = (value: string) => {
-    const isCustom = value === CUSTOM_VALUE;
-    setIsCustomSelected(isCustom);
-
-    if (isCustom) {
-      inputRef()?.focus();
-    }
-  };
-
-  return (
-    <>
-      <CookieRadioValues
-        cookie={props.cookie}
-        tabCookie={props.tabCookie}
-        onValueChange={onValueChange}
-      />
-      <CustomValueField
-        ref={setInputRef}
-        isCustom={isCustomSelected()}
-        tabCookie={props.tabCookie}
-      />
-    </>
-  );
-};
-
-type CookieRadioValuesProps = {
-  cookie: CookieFormData;
-  tabCookie?: chrome.cookies.Cookie;
-  onValueChange: (value: string) => void;
-};
-
-const CookieRadioValues: Component<CookieRadioValuesProps> = (props) => {
-  const { t } = useI18n();
-
-  const value = createMemo(() => {
-    const value = props.tabCookie?.value;
-    if (!value) {
-      return null;
-    }
-
-    const isPredefined = props.cookie.values.includes(value);
-    return isPredefined ? value : CUSTOM_VALUE;
-  });
-
-  const onValueChange: RadioGroup.RootProps["onValueChange"] = (details) => {
-    props.onValueChange(details.value);
-  };
-
-  return (
-    <RadioGroup.Root
-      name="value"
-      size="sm"
-      value={value()}
-      onValueChange={onValueChange}
-    >
-      {props.cookie.values.map((option) => (
-        <RadioGroup.Item value={option}>
-          <RadioGroup.ItemControl />
-          <RadioGroup.ItemText>{option}</RadioGroup.ItemText>
-          <RadioGroup.ItemHiddenInput required />
-        </RadioGroup.Item>
-      ))}
-      <RadioGroup.Item value={CUSTOM_VALUE}>
-        <RadioGroup.ItemControl />
-        <RadioGroup.ItemText>{t("cookies.list.custom")}</RadioGroup.ItemText>
-        <RadioGroup.ItemHiddenInput required />
-      </RadioGroup.Item>
-    </RadioGroup.Root>
-  );
-};
-
-type CustomValueFieldProps = {
-  isCustom: boolean;
-  tabCookie?: chrome.cookies.Cookie;
-  ref: Field.InputProps["ref"];
-};
-
-const CustomValueField: Component<CustomValueFieldProps> = (props) => {
-  const { t } = useI18n();
-
-  return (
-    <Field.Root required w="full">
-      <Field.Input
-        ref={props.ref}
-        placeholder={t("cookies.form.cookieValue")}
-        name="custom"
-        size="xs"
-        aria-label={t("cookies.list.custom")}
-        autocomplete="off"
-        disabled={!props.isCustom}
-        required={props.isCustom}
-        value={props.isCustom ? props.tabCookie?.value : ""}
-      />
-    </Field.Root>
   );
 };

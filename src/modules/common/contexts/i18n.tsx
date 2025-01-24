@@ -31,6 +31,12 @@ const enDict = {
     success: "Success",
     options: "Options",
   },
+  configs: {
+    fields: {
+      value: "Value",
+      custom: "Custom value",
+    },
+  },
   cookies: {
     form: {
       addNewCookie: "Add new cookie",
@@ -40,12 +46,11 @@ const enDict = {
       selectName: "Select cookie name",
       delete: "Delete value",
       value: "Value {{index}}:",
-      cookieValue: "Cookie value",
       updateCookie: "Update cookie",
     },
     list: {
       cookies: "Cookies",
-      custom: "Custom value",
+
       cardDescription: "Set '{{name}}' cookie value",
       options: "Card options",
       delete: "Delete",
