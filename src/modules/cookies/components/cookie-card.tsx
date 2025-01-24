@@ -33,23 +33,11 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
 
   const cookiesContext = useCookiesContext();
   const formId = createMemo(() => `cookie-form-${props.cookie.name}`);
-  const [formRef, setFormRef] = createSignal<HTMLFormElement>();
 
   const [isDirty, setIsDirty] = createSignal(false);
-  const [isCustomSelected, setIsCustomSelected] = createSignal(false);
   const [showAdvanced, setShowAdvanced] = createSignal(false);
 
-  const onFormChange: ComponentProps<"form">["onChange"] = (event) => {
-    const formData = new FormData(event.currentTarget);
-    const isCustom = formData.get("value") === CUSTOM_VALUE;
-    setIsCustomSelected(isCustom);
-
-    if (isCustom) {
-      formRef()
-        ?.querySelector<HTMLInputElement>("input[name='custom']")
-        ?.focus();
-    }
-
+  const onFormChange = () => {
     setIsDirty(true);
   };
 
@@ -100,19 +88,11 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
       <Card.Body px={3} pb={2}>
         <form
           id={formId()}
-          ref={setFormRef}
           class={flex({ flexDirection: "column", gap: 4 })}
           onChange={onFormChange}
           onSubmit={onFormSubmit}
         >
-          <CookieRadioValues
-            cookie={props.cookie}
-            tabCookie={props.tabCookie}
-          />
-          <CustomValueField
-            isCustom={isCustomSelected()}
-            tabCookie={props.tabCookie}
-          />
+          <CookieCardFields cookie={props.cookie} tabCookie={props.tabCookie} />
           <CookieAdvancedFields
             isOpen={showAdvanced()}
             onOpenChange={setShowAdvanced}
@@ -128,9 +108,45 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
   );
 };
 
+type CookieCardFieldsProps = {
+  cookie: SavedCookie;
+  tabCookie?: chrome.cookies.Cookie;
+};
+
+const CookieCardFields: Component<CookieCardFieldsProps> = (props) => {
+  const [inputRef, setInputRef] = createSignal<HTMLInputElement>();
+
+  const [isCustomSelected, setIsCustomSelected] = createSignal(false);
+
+  const onValueChange = (value: string) => {
+    const isCustom = value === CUSTOM_VALUE;
+    setIsCustomSelected(isCustom);
+
+    if (isCustom) {
+      inputRef()?.focus();
+    }
+  };
+
+  return (
+    <>
+      <CookieRadioValues
+        cookie={props.cookie}
+        tabCookie={props.tabCookie}
+        onValueChange={onValueChange}
+      />
+      <CustomValueField
+        ref={setInputRef}
+        isCustom={isCustomSelected()}
+        tabCookie={props.tabCookie}
+      />
+    </>
+  );
+};
+
 type CookieRadioValuesProps = {
   cookie: CookieFormData;
   tabCookie?: chrome.cookies.Cookie;
+  onValueChange: (value: string) => void;
 };
 
 const CookieRadioValues: Component<CookieRadioValuesProps> = (props) => {
@@ -146,8 +162,17 @@ const CookieRadioValues: Component<CookieRadioValuesProps> = (props) => {
     return isPredefined ? value : CUSTOM_VALUE;
   });
 
+  const onValueChange: RadioGroup.RootProps["onValueChange"] = (details) => {
+    props.onValueChange(details.value);
+  };
+
   return (
-    <RadioGroup.Root name="value" size="sm" value={value()}>
+    <RadioGroup.Root
+      name="value"
+      size="sm"
+      value={value()}
+      onValueChange={onValueChange}
+    >
       {props.cookie.values.map((option) => (
         <RadioGroup.Item value={option}>
           <RadioGroup.ItemControl />
@@ -167,6 +192,7 @@ const CookieRadioValues: Component<CookieRadioValuesProps> = (props) => {
 type CustomValueFieldProps = {
   isCustom: boolean;
   tabCookie?: chrome.cookies.Cookie;
+  ref: Field.InputProps["ref"];
 };
 
 const CustomValueField: Component<CustomValueFieldProps> = (props) => {
@@ -175,6 +201,7 @@ const CustomValueField: Component<CustomValueFieldProps> = (props) => {
   return (
     <Field.Root required w="full">
       <Field.Input
+        ref={props.ref}
         placeholder={t("cookies.form.cookieValue")}
         name="custom"
         size="xs"
