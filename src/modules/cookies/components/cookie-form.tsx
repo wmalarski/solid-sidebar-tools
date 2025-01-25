@@ -1,5 +1,10 @@
 import { decode } from "decode-formdata";
-import type { Component, ComponentProps } from "solid-js";
+import {
+  createMemo,
+  createSignal,
+  type Component,
+  type ComponentProps,
+} from "solid-js";
 import { flex } from "styled-system/patterns";
 import * as v from "valibot";
 import { CookieNameTagInput } from "./cookie-name-tag-input";
@@ -17,6 +22,11 @@ type CookieFormProps = {
 };
 
 export const CookieForm: Component<CookieFormProps> = (props) => {
+  const initialValues = createMemo(() => {
+    const [get, set] = createSignal(props.initialData?.values);
+    return { get, set };
+  });
+
   const onSubmit: ComponentProps<"form">["onSubmit"] = (event) => {
     event.preventDefault();
 
@@ -34,14 +44,21 @@ export const CookieForm: Component<CookieFormProps> = (props) => {
     props.onSubmit(parsed.output);
   };
 
+  const onCookieValueChange = (value: string) => {
+    initialValues().set([value]);
+  };
+
   return (
     <form
       onSubmit={onSubmit}
       id={props.id}
       class={flex({ flexDirection: "column", gap: 4 })}
     >
-      <CookieNameTagInput initialValue={props.initialData?.name} />
-      <CookieValuesFields initialValues={props.initialData?.values} />
+      <CookieNameTagInput
+        initialValue={props.initialData?.name}
+        onCookieValueChange={onCookieValueChange}
+      />
+      <CookieValuesFields initialValues={initialValues().get()} />
     </form>
   );
 };

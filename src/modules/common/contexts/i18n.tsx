@@ -45,6 +45,7 @@ const enDict = {
       name: "Cookie name",
       selectName: "Select cookie name",
       delete: "Delete value",
+      cookieValue: "Value",
       value: "Value {{index}}:",
       updateCookie: "Update cookie",
     },

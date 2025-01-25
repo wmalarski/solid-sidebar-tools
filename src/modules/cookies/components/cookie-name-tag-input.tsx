@@ -10,6 +10,7 @@ import { useCookiesContext } from "./cookies-context";
 
 type CookieNameTagInputProps = {
   initialValue?: string;
+  onCookieValueChange: (value: string) => void;
 };
 
 export const CookieNameTagInput: Component<CookieNameTagInputProps> = (
@@ -31,9 +32,11 @@ export const CookieNameTagInput: Component<CookieNameTagInputProps> = (
 
   const collection = createMemo(() => createListCollection({ items: data() }));
 
-  const handleChange = (event: Combobox.InputValueChangeDetails) => {
+  const onInputValueChange: Combobox.RootProps["onInputValueChange"] = (
+    details,
+  ) => {
     const untrackedData = data();
-    const query = event.inputValue.toLowerCase();
+    const query = details.inputValue.toLowerCase();
 
     const filtered = untrackedData.filter((item) =>
       item.label.toLowerCase().includes(query),
@@ -41,11 +44,24 @@ export const CookieNameTagInput: Component<CookieNameTagInputProps> = (
     items().set(filtered.length > 0 ? filtered : untrackedData);
   };
 
+  const onValueChange: Combobox.RootProps["onValueChange"] = (details) => {
+    const value = details.value[0]?.toLowerCase();
+    const tabCookies = cookiesContext().tabCookies();
+    const tabCookie = tabCookies.find((cookie) =>
+      cookie.name.toLowerCase().includes(value),
+    );
+
+    if (tabCookie) {
+      props.onCookieValueChange(tabCookie.value);
+    }
+  };
+
   return (
     <Combobox.Root
       width="2xs"
       size="sm"
-      onInputValueChange={handleChange}
+      onInputValueChange={onInputValueChange}
+      onValueChange={onValueChange}
       collection={collection()}
       allowCustomValue
       inputValue={props.initialValue}

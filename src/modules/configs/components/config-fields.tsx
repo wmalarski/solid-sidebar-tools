@@ -42,8 +42,14 @@ const ConfigRadioValues: Component<ConfigRadioValuesProps> = (props) => {
     >
       {props.config.values.map((option) => (
         <RadioGroup.Item value={option}>
-          <RadioGroup.ItemControl />
-          <RadioGroup.ItemText>{option}</RadioGroup.ItemText>
+          <RadioGroup.ItemControl minW="4" />
+          <RadioGroup.ItemText
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
+          >
+            {option}
+          </RadioGroup.ItemText>
           <RadioGroup.ItemHiddenInput required />
         </RadioGroup.Item>
       ))}
