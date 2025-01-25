@@ -5,6 +5,7 @@ import {
   createContext,
   createMemo,
   createResource,
+  onCleanup,
   useContext,
 } from "solid-js";
 import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";
@@ -53,7 +54,8 @@ const createCookiesContext = (url: string) => {
     await setSavedCookies(url, updated);
   };
 
-  onSavedCookiesChange(url, mutate);
+  const subscription = onSavedCookiesChange(url, mutate);
+  onCleanup(() => subscription());
 
   return {
     get savedCookies() {
