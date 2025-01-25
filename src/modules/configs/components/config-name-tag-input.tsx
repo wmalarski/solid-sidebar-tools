@@ -7,14 +7,14 @@ import { CheckIcon } from "~/ui/icons/check-icon";
 import { ChevronsUpDownIcon } from "~/ui/icons/chevrons-up-down-icon";
 import { Input } from "~/ui/input";
 
-type ConfigValues = {
+export type ConfigValues = {
   name: string;
   value: string;
 };
 
 type ConfigNameTagInputProps = {
   initialValue?: string;
-  values: ConfigValues[];
+  configValues: ConfigValues[];
   onValueChange: (value: string) => void;
 };
 
@@ -24,7 +24,7 @@ export const ConfigNameTagInput: Component<ConfigNameTagInputProps> = (
   const { t } = useI18n();
 
   const data = createMemo(() =>
-    props.values.map((entry) => ({
+    props.configValues.map((entry) => ({
       label: entry.name,
       value: entry.name,
     })),
@@ -51,7 +51,7 @@ export const ConfigNameTagInput: Component<ConfigNameTagInputProps> = (
 
   const onValueChange: Combobox.RootProps["onValueChange"] = (details) => {
     const value = details.value[0]?.toLowerCase();
-    const selectedValue = props.values.find((entry) =>
+    const selectedValue = props.configValues.find((entry) =>
       entry.name.toLowerCase().includes(value),
     );
 

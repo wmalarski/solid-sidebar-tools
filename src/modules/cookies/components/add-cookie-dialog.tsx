@@ -1,12 +1,15 @@
 import { type Component, type ParentProps, createSignal } from "solid-js";
 import { css } from "styled-system/css";
 import { useI18n } from "~/modules/common/contexts/i18n";
+import {
+  ConfigForm,
+  type ConfigFormData,
+} from "~/modules/configs/components/cookie-form";
 import { Button } from "~/ui/button";
 import { Drawer } from "~/ui/drawer";
 import { IconButton } from "~/ui/icon-button";
 import { PlusIcon } from "~/ui/icons/plus-icon";
 import type { OpenChangeDetails } from "~/ui/styled/combobox";
-import { CookieForm, type CookieFormData } from "./cookie-form";
 import { useCookiesContext } from "./cookies-context";
 
 export const IconButtonAddCookieDialog: Component = () => {
@@ -70,7 +73,7 @@ const CookieDialogNoTrigger: Component<CookieDialogNoTriggerProps> = (
     setIsOpen(details.open);
   };
 
-  const onSubmit = (data: CookieFormData) => {
+  const onSubmit = (data: ConfigFormData) => {
     cookiesContext().addCookie(data);
     setIsOpen(false);
   };
@@ -92,7 +95,11 @@ const CookieDialogNoTrigger: Component<CookieDialogNoTriggerProps> = (
             <Drawer.XClose />
           </Drawer.Header>
           <Drawer.Body>
-            <CookieForm onSubmit={onSubmit} id={props.formId} />
+            <ConfigForm
+              configValues={cookiesContext().tabCookies()}
+              onSubmit={onSubmit}
+              id={props.formId}
+            />
           </Drawer.Body>
           <Drawer.Footer gap="3">
             <Drawer.Cancel />

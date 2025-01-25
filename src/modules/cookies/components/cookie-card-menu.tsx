@@ -1,13 +1,13 @@
 import { type Component, type ComponentProps, createSignal } from "solid-js";
 import { HStack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
+import type { ConfigFormData } from "~/modules/configs/components/cookie-form";
 import { AlertDialog } from "~/ui/alert-dialog";
 import { PencilIcon } from "~/ui/icons/pencil-icon";
 import { SlidersHorizontalIcon } from "~/ui/icons/sliders-horizontal-icon";
 import { TrashIcon } from "~/ui/icons/trash-icon";
 import { Menu } from "~/ui/menu";
 import type { SavedCookie } from "../services/storage";
-import type { CookieFormData } from "./cookie-form";
 import { useCookiesContext } from "./cookies-context";
 import { UpdateCookieDialog } from "./update-cookie-dialog";
 
@@ -47,7 +47,7 @@ export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
     }
   };
 
-  const onUpdateSubmit = (cookie: CookieFormData) => {
+  const onUpdateSubmit = (cookie: ConfigFormData) => {
     cookiesContext().updateCookie(props.cookie.id, cookie);
     setIsUpdateOpen(false);
   };

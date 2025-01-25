@@ -7,24 +7,25 @@ import {
 } from "solid-js";
 import { flex } from "styled-system/patterns";
 import * as v from "valibot";
-import { ConfigNameTagInput } from "~/modules/configs/components/config-name-tag-input";
+import {
+  ConfigNameTagInput,
+  type ConfigValues,
+} from "~/modules/configs/components/config-name-tag-input";
 import { ConfigValuesFields } from "~/modules/configs/components/config-values-fields";
-import { useCookiesContext } from "./cookies-context";
 
-export type CookieFormData = {
+export type ConfigFormData = {
   name: string;
   values: string[];
 };
 
-type CookieFormProps = {
+type ConfigFormProps = {
   id: string;
-  initialData?: CookieFormData;
-  onSubmit: (data: CookieFormData) => void;
+  initialData?: ConfigFormData;
+  onSubmit: (data: ConfigFormData) => void;
+  configValues: ConfigValues[];
 };
 
-export const CookieForm: Component<CookieFormProps> = (props) => {
-  const cookiesContext = useCookiesContext();
-
+export const ConfigForm: Component<ConfigFormProps> = (props) => {
   const initialValues = createMemo(() => {
     const [get, set] = createSignal(props.initialData?.values);
     return { get, set };
@@ -47,7 +48,7 @@ export const CookieForm: Component<CookieFormProps> = (props) => {
     props.onSubmit(parsed.output);
   };
 
-  const onCookieValueChange = (value: string) => {
+  const onValueChange = (value: string) => {
     initialValues().set([value]);
   };
 
@@ -59,8 +60,8 @@ export const CookieForm: Component<CookieFormProps> = (props) => {
     >
       <ConfigNameTagInput
         initialValue={props.initialData?.name}
-        onValueChange={onCookieValueChange}
-        values={cookiesContext().tabCookies() ?? []}
+        onValueChange={onValueChange}
+        configValues={props.configValues}
       />
       <ConfigValuesFields initialValues={initialValues().get()} />
     </form>

@@ -8,6 +8,7 @@ import {
   onCleanup,
   useContext,
 } from "solid-js";
+import type { ConfigFormData } from "~/modules/configs/components/cookie-form";
 import { getChromeTabCookies } from "../services/cookies";
 import {
   type SavedCookie,
@@ -16,7 +17,6 @@ import {
   setSavedCookies,
 } from "../services/storage";
 import { onCurrentUrlChange } from "../services/tabs";
-import type { CookieFormData } from "./cookie-form";
 
 const createCookiesContext = () => {
   const [url, setUrl] = createSignal<string>("");
@@ -43,14 +43,14 @@ const createCookiesContext = () => {
 
   onCleanup(() => subscription());
 
-  const addCookie = async (data: CookieFormData) => {
+  const addCookie = async (data: ConfigFormData) => {
     const id = idCounter();
     setIdCounter((current) => current + 1);
     const updated = [...cookies(), { id, ...data }];
     await setSavedCookies(url(), updated);
   };
 
-  const updateCookie = async (id: number, data: CookieFormData) => {
+  const updateCookie = async (id: number, data: ConfigFormData) => {
     const newEntry = { id, ...data };
     await setSavedCookies(
       url(),
