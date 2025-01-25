@@ -15,7 +15,7 @@ export const CookiesPanel: Component = () => {
   const cookiesContext = useCookiesContext();
 
   const tabCookiesMap = createMemo(() => {
-    const tabCookies = cookiesContext().tabCookies();
+    const tabCookies = cookiesContext().tabCookies;
     const entries = tabCookies.map((cookie) => [cookie.name, cookie] as const);
     return new Map(entries);
   });
@@ -28,7 +28,7 @@ export const CookiesPanel: Component = () => {
       </Grid>
       <Flex flexDirection="column" gap={4}>
         <For
-          each={cookiesContext().cookies()}
+          each={cookiesContext().savedCookies}
           fallback={<CardButtonAddCookieDialog />}
         >
           {(cookie) => (

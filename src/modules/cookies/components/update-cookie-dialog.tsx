@@ -50,7 +50,7 @@ export const UpdateCookieDialog: Component<UpdateCookieDialogProps> = (
             <ConfigForm
               initialData={props.initialData}
               onSubmit={props.onSubmit}
-              configValues={cookiesContext().tabCookies()}
+              configValues={cookiesContext().tabCookies}
               id={formId()}
             />
           </Drawer.Body>

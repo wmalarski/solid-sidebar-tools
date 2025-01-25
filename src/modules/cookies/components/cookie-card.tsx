@@ -6,6 +6,7 @@ import {
   createSignal,
 } from "solid-js";
 import * as v from "valibot";
+import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";
 import {
   ConfigCardFooter,
   ConfigCardForm,
@@ -14,12 +15,11 @@ import {
 } from "~/modules/configs/components/config-card";
 import { ConfigFields } from "~/modules/configs/components/config-fields";
 import { Card } from "~/ui/card";
+import { reloadChromeTab } from "../../common/services/tabs";
 import { saveCookie } from "../services/cookies";
 import type { SavedCookie } from "../services/storage";
-import { reloadChromeTab } from "../services/tabs";
 import { CookieAdvancedFields } from "./cookie-advanced-fields";
 import { CookieCardMenu } from "./cookie-card-menu";
-import { useCookiesContext } from "./cookies-context";
 
 type CookieCardProps = {
   cookie: SavedCookie;
@@ -27,7 +27,7 @@ type CookieCardProps = {
 };
 
 export const CookieCard: Component<CookieCardProps> = (props) => {
-  const cookiesContext = useCookiesContext();
+  const currentUrlContext = useCurrentUrlContext();
   const formId = createMemo(() => `cookie-form-${props.cookie.name}`);
 
   const [isDirty, setIsDirty] = createSignal(false);
@@ -54,7 +54,7 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
     }
 
     await saveCookie({
-      url: cookiesContext().url(),
+      url: currentUrlContext().url(),
       name: props.cookie.name,
       value: parsed.output.value,
     });

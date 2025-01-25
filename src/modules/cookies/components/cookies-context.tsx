@@ -4,71 +4,64 @@ import {
   type ParentProps,
   createContext,
   createMemo,
-  createSignal,
-  onCleanup,
+  createResource,
   useContext,
 } from "solid-js";
+import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";
 import type { ConfigFormData } from "~/modules/configs/components/cookie-form";
 import { getChromeTabCookies } from "../services/cookies";
 import {
-  type SavedCookie,
   getSavedCookies,
   onSavedCookiesChange,
   setSavedCookies,
 } from "../services/storage";
-import { onCurrentUrlChange } from "../services/tabs";
 
-const createCookiesContext = () => {
-  const [url, setUrl] = createSignal<string>("");
-  const [tabCookies, setTabCookies] = createSignal<chrome.cookies.Cookie[]>([]);
-  const [idCounter, setIdCounter] = createSignal(0);
-  const [cookies, setCookies] = createSignal<SavedCookie[]>([]);
+const createCookiesContext = (url: string) => {
+  const [tabCookies] = createResource(
+    () => url,
+    (url) => getChromeTabCookies(url),
+  );
 
-  const subscription = onCurrentUrlChange(async (url) => {
-    const [tabCookies, savedCookies] = await Promise.all([
-      getChromeTabCookies(url),
-      getSavedCookies(url),
-    ]);
+  const [cookies, { mutate }] = createResource(
+    () => url,
+    (url) => getSavedCookies(url),
+  );
 
-    const maxId = savedCookies.reduce(
+  const addCookie = async (data: ConfigFormData) => {
+    const resolvedCookies = cookies() ?? [];
+    const id = resolvedCookies.reduce(
       (previous, current) => Math.max(previous, current.id),
       0,
     );
 
-    setUrl(url);
-    setTabCookies(tabCookies);
-    setCookies(savedCookies);
-    setIdCounter(maxId + 1);
-  });
-
-  onCleanup(() => subscription());
-
-  const addCookie = async (data: ConfigFormData) => {
-    const id = idCounter();
-    setIdCounter((current) => current + 1);
-    const updated = [...cookies(), { id, ...data }];
-    await setSavedCookies(url(), updated);
+    const updated = [...resolvedCookies, { id, ...data }];
+    await setSavedCookies(url, updated);
   };
 
   const updateCookie = async (id: number, data: ConfigFormData) => {
     const newEntry = { id, ...data };
-    await setSavedCookies(
-      url(),
-      cookies().map((entry) => (entry.id === id ? newEntry : entry)),
+    const resolvedCookies = cookies() ?? [];
+    const updated = resolvedCookies.map((entry) =>
+      entry.id === id ? newEntry : entry,
     );
+    await setSavedCookies(url, updated);
   };
 
   const removeCookie = async (id: number) => {
-    const updated = cookies().filter((entry) => entry.id !== id);
-    await setSavedCookies(url(), updated);
+    const resolvedCookies = cookies() ?? [];
+    const updated = resolvedCookies.filter((entry) => entry.id !== id);
+    await setSavedCookies(url, updated);
   };
 
-  onSavedCookiesChange(url, setCookies);
+  onSavedCookiesChange(url, mutate);
 
   return {
-    url,
-    cookies,
-    tabCookies,
+    get savedCookies() {
+      return cookies() ?? [];
+    },
+    get tabCookies() {
+      return tabCookies() ?? [];
+    },
     addCookie,
     updateCookie,
     removeCookie,
@@ -82,7 +75,11 @@ const CookiesContext = createContext<
 });
 
 export const CookiesContextProvider: Component<ParentProps> = (props) => {
-  const value = createMemo(() => createCookiesContext());
+  const currentUrlContext = useCurrentUrlContext();
+
+  const value = createMemo(() =>
+    createCookiesContext(currentUrlContext().url()),
+  );
 
   return (
     <CookiesContext.Provider value={value}>

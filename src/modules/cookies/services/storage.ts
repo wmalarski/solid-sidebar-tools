@@ -1,5 +1,3 @@
-import type { Accessor } from "solid-js";
-
 export type SavedCookie = {
   id: number;
   name: string;
@@ -31,15 +29,14 @@ type OnChangeListener = Parameters<
 >[0];
 
 export const onSavedCookiesChange = (
-  url: Accessor<string>,
+  url: string,
   callback: (cookies: SavedCookie[]) => void,
 ) => {
   const listener: OnChangeListener = (changes) => {
-    const resolvedUrl = url();
-    const currentChanges = changes[resolvedUrl];
+    const currentChanges = changes[url];
 
     if (currentChanges) {
-      callback(changes[resolvedUrl].newValue.cookies as SavedCookie[]);
+      callback(changes[url].newValue.cookies as SavedCookie[]);
     }
   };
 

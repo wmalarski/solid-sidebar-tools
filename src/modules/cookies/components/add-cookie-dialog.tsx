@@ -96,7 +96,7 @@ const CookieDialogNoTrigger: Component<CookieDialogNoTriggerProps> = (
           </Drawer.Header>
           <Drawer.Body>
             <ConfigForm
-              configValues={cookiesContext().tabCookies()}
+              configValues={cookiesContext().tabCookies}
               onSubmit={onSubmit}
               id={props.formId}
             />
