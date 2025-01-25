@@ -1,4 +1,4 @@
-import { createMemo, createSignal, type Component } from "solid-js";
+import { type Component, createMemo, createSignal } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Field } from "~/ui/field";
 import { RadioGroup } from "~/ui/radio-group";

@@ -1,5 +1,5 @@
 import type { ListCollection } from "@ark-ui/solid";
-import { createMemo, For, type Component, type ComponentProps } from "solid-js";
+import { type Component, type ComponentProps, For, createMemo } from "solid-js";
 import { Flex } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Checkbox } from "~/ui/checkbox";
@@ -7,7 +7,7 @@ import { Collapsible } from "~/ui/collapsible";
 import { Field } from "~/ui/field";
 import { CheckIcon } from "~/ui/icons/check-icon";
 import { ChevronsUpDownIcon } from "~/ui/icons/chevrons-up-down-icon";
-import { createListCollection, Select } from "~/ui/select";
+import { Select, createListCollection } from "~/ui/select";
 
 type CookieAdvancedFieldsProps = {
   isOpen: boolean;
