@@ -1,5 +1,4 @@
 import type { Component } from "solid-js";
-import {} from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button, type ButtonProps } from "./button";
 import { Drawer } from "./drawer";

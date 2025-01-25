@@ -5,12 +5,14 @@ import {
   createMemo,
   createSignal,
 } from "solid-js";
-import { Flex } from "styled-system/jsx";
-import { flex } from "styled-system/patterns";
 import * as v from "valibot";
-import { useI18n } from "~/modules/common/contexts/i18n";
+import {
+  ConfigCardFooter,
+  ConfigCardForm,
+  ConfigCardHeader,
+  ConfigCardHeading,
+} from "~/modules/configs/components/config-card";
 import { ConfigFields } from "~/modules/configs/components/config-fields";
-import { Button } from "~/ui/button";
 import { Card } from "~/ui/card";
 import { saveCookie } from "../services/cookies";
 import type { SavedCookie } from "../services/storage";
@@ -25,8 +27,6 @@ type CookieCardProps = {
 };
 
 export const CookieCard: Component<CookieCardProps> = (props) => {
-  const { t } = useI18n();
-
   const cookiesContext = useCookiesContext();
   const formId = createMemo(() => `cookie-form-${props.cookie.name}`);
 
@@ -68,38 +68,26 @@ export const CookieCard: Component<CookieCardProps> = (props) => {
 
   return (
     <Card.Root>
-      <Card.Header p={3} display="grid" gridTemplateColumns="1fr auto">
-        <Flex flexDirection="column" gap="2">
-          <Card.Title>{props.cookie.name}</Card.Title>
-          <Card.Description>
-            {t("cookies.list.cardDescription", { name: props.cookie.name })}
-          </Card.Description>
-        </Flex>
+      <ConfigCardHeader>
+        <ConfigCardHeading name={props.cookie.name} />
         <CookieCardMenu
           cookie={props.cookie}
           onShowAdvancedClick={onShowAdvancedClick}
           showAdvanced={showAdvanced()}
         />
-      </Card.Header>
-      <Card.Body px={3} pb={2}>
-        <form
-          id={formId()}
-          class={flex({ flexDirection: "column", gap: 4 })}
-          onChange={onFormChange}
-          onSubmit={onFormSubmit}
-        >
-          <ConfigFields cookie={props.cookie} value={props.tabCookie?.value} />
-          <CookieAdvancedFields
-            isOpen={showAdvanced()}
-            onOpenChange={setShowAdvanced}
-          />
-        </form>
-      </Card.Body>
-      <Card.Footer px={3} pt={1} pb={3} gap="3">
-        <Button size="xs" disabled={!isDirty()} form={formId()}>
-          {t("common.save")}
-        </Button>
-      </Card.Footer>
+      </ConfigCardHeader>
+      <ConfigCardForm
+        id={formId()}
+        onChange={onFormChange}
+        onSubmit={onFormSubmit}
+      >
+        <ConfigFields cookie={props.cookie} value={props.tabCookie?.value} />
+        <CookieAdvancedFields
+          isOpen={showAdvanced()}
+          onOpenChange={setShowAdvanced}
+        />
+      </ConfigCardForm>
+      <ConfigCardFooter formId={formId()} isDirty={isDirty()} />
     </Card.Root>
   );
 };

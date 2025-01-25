@@ -1,5 +1,4 @@
 import { type Component, createMemo } from "solid-js";
-import {} from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Button } from "~/ui/button";
 import { Drawer } from "~/ui/drawer";
