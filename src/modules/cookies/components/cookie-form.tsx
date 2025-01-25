@@ -7,8 +7,9 @@ import {
 } from "solid-js";
 import { flex } from "styled-system/patterns";
 import * as v from "valibot";
-import { CookieNameTagInput } from "./cookie-name-tag-input";
-import { CookieValuesFields } from "./cookie-values-fields";
+import { ConfigNameTagInput } from "~/modules/configs/components/config-name-tag-input";
+import { ConfigValuesFields } from "~/modules/configs/components/config-values-fields";
+import { useCookiesContext } from "./cookies-context";
 
 export type CookieFormData = {
   name: string;
@@ -22,6 +23,8 @@ type CookieFormProps = {
 };
 
 export const CookieForm: Component<CookieFormProps> = (props) => {
+  const cookiesContext = useCookiesContext();
+
   const initialValues = createMemo(() => {
     const [get, set] = createSignal(props.initialData?.values);
     return { get, set };
@@ -54,11 +57,12 @@ export const CookieForm: Component<CookieFormProps> = (props) => {
       id={props.id}
       class={flex({ flexDirection: "column", gap: 4 })}
     >
-      <CookieNameTagInput
+      <ConfigNameTagInput
         initialValue={props.initialData?.name}
-        onCookieValueChange={onCookieValueChange}
+        onValueChange={onCookieValueChange}
+        values={cookiesContext().tabCookies() ?? []}
       />
-      <CookieValuesFields initialValues={initialValues().get()} />
+      <ConfigValuesFields initialValues={initialValues().get()} />
     </form>
   );
 };

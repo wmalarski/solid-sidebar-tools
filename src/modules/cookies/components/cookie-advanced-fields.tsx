@@ -73,8 +73,6 @@ export const CookieAdvancedFields: Component<CookieAdvancedFieldsProps> = (
 };
 
 const SameSiteSelect: Component = () => {
-  const { t } = useI18n();
-
   const collection = createMemo(
     () =>
       createListCollection({

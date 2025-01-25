@@ -30,11 +30,19 @@ const enDict = {
     reset: "Reset",
     success: "Success",
     options: "Options",
+    delete: "Delete",
   },
   configs: {
     fields: {
       value: "Value",
       custom: "Custom value",
+    },
+    form: {
+      values: "Values",
+      addValue: "Add value",
+      value: "Value",
+      name: "Name",
+      selectName: "Select name",
     },
   },
   cookies: {

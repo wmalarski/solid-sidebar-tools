@@ -6,24 +6,29 @@ import { IconButton } from "~/ui/icon-button";
 import { CheckIcon } from "~/ui/icons/check-icon";
 import { ChevronsUpDownIcon } from "~/ui/icons/chevrons-up-down-icon";
 import { Input } from "~/ui/input";
-import { useCookiesContext } from "./cookies-context";
 
-type CookieNameTagInputProps = {
-  initialValue?: string;
-  onCookieValueChange: (value: string) => void;
+type ConfigValues = {
+  name: string;
+  value: string;
 };
 
-export const CookieNameTagInput: Component<CookieNameTagInputProps> = (
+type ConfigNameTagInputProps = {
+  initialValue?: string;
+  values: ConfigValues[];
+  onValueChange: (value: string) => void;
+};
+
+export const ConfigNameTagInput: Component<ConfigNameTagInputProps> = (
   props,
 ) => {
   const { t } = useI18n();
 
-  const cookiesContext = useCookiesContext();
-
-  const data = createMemo(() => {
-    const cookies = cookiesContext().tabCookies() ?? [];
-    return cookies.map((entry) => ({ label: entry.name, value: entry.name }));
-  });
+  const data = createMemo(() =>
+    props.values.map((entry) => ({
+      label: entry.name,
+      value: entry.name,
+    })),
+  );
 
   const items = createMemo(() => {
     const [items, setItems] = createSignal(data());
@@ -46,13 +51,12 @@ export const CookieNameTagInput: Component<CookieNameTagInputProps> = (
 
   const onValueChange: Combobox.RootProps["onValueChange"] = (details) => {
     const value = details.value[0]?.toLowerCase();
-    const tabCookies = cookiesContext().tabCookies();
-    const tabCookie = tabCookies.find((cookie) =>
-      cookie.name.toLowerCase().includes(value),
+    const selectedValue = props.values.find((entry) =>
+      entry.name.toLowerCase().includes(value),
     );
 
-    if (tabCookie) {
-      props.onCookieValueChange(tabCookie.value);
+    if (selectedValue) {
+      props.onValueChange(selectedValue.value);
     }
   };
 
@@ -66,11 +70,11 @@ export const CookieNameTagInput: Component<CookieNameTagInputProps> = (
       allowCustomValue
       inputValue={props.initialValue}
     >
-      <Combobox.Label>{t("cookies.form.name")}</Combobox.Label>
+      <Combobox.Label>{t("configs.form.name")}</Combobox.Label>
       <Combobox.Control>
         <Combobox.Input
           size="xs"
-          placeholder={t("cookies.form.selectName")}
+          placeholder={t("configs.form.selectName")}
           asChild={(inputProps) => <Input {...inputProps()} />}
           name="name"
           autofocus

@@ -9,7 +9,7 @@ import { PlusIcon } from "~/ui/icons/plus-icon";
 import { TrashIcon } from "~/ui/icons/trash-icon";
 import { SimpleTooltip } from "~/ui/styled/tooltip";
 
-const createCookieInputsState = (initialValues: string[] = []) => {
+const createConfigValuesState = (initialValues: string[] = []) => {
   const nonEmptyInitialValues =
     initialValues.length === 0 ? [""] : initialValues;
 
@@ -32,11 +32,11 @@ const createCookieInputsState = (initialValues: string[] = []) => {
   return { entries, addInput, removeInput };
 };
 
-type CookieValuesFieldsProps = {
+type ConfigValuesFieldsProps = {
   initialValues?: string[];
 };
 
-export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
+export const ConfigValuesFields: Component<ConfigValuesFieldsProps> = (
   props,
 ) => {
   const { t } = useI18n();
@@ -46,7 +46,7 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
   const [listRef, setListRef] = createSignal<HTMLElement>();
 
   const inputsState = createMemo(() =>
-    createCookieInputsState(props?.initialValues),
+    createConfigValuesState(props?.initialValues),
   );
 
   const onDeleteClickFactory = (id: number) => () => {
@@ -76,7 +76,7 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
         alignItems="center"
         fontWeight="semibold"
       >
-        {t("cookies.form.cookies")}
+        {t("configs.form.values")}
         <SimpleTooltip
           asChild={(tooltipProps) => (
             <IconButton
@@ -87,13 +87,13 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
               {...tooltipProps({ onClick: onAddValueClick })}
             >
               <span class={css({ srOnly: true })}>
-                {t("cookies.form.addCookieValue")}
+                {t("configs.form.addValue")}
               </span>
               <PlusIcon />
             </IconButton>
           )}
         >
-          {t("cookies.form.addCookieValue")}
+          {t("configs.form.addValue")}
         </SimpleTooltip>
       </Grid>
       <VStack ref={setParent} gap="4" w="full">
@@ -101,12 +101,12 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
           {(entry, index) => (
             <Field.Root required w="full">
               <Field.Label>
-                {t("cookies.form.value", { index: index() + 1 })}
+                {t("configs.form.value", { index: index() + 1 })}
               </Field.Label>
               <HStack alignItems="center" justifyContent="center">
                 <Field.Input
                   size="xs"
-                  placeholder={t("cookies.form.cookieValue")}
+                  placeholder={t("configs.form.value")}
                   value={entry.value}
                   name={`values[${index()}]`}
                   autocomplete="off"
@@ -123,13 +123,13 @@ export const CookieValuesFields: Component<CookieValuesFieldsProps> = (
                       })}
                     >
                       <span class={css({ srOnly: true })}>
-                        {t("cookies.form.delete")}
+                        {t("common.delete")}
                       </span>
                       <TrashIcon />
                     </IconButton>
                   )}
                 >
-                  {t("cookies.form.delete")}
+                  {t("common.delete")}
                 </SimpleTooltip>
               </HStack>
             </Field.Root>
