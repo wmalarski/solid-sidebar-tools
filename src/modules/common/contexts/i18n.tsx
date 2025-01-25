@@ -59,7 +59,6 @@ const enDict = {
     },
     list: {
       cookies: "Cookies",
-
       cardDescription: "Set '{{name}}' cookie value",
       options: "Card options",
       delete: "Delete",
@@ -75,6 +74,9 @@ const enDict = {
       sameSite: "SameSite",
       secure: "Secure",
     },
+  },
+  locals: {
+    locals: "Locals",
   },
 };
 

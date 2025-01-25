@@ -1,5 +1,7 @@
 import { type Component, For, createMemo } from "solid-js";
 import { css } from "styled-system/css";
+import { ExtensionOnly } from "~/modules/common/components/extension-only";
+import { CurrentUrlContextProvider } from "~/modules/common/contexts/current-url";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { CookiesContextProvider } from "~/modules/cookies/components/cookies-context";
 import { CookiesPanel } from "~/modules/cookies/components/cookies-panel";
@@ -12,6 +14,7 @@ export const Homepage: Component = () => {
 
   const options = createMemo(() => [
     { id: "cookies", label: t("cookies.list.cookies") },
+    { id: "locals", label: t("locals.locals") },
   ]);
 
   return (
@@ -39,10 +42,15 @@ export const Homepage: Component = () => {
           <Tabs.Indicator />
         </Tabs.List>
         <Tabs.Content value="cookies">
-          <CookiesContextProvider>
-            <CookiesPanel />
-          </CookiesContextProvider>
+          <ExtensionOnly>
+            <CurrentUrlContextProvider>
+              <CookiesContextProvider>
+                <CookiesPanel />
+              </CookiesContextProvider>
+            </CurrentUrlContextProvider>
+          </ExtensionOnly>
         </Tabs.Content>
+        <Tabs.Content value="locals">Hello</Tabs.Content>
       </Tabs.Root>
     </main>
   );
