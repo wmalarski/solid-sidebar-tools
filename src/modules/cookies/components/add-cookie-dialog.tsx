@@ -5,6 +5,7 @@ import {
   ConfigForm,
   type ConfigFormData,
 } from "~/modules/configs/components/cookie-form";
+import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
 import { Button } from "~/ui/button";
 import { Drawer } from "~/ui/drawer";
 import { IconButton } from "~/ui/icon-button";
@@ -65,6 +66,7 @@ const CookieDialogNoTrigger: Component<CookieDialogNoTriggerProps> = (
 ) => {
   const { t } = useI18n();
 
+  const savedCookies = useSavedConfigsContext();
   const cookiesContext = useCookiesContext();
 
   const [isOpen, setIsOpen] = createSignal(false);
@@ -74,7 +76,7 @@ const CookieDialogNoTrigger: Component<CookieDialogNoTriggerProps> = (
   };
 
   const onSubmit = (data: ConfigFormData) => {
-    cookiesContext().addCookie(data);
+    savedCookies().add({ ...data, kind: "cookie" });
     setIsOpen(false);
   };
 

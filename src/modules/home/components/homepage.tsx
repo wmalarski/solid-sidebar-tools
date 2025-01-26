@@ -3,6 +3,7 @@ import { css } from "styled-system/css";
 import { ExtensionOnly } from "~/modules/common/components/extension-only";
 import { CurrentUrlContextProvider } from "~/modules/common/contexts/current-url";
 import { useI18n } from "~/modules/common/contexts/i18n";
+import { SavedConfigsContextProvider } from "~/modules/configs/contexts/saved-configs";
 import { CookiesContextProvider } from "~/modules/cookies/components/cookies-context";
 import { CookiesPanel } from "~/modules/cookies/components/cookies-panel";
 import { Heading } from "~/ui/heading";
@@ -43,9 +44,11 @@ export const Homepage: Component = () => {
         <Tabs.Content value="cookies">
           <ExtensionOnly>
             <CurrentUrlContextProvider>
-              <CookiesContextProvider>
-                <CookiesPanel />
-              </CookiesContextProvider>
+              <SavedConfigsContextProvider>
+                <CookiesContextProvider>
+                  <CookiesPanel />
+                </CookiesContextProvider>
+              </SavedConfigsContextProvider>
             </CurrentUrlContextProvider>
           </ExtensionOnly>
         </Tabs.Content>

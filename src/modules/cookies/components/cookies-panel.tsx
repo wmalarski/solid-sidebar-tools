@@ -1,6 +1,7 @@
 import { type Component, For, createMemo } from "solid-js";
 import { Flex, Grid } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
+import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
 import { Heading } from "~/ui/heading";
 import {
   CardButtonAddCookieDialog,
@@ -12,6 +13,7 @@ import { useCookiesContext } from "./cookies-context";
 export const CookiesPanel: Component = () => {
   const { t } = useI18n();
 
+  const savedCookies = useSavedConfigsContext();
   const cookiesContext = useCookiesContext();
 
   const tabCookiesMap = createMemo(() => {
@@ -28,7 +30,7 @@ export const CookiesPanel: Component = () => {
       </Grid>
       <Flex flexDirection="column" gap={4}>
         <For
-          each={cookiesContext().savedCookies}
+          each={savedCookies().get()}
           fallback={<CardButtonAddCookieDialog />}
         >
           {(cookie) => (

@@ -2,13 +2,13 @@ import { type Component, type ComponentProps, createSignal } from "solid-js";
 import { HStack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import type { ConfigFormData } from "~/modules/configs/components/cookie-form";
+import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
 import { AlertDialog } from "~/ui/alert-dialog";
 import { PencilIcon } from "~/ui/icons/pencil-icon";
 import { SlidersHorizontalIcon } from "~/ui/icons/sliders-horizontal-icon";
 import { TrashIcon } from "~/ui/icons/trash-icon";
 import { Menu } from "~/ui/menu";
 import type { SavedConfig } from "../../configs/services/storage";
-import { useCookiesContext } from "./cookies-context";
 import { UpdateCookieDialog } from "./update-cookie-dialog";
 
 const DELETE_VALUE = "delete";
@@ -27,7 +27,7 @@ export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
   const [isDeleteOpen, setIsDeleteOpen] = createSignal(false);
   const [isUpdateOpen, setIsUpdateOpen] = createSignal(false);
 
-  const cookiesContext = useCookiesContext();
+  const savedCookies = useSavedConfigsContext();
 
   const onSelect: ComponentProps<typeof Menu.Root>["onSelect"] = (details) => {
     switch (details.value) {
@@ -47,13 +47,13 @@ export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
     }
   };
 
-  const onUpdateSubmit = (cookie: ConfigFormData) => {
-    cookiesContext().updateCookie(props.cookie.id, cookie);
+  const onUpdateSubmit = (data: ConfigFormData) => {
+    savedCookies().update({ ...props.cookie, ...data });
     setIsUpdateOpen(false);
   };
 
   const onDeleteConfirm = () => {
-    cookiesContext().removeCookie(props.cookie.id);
+    savedCookies().remove(props.cookie.id);
     setIsDeleteOpen(false);
   };
 
