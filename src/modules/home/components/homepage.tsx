@@ -14,7 +14,6 @@ export const Homepage: Component = () => {
 
   const options = createMemo(() => [
     { id: "cookies", label: t("cookies.list.cookies") },
-    { id: "locals", label: t("locals.locals") },
   ]);
 
   return (
@@ -50,7 +49,6 @@ export const Homepage: Component = () => {
             </CurrentUrlContextProvider>
           </ExtensionOnly>
         </Tabs.Content>
-        <Tabs.Content value="locals">Hello</Tabs.Content>
       </Tabs.Root>
     </main>
   );

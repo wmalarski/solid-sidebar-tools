@@ -10,12 +10,12 @@ import {
 } from "solid-js";
 import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";
 import type { ConfigFormData } from "~/modules/configs/components/cookie-form";
-import { getChromeTabCookies } from "../services/cookies";
 import {
-  getSavedCookies,
-  onSavedCookiesChange,
-  setSavedCookies,
-} from "../services/storage";
+  getSavedConfig,
+  onSavedConfigChange,
+  setSavedConfig,
+} from "../../configs/services/storage";
+import { getChromeTabCookies } from "../services/cookies";
 
 const createCookiesContext = (url: string) => {
   const [tabCookies] = createResource(
@@ -25,7 +25,7 @@ const createCookiesContext = (url: string) => {
 
   const [cookies, { mutate }] = createResource(
     () => url,
-    (url) => getSavedCookies(url),
+    (url) => getSavedConfig(url),
   );
 
   const addCookie = async (data: ConfigFormData) => {
@@ -35,26 +35,29 @@ const createCookiesContext = (url: string) => {
       0,
     );
 
-    const updated = [...resolvedCookies, { id, ...data }];
-    await setSavedCookies(url, updated);
+    const updated = [
+      ...resolvedCookies,
+      { id, ...data, kind: "cookie" } as const,
+    ];
+    await setSavedConfig(url, updated);
   };
 
   const updateCookie = async (id: number, data: ConfigFormData) => {
-    const newEntry = { id, ...data };
+    const newEntry = { id, ...data, kind: "cookie" } as const;
     const resolvedCookies = cookies() ?? [];
     const updated = resolvedCookies.map((entry) =>
       entry.id === id ? newEntry : entry,
     );
-    await setSavedCookies(url, updated);
+    await setSavedConfig(url, updated);
   };
 
   const removeCookie = async (id: number) => {
     const resolvedCookies = cookies() ?? [];
     const updated = resolvedCookies.filter((entry) => entry.id !== id);
-    await setSavedCookies(url, updated);
+    await setSavedConfig(url, updated);
   };
 
-  const subscription = onSavedCookiesChange(url, mutate);
+  const subscription = onSavedConfigChange(url, mutate);
   onCleanup(() => subscription());
 
   return {

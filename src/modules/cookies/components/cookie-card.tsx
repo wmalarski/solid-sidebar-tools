@@ -16,13 +16,13 @@ import {
 import { ConfigFields } from "~/modules/configs/components/config-fields";
 import { Card } from "~/ui/card";
 import { reloadChromeTab } from "../../common/services/tabs";
+import type { SavedConfig } from "../../configs/services/storage";
 import { saveCookie } from "../services/cookies";
-import type { SavedCookie } from "../services/storage";
 import { CookieAdvancedFields } from "./cookie-advanced-fields";
 import { CookieCardMenu } from "./cookie-card-menu";
 
 type CookieCardProps = {
-  cookie: SavedCookie;
+  cookie: SavedConfig;
   tabCookie?: chrome.cookies.Cookie;
 };
 

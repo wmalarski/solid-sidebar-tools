@@ -7,7 +7,7 @@ import { PencilIcon } from "~/ui/icons/pencil-icon";
 import { SlidersHorizontalIcon } from "~/ui/icons/sliders-horizontal-icon";
 import { TrashIcon } from "~/ui/icons/trash-icon";
 import { Menu } from "~/ui/menu";
-import type { SavedCookie } from "../services/storage";
+import type { SavedConfig } from "../../configs/services/storage";
 import { useCookiesContext } from "./cookies-context";
 import { UpdateCookieDialog } from "./update-cookie-dialog";
 
@@ -16,7 +16,7 @@ const UPDATE_VALUE = "update";
 const ADVANCED_VALUE = "advanced";
 
 type CookieCardMenuProps = {
-  cookie: SavedCookie;
+  cookie: SavedConfig;
   showAdvanced: boolean;
   onShowAdvancedClick: () => void;
 };
