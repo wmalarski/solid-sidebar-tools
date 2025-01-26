@@ -3,7 +3,7 @@ import { useI18n } from "~/modules/common/contexts/i18n";
 import {
   ConfigForm,
   type ConfigFormData,
-} from "~/modules/configs/components/cookie-form";
+} from "~/modules/configs/components/config-form";
 import { Button } from "~/ui/button";
 import { Drawer } from "~/ui/drawer";
 import type { OpenChangeDetails } from "~/ui/styled/combobox";

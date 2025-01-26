@@ -89,7 +89,7 @@ const CustomValueField: Component<CustomValueFieldProps> = (props) => {
 };
 
 type ConfigFieldsProps = {
-  cookie: ConfigFieldsData;
+  config: ConfigFieldsData;
   value?: string;
 };
 
@@ -110,7 +110,7 @@ export const ConfigFields: Component<ConfigFieldsProps> = (props) => {
   return (
     <>
       <ConfigRadioValues
-        config={props.cookie}
+        config={props.config}
         value={props.value}
         onValueChange={onValueChange}
       />

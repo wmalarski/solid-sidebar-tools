@@ -3,11 +3,11 @@ import { Flex, Grid } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
 import { Heading } from "~/ui/heading";
+import { ConfigCard } from "../../configs/components/config-card";
 import {
   CardButtonAddCookieDialog,
   IconButtonAddCookieDialog,
 } from "./add-cookie-dialog";
-import { CookieCard } from "./cookie-card";
 import { useCookiesContext } from "./cookies-context";
 
 export const CookiesPanel: Component = () => {
@@ -34,9 +34,9 @@ export const CookiesPanel: Component = () => {
           fallback={<CardButtonAddCookieDialog />}
         >
           {(cookie) => (
-            <CookieCard
-              cookie={cookie}
-              tabCookie={tabCookiesMap().get(cookie.name)}
+            <ConfigCard
+              config={cookie}
+              value={tabCookiesMap().get(cookie.name)?.value}
             />
           )}
         </For>

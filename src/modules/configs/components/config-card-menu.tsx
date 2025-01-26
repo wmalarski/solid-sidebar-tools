@@ -1,33 +1,38 @@
-import { type Component, type ComponentProps, createSignal } from "solid-js";
+import {
+  type Component,
+  type ComponentProps,
+  createSignal,
+  Show,
+} from "solid-js";
 import { HStack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import type { ConfigFormData } from "~/modules/configs/components/cookie-form";
+import type { ConfigFormData } from "~/modules/configs/components/config-form";
 import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
 import { AlertDialog } from "~/ui/alert-dialog";
 import { PencilIcon } from "~/ui/icons/pencil-icon";
 import { SlidersHorizontalIcon } from "~/ui/icons/sliders-horizontal-icon";
 import { TrashIcon } from "~/ui/icons/trash-icon";
 import { Menu } from "~/ui/menu";
-import type { SavedConfig } from "../../configs/services/storage";
-import { UpdateCookieDialog } from "./update-cookie-dialog";
+import { UpdateCookieDialog } from "../../cookies/components/update-cookie-dialog";
+import type { SavedConfig } from "../services/storage";
 
 const DELETE_VALUE = "delete";
 const UPDATE_VALUE = "update";
 const ADVANCED_VALUE = "advanced";
 
-type CookieCardMenuProps = {
-  cookie: SavedConfig;
+type ConfigCardMenuProps = {
+  config: SavedConfig;
   showAdvanced: boolean;
   onShowAdvancedClick: () => void;
 };
 
-export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
+export const ConfigCardMenu: Component<ConfigCardMenuProps> = (props) => {
   const { t } = useI18n();
 
   const [isDeleteOpen, setIsDeleteOpen] = createSignal(false);
   const [isUpdateOpen, setIsUpdateOpen] = createSignal(false);
 
-  const savedCookies = useSavedConfigsContext();
+  const savedConfigs = useSavedConfigsContext();
 
   const onSelect: ComponentProps<typeof Menu.Root>["onSelect"] = (details) => {
     switch (details.value) {
@@ -48,12 +53,12 @@ export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
   };
 
   const onUpdateSubmit = (data: ConfigFormData) => {
-    savedCookies().update({ ...props.cookie, ...data });
+    savedConfigs().update({ ...props.config, ...data });
     setIsUpdateOpen(false);
   };
 
   const onDeleteConfirm = () => {
-    savedCookies().remove(props.cookie.id);
+    savedConfigs().remove(props.config.id);
     setIsDeleteOpen(false);
   };
 
@@ -63,16 +68,18 @@ export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
         <Menu.IconTrigger />
         <Menu.Positioner>
           <Menu.Content>
-            <Menu.Item value={ADVANCED_VALUE}>
-              <HStack gap="2">
-                <SlidersHorizontalIcon />
-                {t(
-                  props.showAdvanced
-                    ? "cookies.list.hideAdvanced"
-                    : "cookies.list.showAdvanced",
-                )}
-              </HStack>
-            </Menu.Item>
+            <Show when={props.config.kind === "cookie"}>
+              <Menu.Item value={ADVANCED_VALUE}>
+                <HStack gap="2">
+                  <SlidersHorizontalIcon />
+                  {t(
+                    props.showAdvanced
+                      ? "cookies.list.hideAdvanced"
+                      : "cookies.list.showAdvanced",
+                  )}
+                </HStack>
+              </Menu.Item>
+            </Show>
             <Menu.Item value={UPDATE_VALUE}>
               <HStack gap="2">
                 <PencilIcon />
@@ -89,7 +96,7 @@ export const CookieCardMenu: Component<CookieCardMenuProps> = (props) => {
         </Menu.Positioner>
       </Menu.Root>
       <UpdateCookieDialog
-        initialData={props.cookie}
+        initialData={props.config}
         isOpen={isUpdateOpen()}
         onIsOpenChange={setIsUpdateOpen}
         onSubmit={onUpdateSubmit}
