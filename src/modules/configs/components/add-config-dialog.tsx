@@ -101,7 +101,7 @@ const ConfigDialogNoTrigger: Component<
           <Drawer.Body>
             <ConfigForm
               configValues={
-                props.kind === "cookie" ? cookiesContext().tabCookies : []
+                props.kind === "cookie" ? cookiesContext().get() : []
               }
               onSubmit={onSubmit}
               id={props.formId}

@@ -11,16 +11,14 @@ import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";
 import { getChromeTabCookies } from "../services/cookies";
 
 const createCookiesContext = (url: string) => {
-  const [tabCookies] = createResource(
+  const [cookies] = createResource(
     () => url,
     (url) => getChromeTabCookies(url),
   );
 
-  return {
-    get tabCookies() {
-      return tabCookies() ?? [];
-    },
-  };
+  const get = createMemo(() => cookies() ?? []);
+
+  return { get };
 };
 
 const CookiesContext = createContext<

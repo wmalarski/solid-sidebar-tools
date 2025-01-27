@@ -49,7 +49,7 @@ export const UpdateConfigDialog: Component<{
               onSubmit={props.onSubmit}
               configValues={
                 props.initialData.kind === "cookie"
-                  ? cookiesContext().tabCookies
+                  ? cookiesContext().get()
                   : []
               }
               id={formId()}

@@ -17,7 +17,7 @@ export const ConfigsPanel: Component = () => {
   const cookiesContext = useCookiesContext();
 
   const tabCookiesMap = createMemo(() => {
-    const tabCookies = cookiesContext().tabCookies;
+    const tabCookies = cookiesContext().get();
     const entries = tabCookies.map((cookie) => [cookie.name, cookie] as const);
     return new Map(entries);
   });
