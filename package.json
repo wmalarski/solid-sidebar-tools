@@ -27,7 +27,7 @@
     "@park-ui/panda-preset": "^0.43.1",
     "@types/chrome": "^0.0.299",
     "@types/node": "^22.10.10",
-    "knip": "^5.43.3",
+    "knip": "^5.43.5",
     "sonda": "^0.7.1",
     "typescript": "~5.7.3",
     "vite": "^6.0.11",
