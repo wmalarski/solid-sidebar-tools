@@ -18,14 +18,12 @@ export type ConfigFormData = {
   values: string[];
 };
 
-type ConfigFormProps = {
+export const ConfigForm: Component<{
   id: string;
   initialData?: ConfigFormData;
   onSubmit: (data: ConfigFormData) => void;
   configValues: ConfigValues[];
-};
-
-export const ConfigForm: Component<ConfigFormProps> = (props) => {
+}> = (props) => {
   const initialValues = createMemo(() => {
     const [get, set] = createSignal(props.initialData?.values);
     return { get, set };

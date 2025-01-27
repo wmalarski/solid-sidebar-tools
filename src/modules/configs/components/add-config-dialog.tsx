@@ -62,14 +62,12 @@ export const CardButtonAddConfigDialog: Component<{
   );
 };
 
-type ConfigDialogNoTriggerProps = ParentProps<{
-  formId: string;
-  kind: SavedConfig["kind"];
-}>;
-
-const ConfigDialogNoTrigger: Component<ConfigDialogNoTriggerProps> = (
-  props,
-) => {
+const ConfigDialogNoTrigger: Component<
+  ParentProps<{
+    formId: string;
+    kind: SavedConfig["kind"];
+  }>
+> = (props) => {
   const { t } = useI18n();
 
   const savedConfigs = useSavedConfigsContext();

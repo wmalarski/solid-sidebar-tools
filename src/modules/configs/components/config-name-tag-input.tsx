@@ -12,15 +12,11 @@ export type ConfigValues = {
   value: string;
 };
 
-type ConfigNameTagInputProps = {
+export const ConfigNameTagInput: Component<{
   initialValue?: string;
   configValues: ConfigValues[];
   onValueChange: (value: string) => void;
-};
-
-export const ConfigNameTagInput: Component<ConfigNameTagInputProps> = (
-  props,
-) => {
+}> = (props) => {
   const { t } = useI18n();
 
   const data = createMemo(() =>

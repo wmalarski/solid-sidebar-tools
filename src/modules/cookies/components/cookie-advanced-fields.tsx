@@ -9,15 +9,11 @@ import { CheckIcon } from "~/ui/icons/check-icon";
 import { ChevronsUpDownIcon } from "~/ui/icons/chevrons-up-down-icon";
 import { Select, createListCollection } from "~/ui/select";
 
-type CookieAdvancedFieldsProps = {
+export const CookieAdvancedFields: Component<{
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   cookie?: chrome.cookies.Cookie;
-};
-
-export const CookieAdvancedFields: Component<CookieAdvancedFieldsProps> = (
-  props,
-) => {
+}> = (props) => {
   const { t } = useI18n();
 
   const onOpenChange: ComponentProps<typeof Collapsible.Root>["onOpenChange"] =

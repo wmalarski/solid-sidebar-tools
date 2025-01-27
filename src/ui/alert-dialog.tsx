@@ -4,16 +4,14 @@ import { Button, type ButtonProps } from "./button";
 import { Drawer } from "./drawer";
 import type { OpenChangeDetails } from "./styled/combobox";
 
-type AlertDialogProps = {
+export const AlertDialog: Component<{
   isOpen: boolean;
   title: string;
   colorPalette?: ButtonProps["colorPalette"];
   description: string;
   onConfirm: () => void;
   onIsOpenChange: (isOpen: boolean) => void;
-};
-
-export const AlertDialog: Component<AlertDialogProps> = (props) => {
+}> = (props) => {
   const { t } = useI18n();
 
   const onOpenChange = (details: OpenChangeDetails) => {

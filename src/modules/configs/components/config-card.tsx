@@ -15,12 +15,10 @@ import { saveCookie } from "../../cookies/services/cookies";
 import type { SavedConfig } from "../services/storage";
 import { ConfigCardMenu } from "./config-card-menu";
 
-type ConfigCardProps = {
+export const ConfigCard: Component<{
   config: SavedConfig;
   value?: string;
-};
-
-export const ConfigCard: Component<ConfigCardProps> = (props) => {
+}> = (props) => {
   const currentUrlContext = useCurrentUrlContext();
   const formId = createMemo(() => `config-form-${props.config.name}`);
 
@@ -106,12 +104,10 @@ const ConfigCardHeader: Component<ParentProps> = (props) => {
   );
 };
 
-type ConfigCardFooterProps = {
+const ConfigCardFooter: Component<{
   formId: string;
   isDirty: boolean;
-};
-
-const ConfigCardFooter: Component<ConfigCardFooterProps> = (props) => {
+}> = (props) => {
   const { t } = useI18n();
 
   return (
@@ -123,11 +119,9 @@ const ConfigCardFooter: Component<ConfigCardFooterProps> = (props) => {
   );
 };
 
-type ConfigCardHeadingProps = {
+const ConfigCardHeading: Component<{
   name: string;
-};
-
-const ConfigCardHeading: Component<ConfigCardHeadingProps> = (props) => {
+}> = (props) => {
   const { t } = useI18n();
 
   return (

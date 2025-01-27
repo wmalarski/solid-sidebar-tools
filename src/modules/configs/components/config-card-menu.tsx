@@ -20,13 +20,11 @@ const DELETE_VALUE = "delete";
 const UPDATE_VALUE = "update";
 const ADVANCED_VALUE = "advanced";
 
-type ConfigCardMenuProps = {
+export const ConfigCardMenu: Component<{
   config: SavedConfig;
   showAdvanced: boolean;
   onShowAdvancedClick: () => void;
-};
-
-export const ConfigCardMenu: Component<ConfigCardMenuProps> = (props) => {
+}> = (props) => {
   const { t } = useI18n();
 
   const [isDeleteOpen, setIsDeleteOpen] = createSignal(false);

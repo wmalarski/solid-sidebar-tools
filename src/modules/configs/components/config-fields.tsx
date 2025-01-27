@@ -10,13 +10,11 @@ export type ConfigFieldsData = {
   values: string[];
 };
 
-type ConfigRadioValuesProps = {
+const ConfigRadioValues: Component<{
   config: ConfigFieldsData;
   value?: string;
   onValueChange: (value: string) => void;
-};
-
-const ConfigRadioValues: Component<ConfigRadioValuesProps> = (props) => {
+}> = (props) => {
   const { t } = useI18n();
 
   const value = createMemo(() => {
@@ -62,13 +60,11 @@ const ConfigRadioValues: Component<ConfigRadioValuesProps> = (props) => {
   );
 };
 
-type CustomValueFieldProps = {
+const CustomValueField: Component<{
   isCustom: boolean;
   value?: string;
   ref: Field.InputProps["ref"];
-};
-
-const CustomValueField: Component<CustomValueFieldProps> = (props) => {
+}> = (props) => {
   const { t } = useI18n();
 
   return (
@@ -88,12 +84,10 @@ const CustomValueField: Component<CustomValueFieldProps> = (props) => {
   );
 };
 
-type ConfigFieldsProps = {
+export const ConfigFields: Component<{
   config: ConfigFieldsData;
   value?: string;
-};
-
-export const ConfigFields: Component<ConfigFieldsProps> = (props) => {
+}> = (props) => {
   const [inputRef, setInputRef] = createSignal<HTMLInputElement>();
 
   const [isCustomSelected, setIsCustomSelected] = createSignal(false);

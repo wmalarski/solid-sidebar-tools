@@ -10,16 +10,12 @@ import { Drawer } from "~/ui/drawer";
 import type { OpenChangeDetails } from "~/ui/styled/combobox";
 import { useCookiesContext } from "../../cookies/contexts/cookies-context";
 
-type UpdateConfigDialogProps = {
+export const UpdateConfigDialog: Component<{
   isOpen: boolean;
   onIsOpenChange: (isOpen: boolean) => void;
   initialData: SavedConfig;
   onSubmit: (data: ConfigFormData) => void;
-};
-
-export const UpdateConfigDialog: Component<UpdateConfigDialogProps> = (
-  props,
-) => {
+}> = (props) => {
   const { t } = useI18n();
 
   const cookiesContext = useCookiesContext();

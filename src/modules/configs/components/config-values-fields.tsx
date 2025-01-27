@@ -32,13 +32,9 @@ const createConfigValuesState = (initialValues: string[] = []) => {
   return { entries, addInput, removeInput };
 };
 
-type ConfigValuesFieldsProps = {
+export const ConfigValuesFields: Component<{
   initialValues?: string[];
-};
-
-export const ConfigValuesFields: Component<ConfigValuesFieldsProps> = (
-  props,
-) => {
+}> = (props) => {
   const { t } = useI18n();
 
   const [setParent] = createAutoAnimate({ duration: 150 });
