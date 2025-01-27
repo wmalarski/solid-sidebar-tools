@@ -10,8 +10,8 @@ import * as v from "valibot";
 import {
   ConfigNameTagInput,
   type ConfigValues,
-} from "~/modules/configs/components/config-name-tag-input";
-import { ConfigValuesFields } from "~/modules/configs/components/config-values-fields";
+} from "~/modules/configs/dialogs/config-name-tag-input";
+import { ConfigValuesFields } from "~/modules/configs/dialogs/config-values-fields";
 
 export type ConfigFormData = {
   name: string;

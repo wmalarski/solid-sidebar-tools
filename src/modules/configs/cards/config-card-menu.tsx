@@ -6,15 +6,15 @@ import {
 } from "solid-js";
 import { HStack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import type { ConfigFormData } from "~/modules/configs/components/config-form";
 import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
+import type { ConfigFormData } from "~/modules/configs/dialogs/config-form";
 import { AlertDialog } from "~/ui/alert-dialog";
 import { PencilIcon } from "~/ui/icons/pencil-icon";
 import { SlidersHorizontalIcon } from "~/ui/icons/sliders-horizontal-icon";
 import { TrashIcon } from "~/ui/icons/trash-icon";
 import { Menu } from "~/ui/menu";
+import { UpdateConfigDialog } from "../dialogs/update-config-dialog";
 import type { SavedConfig } from "../services/storage";
-import { UpdateConfigDialog } from "./update-config-dialog";
 
 const DELETE_VALUE = "delete";
 const UPDATE_VALUE = "update";

@@ -1,11 +1,11 @@
 import { type Component, For, createMemo } from "solid-js";
 import { Flex, Grid } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
+import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
 import {
   CardButtonAddConfigDialog,
   IconButtonAddConfigDialog,
-} from "~/modules/configs/components/add-config-dialog";
-import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
+} from "~/modules/configs/dialogs/add-config-dialog";
 import { useCookiesContext } from "~/modules/cookies/contexts/cookies-context";
 import { Heading } from "~/ui/heading";
 import { ConfigCard } from "./config-card";

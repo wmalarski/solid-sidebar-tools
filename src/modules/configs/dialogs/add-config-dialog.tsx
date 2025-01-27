@@ -1,11 +1,11 @@
 import { type Component, type ParentProps, createSignal } from "solid-js";
 import { css } from "styled-system/css";
 import { useI18n } from "~/modules/common/contexts/i18n";
+import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
 import {
   ConfigForm,
   type ConfigFormData,
-} from "~/modules/configs/components/config-form";
-import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
+} from "~/modules/configs/dialogs/config-form";
 import type { SavedConfig } from "~/modules/configs/services/storage";
 import { useCookiesContext } from "~/modules/cookies/contexts/cookies-context";
 import { Button } from "~/ui/button";
