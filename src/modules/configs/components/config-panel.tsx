@@ -1,19 +1,19 @@
 import { type Component, For, createMemo } from "solid-js";
 import { Flex, Grid } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
-import { Heading } from "~/ui/heading";
-import { ConfigCard } from "../../configs/components/config-card";
 import {
-  CardButtonAddCookieDialog,
-  IconButtonAddCookieDialog,
-} from "./add-cookie-dialog";
-import { useCookiesContext } from "./cookies-context";
+  CardButtonAddConfigDialog,
+  IconButtonAddConfigDialog,
+} from "~/modules/configs/components/add-config-dialog";
+import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
+import { useCookiesContext } from "~/modules/cookies/contexts/cookies-context";
+import { Heading } from "~/ui/heading";
+import { ConfigCard } from "./config-card";
 
-export const CookiesPanel: Component = () => {
+export const ConfigsPanel: Component = () => {
   const { t } = useI18n();
 
-  const savedCookies = useSavedConfigsContext();
+  const savedConfigs = useSavedConfigsContext();
   const cookiesContext = useCookiesContext();
 
   const tabCookiesMap = createMemo(() => {
@@ -26,12 +26,12 @@ export const CookiesPanel: Component = () => {
     <Flex flexDirection="column" px={2} gap={4}>
       <Grid gridTemplateColumns="1fr auto" gap={4} alignItems="center">
         <Heading fontSize="lg">{t("cookies.list.cookies")}</Heading>
-        <IconButtonAddCookieDialog />
+        <IconButtonAddConfigDialog kind="cookie" />
       </Grid>
       <Flex flexDirection="column" gap={4}>
         <For
-          each={savedCookies().get()}
-          fallback={<CardButtonAddCookieDialog />}
+          each={savedConfigs().get()}
+          fallback={<CardButtonAddConfigDialog kind="cookie" />}
         >
           {(cookie) => (
             <ConfigCard

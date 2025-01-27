@@ -4,19 +4,20 @@ import {
   ConfigForm,
   type ConfigFormData,
 } from "~/modules/configs/components/config-form";
+import type { SavedConfig } from "~/modules/configs/services/storage";
 import { Button } from "~/ui/button";
 import { Drawer } from "~/ui/drawer";
 import type { OpenChangeDetails } from "~/ui/styled/combobox";
-import { useCookiesContext } from "./cookies-context";
+import { useCookiesContext } from "../../cookies/contexts/cookies-context";
 
-type UpdateCookieDialogProps = {
+type UpdateConfigDialogProps = {
   isOpen: boolean;
   onIsOpenChange: (isOpen: boolean) => void;
-  initialData: ConfigFormData;
+  initialData: SavedConfig;
   onSubmit: (data: ConfigFormData) => void;
 };
 
-export const UpdateCookieDialog: Component<UpdateCookieDialogProps> = (
+export const UpdateConfigDialog: Component<UpdateConfigDialogProps> = (
   props,
 ) => {
   const { t } = useI18n();
@@ -24,7 +25,7 @@ export const UpdateCookieDialog: Component<UpdateCookieDialogProps> = (
   const cookiesContext = useCookiesContext();
 
   const formId = createMemo(
-    () => `update-cookie-form-${props.initialData.name}`,
+    () => `update-config-form-${props.initialData.name}`,
   );
 
   const onOpenChange = (details: OpenChangeDetails) => {
@@ -50,7 +51,11 @@ export const UpdateCookieDialog: Component<UpdateCookieDialogProps> = (
             <ConfigForm
               initialData={props.initialData}
               onSubmit={props.onSubmit}
-              configValues={cookiesContext().tabCookies}
+              configValues={
+                props.initialData.kind === "cookie"
+                  ? cookiesContext().tabCookies
+                  : []
+              }
               id={formId()}
             />
           </Drawer.Body>

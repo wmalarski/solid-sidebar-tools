@@ -3,9 +3,9 @@ import { css } from "styled-system/css";
 import { ExtensionOnly } from "~/modules/common/components/extension-only";
 import { CurrentUrlContextProvider } from "~/modules/common/contexts/current-url";
 import { useI18n } from "~/modules/common/contexts/i18n";
+import { ConfigsPanel } from "~/modules/configs/components/config-panel";
 import { SavedConfigsContextProvider } from "~/modules/configs/contexts/saved-configs";
-import { CookiesContextProvider } from "~/modules/cookies/components/cookies-context";
-import { CookiesPanel } from "~/modules/cookies/components/cookies-panel";
+import { CookiesContextProvider } from "~/modules/cookies/contexts/cookies-context";
 import { Heading } from "~/ui/heading";
 import { PocketKnifeIcon } from "~/ui/icons/pocket-knife-icon";
 import { Tabs } from "~/ui/tabs";
@@ -46,7 +46,7 @@ export const Homepage: Component = () => {
             <CurrentUrlContextProvider>
               <SavedConfigsContextProvider>
                 <CookiesContextProvider>
-                  <CookiesPanel />
+                  <ConfigsPanel />
                 </CookiesContextProvider>
               </SavedConfigsContextProvider>
             </CurrentUrlContextProvider>

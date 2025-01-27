@@ -6,20 +6,23 @@ import {
   type ConfigFormData,
 } from "~/modules/configs/components/config-form";
 import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
+import type { SavedConfig } from "~/modules/configs/services/storage";
 import { Button } from "~/ui/button";
 import { Drawer } from "~/ui/drawer";
 import { IconButton } from "~/ui/icon-button";
 import { PlusIcon } from "~/ui/icons/plus-icon";
 import type { OpenChangeDetails } from "~/ui/styled/combobox";
-import { useCookiesContext } from "./cookies-context";
+import { useCookiesContext } from "../../cookies/contexts/cookies-context";
 
-export const IconButtonAddCookieDialog: Component = () => {
+export const IconButtonAddConfigDialog: Component<{
+  kind: SavedConfig["kind"];
+}> = (props) => {
   const { t } = useI18n();
 
-  const formId = "icon-add-cookie-form";
+  const formId = "icon-add-config-form";
 
   return (
-    <CookieDialogNoTrigger formId={formId}>
+    <ConfigDialogNoTrigger formId={formId} kind={props.kind}>
       <Drawer.Trigger
         asChild={(triggerProps) => (
           <IconButton size="xs" {...triggerProps()}>
@@ -30,17 +33,19 @@ export const IconButtonAddCookieDialog: Component = () => {
           </IconButton>
         )}
       />
-    </CookieDialogNoTrigger>
+    </ConfigDialogNoTrigger>
   );
 };
 
-export const CardButtonAddCookieDialog: Component = () => {
+export const CardButtonAddConfigDialog: Component<{
+  kind: SavedConfig["kind"];
+}> = (props) => {
   const { t } = useI18n();
 
-  const formId = "card-add-cookie-form";
+  const formId = "card-add-config-form";
 
   return (
-    <CookieDialogNoTrigger formId={formId}>
+    <ConfigDialogNoTrigger formId={formId} kind={props.kind}>
       <Drawer.Trigger
         asChild={(triggerProps) => (
           <Button
@@ -53,20 +58,21 @@ export const CardButtonAddCookieDialog: Component = () => {
           </Button>
         )}
       />
-    </CookieDialogNoTrigger>
+    </ConfigDialogNoTrigger>
   );
 };
 
-type CookieDialogNoTriggerProps = ParentProps<{
+type ConfigDialogNoTriggerProps = ParentProps<{
   formId: string;
+  kind: SavedConfig["kind"];
 }>;
 
-const CookieDialogNoTrigger: Component<CookieDialogNoTriggerProps> = (
+const ConfigDialogNoTrigger: Component<ConfigDialogNoTriggerProps> = (
   props,
 ) => {
   const { t } = useI18n();
 
-  const savedCookies = useSavedConfigsContext();
+  const savedConfigs = useSavedConfigsContext();
   const cookiesContext = useCookiesContext();
 
   const [isOpen, setIsOpen] = createSignal(false);
@@ -76,7 +82,7 @@ const CookieDialogNoTrigger: Component<CookieDialogNoTriggerProps> = (
   };
 
   const onSubmit = (data: ConfigFormData) => {
-    savedCookies().add({ ...data, kind: "cookie" });
+    savedConfigs().add({ ...data, kind: props.kind });
     setIsOpen(false);
   };
 
@@ -98,7 +104,9 @@ const CookieDialogNoTrigger: Component<CookieDialogNoTriggerProps> = (
           </Drawer.Header>
           <Drawer.Body>
             <ConfigForm
-              configValues={cookiesContext().tabCookies}
+              configValues={
+                props.kind === "cookie" ? cookiesContext().tabCookies : []
+              }
               onSubmit={onSubmit}
               id={props.formId}
             />

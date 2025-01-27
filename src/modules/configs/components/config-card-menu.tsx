@@ -13,8 +13,8 @@ import { PencilIcon } from "~/ui/icons/pencil-icon";
 import { SlidersHorizontalIcon } from "~/ui/icons/sliders-horizontal-icon";
 import { TrashIcon } from "~/ui/icons/trash-icon";
 import { Menu } from "~/ui/menu";
-import { UpdateCookieDialog } from "../../cookies/components/update-cookie-dialog";
 import type { SavedConfig } from "../services/storage";
+import { UpdateConfigDialog } from "./update-config-dialog";
 
 const DELETE_VALUE = "delete";
 const UPDATE_VALUE = "update";
@@ -95,7 +95,7 @@ export const ConfigCardMenu: Component<ConfigCardMenuProps> = (props) => {
           </Menu.Content>
         </Menu.Positioner>
       </Menu.Root>
-      <UpdateCookieDialog
+      <UpdateConfigDialog
         initialData={props.config}
         isOpen={isUpdateOpen()}
         onIsOpenChange={setIsUpdateOpen}
