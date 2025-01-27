@@ -14,7 +14,7 @@ import {
   onSavedConfigChange,
   type SavedConfig,
   setSavedConfig,
-} from "../../configs/services/storage";
+} from "../services/storage";
 
 const createSavedConfigsContext = (url: string) => {
   const [savedConfigs, { mutate }] = createResource(

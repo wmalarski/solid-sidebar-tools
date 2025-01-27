@@ -6,12 +6,12 @@ import { flex } from "styled-system/patterns";
 import * as v from "valibot";
 import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";
 import { useI18n } from "~/modules/common/contexts/i18n";
+import { reloadChromeTab } from "~/modules/common/services/tabs";
 import { ConfigFields } from "~/modules/configs/components/config-fields";
 import { CookieAdvancedFields } from "~/modules/cookies/components/cookie-advanced-fields";
+import { saveCookie } from "~/modules/cookies/services/cookies";
 import { Button } from "~/ui/button";
 import { Card } from "~/ui/card";
-import { reloadChromeTab } from "../../common/services/tabs";
-import { saveCookie } from "../../cookies/services/cookies";
 import type { SavedConfig } from "../services/storage";
 import { ConfigCardMenu } from "./config-card-menu";
 

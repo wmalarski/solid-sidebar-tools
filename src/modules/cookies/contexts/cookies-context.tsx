@@ -8,7 +8,6 @@ import {
   useContext,
 } from "solid-js";
 import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";
-import {} from "../../configs/services/storage";
 import { getChromeTabCookies } from "../services/cookies";
 
 const createCookiesContext = (url: string) => {

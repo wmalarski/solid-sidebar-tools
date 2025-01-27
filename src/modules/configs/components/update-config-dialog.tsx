@@ -5,10 +5,10 @@ import {
   type ConfigFormData,
 } from "~/modules/configs/components/config-form";
 import type { SavedConfig } from "~/modules/configs/services/storage";
+import { useCookiesContext } from "~/modules/cookies/contexts/cookies-context";
 import { Button } from "~/ui/button";
 import { Drawer } from "~/ui/drawer";
 import type { OpenChangeDetails } from "~/ui/styled/combobox";
-import { useCookiesContext } from "../../cookies/contexts/cookies-context";
 
 export const UpdateConfigDialog: Component<{
   isOpen: boolean;
