@@ -1,18 +1,18 @@
 import type { Component } from "solid-js";
 import {
   type Accessor,
+  type ParentProps,
   createContext,
   createMemo,
   createResource,
   onCleanup,
-  type ParentProps,
   useContext,
 } from "solid-js";
 import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";
 import {
+  type SavedConfig,
   getSavedConfig,
   onSavedConfigChange,
-  type SavedConfig,
   setSavedConfig,
 } from "../services/storage";
 

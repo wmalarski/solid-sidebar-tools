@@ -1,6 +1,6 @@
 import { decode } from "decode-formdata";
 import type { Component, ComponentProps, ParentProps } from "solid-js";
-import { createMemo, createSignal, Show } from "solid-js";
+import { Show, createMemo, createSignal } from "solid-js";
 import { Flex } from "styled-system/jsx";
 import { flex } from "styled-system/patterns";
 import * as v from "valibot";

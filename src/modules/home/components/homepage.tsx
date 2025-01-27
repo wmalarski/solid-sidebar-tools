@@ -14,7 +14,7 @@ export const Homepage: Component = () => {
   const { t } = useI18n();
 
   const options = createMemo(() => [
-    { id: "cookies", label: t("cookies.list.cookies") },
+    { id: "cookies", label: t("configs.list.heading") },
   ]);
 
   return (
