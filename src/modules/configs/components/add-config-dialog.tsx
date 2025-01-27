@@ -17,8 +17,6 @@ import { useCookiesContext } from "../../cookies/contexts/cookies-context";
 export const IconButtonAddConfigDialog: Component<{
   kind: SavedConfig["kind"];
 }> = (props) => {
-  const { t } = useI18n();
-
   const formId = "icon-add-config-form";
 
   return (
@@ -27,7 +25,7 @@ export const IconButtonAddConfigDialog: Component<{
         asChild={(triggerProps) => (
           <IconButton size="xs" {...triggerProps()}>
             <span class={css({ srOnly: true })}>
-              {t("cookies.form.addNewCookie")}
+              <KindText kind={props.kind} />
             </span>
             <PlusIcon />
           </IconButton>
@@ -40,8 +38,6 @@ export const IconButtonAddConfigDialog: Component<{
 export const CardButtonAddConfigDialog: Component<{
   kind: SavedConfig["kind"];
 }> = (props) => {
-  const { t } = useI18n();
-
   const formId = "card-add-config-form";
 
   return (
@@ -54,7 +50,7 @@ export const CardButtonAddConfigDialog: Component<{
             {...triggerProps({ class: css({ h: "32" }) })}
           >
             <PlusIcon />
-            {t("cookies.form.addNewCookie")}
+            <KindText kind={props.kind} />
           </Button>
         )}
       />
@@ -97,7 +93,9 @@ const ConfigDialogNoTrigger: Component<
       <Drawer.Positioner>
         <Drawer.Content>
           <Drawer.Header>
-            <Drawer.Title>{t("cookies.form.addNewCookie")}</Drawer.Title>
+            <Drawer.Title>
+              <KindText kind={props.kind} />
+            </Drawer.Title>
             <Drawer.XClose />
           </Drawer.Header>
           <Drawer.Body>
@@ -118,5 +116,21 @@ const ConfigDialogNoTrigger: Component<
         </Drawer.Content>
       </Drawer.Positioner>
     </Drawer.Root>
+  );
+};
+
+const KindText: Component<{
+  kind: SavedConfig["kind"];
+}> = (props) => {
+  const { t } = useI18n();
+
+  return (
+    <>
+      {t(
+        props.kind === "cookie"
+          ? "configs.dialogs.addNewCookie"
+          : "configs.dialogs.addNewLocal",
+      )}
+    </>
   );
 };

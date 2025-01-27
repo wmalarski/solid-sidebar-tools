@@ -25,7 +25,7 @@ export const ConfigsPanel: Component = () => {
   return (
     <Flex flexDirection="column" px={2} gap={4}>
       <Grid gridTemplateColumns="1fr auto" gap={4} alignItems="center">
-        <Heading fontSize="lg">{t("cookies.list.cookies")}</Heading>
+        <Heading fontSize="lg">{t("configs.list.heading")}</Heading>
         <IconButtonAddConfigDialog kind="cookie" />
       </Grid>
       <Flex flexDirection="column" gap={4}>

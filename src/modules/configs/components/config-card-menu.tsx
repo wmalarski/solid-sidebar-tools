@@ -72,8 +72,8 @@ export const ConfigCardMenu: Component<{
                   <SlidersHorizontalIcon />
                   {t(
                     props.showAdvanced
-                      ? "cookies.list.hideAdvanced"
-                      : "cookies.list.showAdvanced",
+                      ? "configs.card.hideAdvanced"
+                      : "configs.card.showAdvanced",
                   )}
                 </HStack>
               </Menu.Item>
@@ -81,13 +81,13 @@ export const ConfigCardMenu: Component<{
             <Menu.Item value={UPDATE_VALUE}>
               <HStack gap="2">
                 <PencilIcon />
-                {t("cookies.list.update")}
+                {t("common.update")}
               </HStack>
             </Menu.Item>
             <Menu.Item value={DELETE_VALUE}>
               <HStack gap="2">
                 <TrashIcon />
-                {t("cookies.list.delete")}
+                {t("common.delete")}
               </HStack>
             </Menu.Item>
           </Menu.Content>
@@ -100,12 +100,12 @@ export const ConfigCardMenu: Component<{
         onSubmit={onUpdateSubmit}
       />
       <AlertDialog
-        description={t("cookies.list.deleteDescription")}
+        description={t("configs.card.deleteDescription")}
         isOpen={isDeleteOpen()}
         onConfirm={onDeleteConfirm}
         onIsOpenChange={setIsDeleteOpen}
         colorPalette="red"
-        title={t("cookies.list.delete")}
+        title={t("common.delete")}
       />
     </>
   );

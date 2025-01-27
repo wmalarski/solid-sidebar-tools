@@ -31,11 +31,17 @@ const enDict = {
     success: "Success",
     options: "Options",
     delete: "Delete",
+    update: "Update",
   },
   configs: {
     fields: {
       value: "Value",
       custom: "Custom value",
+    },
+    dialogs: {
+      addNewCookie: "Add new cookie",
+      addNewLocal: "Add new localStorage config",
+      updateConfig: "Update",
     },
     form: {
       values: "Values",
@@ -44,29 +50,18 @@ const enDict = {
       name: "Name",
       selectName: "Select name",
     },
+    card: {
+      showAdvanced: "Show advanced",
+      hideAdvanced: "Hide advanced",
+      deleteDescription: "Delete config",
+      description: "Set '{{name}}' value",
+    },
+    list: {
+      heading: "Configs",
+    },
   },
   cookies: {
     form: {
-      addNewCookie: "Add new cookie",
-      addCookieValue: "Add cookie value",
-      cookies: "Cookie values:",
-      name: "Cookie name",
-      selectName: "Select cookie name",
-      delete: "Delete value",
-      cookieValue: "Value",
-      value: "Value {{index}}:",
-      updateCookie: "Update cookie",
-    },
-    list: {
-      cookies: "Cookies",
-      cardDescription: "Set '{{name}}' cookie value",
-      options: "Card options",
-      delete: "Delete",
-      update: "Update",
-      showAdvanced: "Show advanced",
-      hideAdvanced: "Hide advanced",
-      deleteDescription: "Delete cookie",
-      updateSuccess: "Cookie updated",
       domain: "Domain",
       expirationDate: "Expiration date",
       httpOnly: "HttpOnly",
@@ -74,9 +69,6 @@ const enDict = {
       sameSite: "SameSite",
       secure: "Secure",
     },
-  },
-  locals: {
-    locals: "Locals",
   },
 };
 

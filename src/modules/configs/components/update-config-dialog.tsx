@@ -40,7 +40,7 @@ export const UpdateConfigDialog: Component<{
       <Drawer.Positioner>
         <Drawer.Content>
           <Drawer.Header>
-            <Drawer.Title>{t("cookies.form.updateCookie")}</Drawer.Title>
+            <Drawer.Title>{t("configs.dialogs.updateConfig")}</Drawer.Title>
             <Drawer.XClose />
           </Drawer.Header>
           <Drawer.Body>

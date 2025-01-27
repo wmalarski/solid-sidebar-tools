@@ -26,33 +26,33 @@ export const CookieAdvancedFields: Component<{
       <Collapsible.Content>
         <Flex flexDirection="column" gap={4}>
           <Field.Root w="full">
-            <Field.Label>{t("cookies.list.domain")}</Field.Label>
+            <Field.Label>{t("cookies.form.domain")}</Field.Label>
             <Field.Input
               size="xs"
-              placeholder={t("cookies.list.domain")}
+              placeholder={t("cookies.form.domain")}
               value={props.cookie?.domain}
               name="domain"
               autocomplete="off"
             />
           </Field.Root>
           <Field.Root w="full">
-            <Field.Label>{t("cookies.list.expirationDate")}</Field.Label>
+            <Field.Label>{t("cookies.form.expirationDate")}</Field.Label>
             <Field.Input
               size="xs"
-              placeholder={t("cookies.list.expirationDate")}
+              placeholder={t("cookies.form.expirationDate")}
               value={props.cookie?.expirationDate}
               name="expirationDate"
               autocomplete="off"
             />
           </Field.Root>
           <Checkbox checked={props.cookie?.httpOnly} name="httpOnly" size="sm">
-            {t("cookies.list.httpOnly")}
+            {t("cookies.form.httpOnly")}
           </Checkbox>
           <Field.Root w="full">
-            <Field.Label>{t("cookies.list.path")}</Field.Label>
+            <Field.Label>{t("cookies.form.path")}</Field.Label>
             <Field.Input
               size="xs"
-              placeholder={t("cookies.list.path")}
+              placeholder={t("cookies.form.path")}
               value={props.cookie?.path}
               name="path"
               autocomplete="off"
@@ -60,7 +60,7 @@ export const CookieAdvancedFields: Component<{
           </Field.Root>
           <SameSiteSelect />
           <Checkbox checked={props.cookie?.secure} name="secure" size="sm">
-            {t("cookies.list.secure")}
+            {t("cookies.form.secure")}
           </Checkbox>
         </Flex>
       </Collapsible.Content>

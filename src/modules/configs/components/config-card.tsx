@@ -128,7 +128,7 @@ const ConfigCardHeading: Component<{
     <Flex flexDirection="column" gap="2">
       <Card.Title>{props.name}</Card.Title>
       <Card.Description>
-        {t("cookies.list.cardDescription", { name: props.name })}
+        {t("configs.card.description", { name: props.name })}
       </Card.Description>
     </Flex>
   );
