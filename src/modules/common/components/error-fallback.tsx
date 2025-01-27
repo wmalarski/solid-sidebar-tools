@@ -4,9 +4,7 @@ import { flex } from "styled-system/patterns";
 import { Button } from "~/ui/button";
 import { Card } from "~/ui/card";
 import { XCircleIcon } from "~/ui/icons/x-circle-icon";
-import { Link } from "~/ui/link";
 import { useI18n } from "../contexts/i18n";
-import { paths } from "../utils/paths";
 
 export const ErrorFallback = (err: unknown, reset: VoidFunction) => {
   const { t } = useI18n();
@@ -18,7 +16,7 @@ export const ErrorFallback = (err: unknown, reset: VoidFunction) => {
   return (
     <div class={flex({ pt: "8", justifyContent: "center", width: "full" })}>
       <Card.Root maxW="md" w="full">
-        <Card.Header>
+        <Card.Header alignItems="center">
           <XCircleIcon
             class={css({ width: 10, height: 10, color: "colorPalette.error" })}
           />
@@ -29,11 +27,12 @@ export const ErrorFallback = (err: unknown, reset: VoidFunction) => {
             {/* biome-ignore lint/suspicious/noExplicitAny: <explanation> */}
             {t("error.description", { message: (err as any)?.message })}
           </span>
+        </Card.Body>
+        <Card.Footer>
           <Button size="xs" onClick={reset}>
             {t("error.reload")}
           </Button>
-          <Link href={paths.home}>{t("error.home")}</Link>
-        </Card.Body>
+        </Card.Footer>
       </Card.Root>
     </div>
   );

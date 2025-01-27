@@ -79,7 +79,6 @@ export const ConfigValuesFields: Component<{
               type="button"
               size="xs"
               disabled={shouldDisableAdd()}
-              variant="outline"
               {...tooltipProps({ onClick: onAddValueClick })}
             >
               <span class={css({ srOnly: true })}>
