@@ -1,7 +1,13 @@
 {
   "$schema": "https://unpkg.com/knip@5/schema.json",
-  "entry": ["src/index.tsx", "src/service-worker.ts"],
+  "entry": [
+    "src/index.tsx",
+    "src/service-worker.ts",
+    "panda.config.ts",
+    "src/ui/**/*.tsx"
+  ],
   "project": ["src/**/*.{ts,tsx}"],
+  "ignoreExportsUsedInFile": true,
   "vite": true,
   "postcss": true
 }
