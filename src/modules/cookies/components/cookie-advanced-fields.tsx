@@ -1,13 +1,11 @@
-import type { ListCollection } from "@ark-ui/solid";
-import { type Component, type ComponentProps, For, createMemo } from "solid-js";
+import type { Component, ComponentProps } from "solid-js";
 import { Flex } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Checkbox } from "~/ui/checkbox";
 import { Collapsible } from "~/ui/collapsible";
 import { Field } from "~/ui/field";
-import { CheckIcon } from "~/ui/icons/check-icon";
-import { ChevronsUpDownIcon } from "~/ui/icons/chevrons-up-down-icon";
-import { Select, createListCollection } from "~/ui/select";
+import { ExpirationDatePicker } from "./expiration-date-picker";
+import { SameSiteSelect } from "./same-site-select";
 
 export const CookieAdvancedFields: Component<{
   isOpen: boolean;
@@ -35,6 +33,7 @@ export const CookieAdvancedFields: Component<{
               autocomplete="off"
             />
           </Field.Root>
+          <ExpirationDatePicker />
           <Field.Root w="full">
             <Field.Label>{t("cookies.form.expirationDate")}</Field.Label>
             <Field.Input
@@ -45,9 +44,6 @@ export const CookieAdvancedFields: Component<{
               autocomplete="off"
             />
           </Field.Root>
-          <Checkbox checked={props.cookie?.httpOnly} name="httpOnly" size="sm">
-            {t("cookies.form.httpOnly")}
-          </Checkbox>
           <Field.Root w="full">
             <Field.Label>{t("cookies.form.path")}</Field.Label>
             <Field.Input
@@ -59,60 +55,14 @@ export const CookieAdvancedFields: Component<{
             />
           </Field.Root>
           <SameSiteSelect />
+          <Checkbox checked={props.cookie?.httpOnly} name="httpOnly" size="sm">
+            {t("cookies.form.httpOnly")}
+          </Checkbox>
           <Checkbox checked={props.cookie?.secure} name="secure" size="sm">
             {t("cookies.form.secure")}
           </Checkbox>
         </Flex>
       </Collapsible.Content>
     </Collapsible.Root>
-  );
-};
-
-const SameSiteSelect: Component = () => {
-  const collection = createMemo(
-    () =>
-      createListCollection({
-        items: [
-          { label: "React", value: "react" },
-          { label: "Solid", value: "solid" },
-          { label: "Svelte", value: "svelte" },
-          { label: "Vue", value: "vue" },
-        ],
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-      }) as unknown as ListCollection<any>,
-  );
-
-  return (
-    <Select.Root
-      name="sameSite"
-      positioning={{ sameWidth: true }}
-      width="2xs"
-      collection={collection()}
-    >
-      <Select.Label>Framework</Select.Label>
-      <Select.Control>
-        <Select.Trigger>
-          <Select.ValueText placeholder="Select a Framework" />
-          <ChevronsUpDownIcon />
-        </Select.Trigger>
-      </Select.Control>
-      <Select.Positioner>
-        <Select.Content>
-          <Select.ItemGroup>
-            <Select.ItemGroupLabel>Framework</Select.ItemGroupLabel>
-            <For each={collection().items}>
-              {(item) => (
-                <Select.Item item={item}>
-                  <Select.ItemText>{item.label}</Select.ItemText>
-                  <Select.ItemIndicator>
-                    <CheckIcon />
-                  </Select.ItemIndicator>
-                </Select.Item>
-              )}
-            </For>
-          </Select.ItemGroup>
-        </Select.Content>
-      </Select.Positioner>
-    </Select.Root>
   );
 };

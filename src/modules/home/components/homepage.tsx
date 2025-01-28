@@ -5,6 +5,7 @@ import { CurrentUrlContextProvider } from "~/modules/common/contexts/current-url
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { ConfigsPanel } from "~/modules/configs/cards/config-panel";
 import { SavedConfigsContextProvider } from "~/modules/configs/contexts/saved-configs";
+import { CookieAdvancedFields } from "~/modules/cookies/components/cookie-advanced-fields";
 import { CookiesContextProvider } from "~/modules/cookies/contexts/cookies-context";
 import { Heading } from "~/ui/heading";
 import { PocketKnifeIcon } from "~/ui/icons/pocket-knife-icon";
@@ -42,7 +43,26 @@ export const Homepage: Component = () => {
           <Tabs.Indicator />
         </Tabs.List>
         <Tabs.Content value="cookies">
-          <ExtensionOnly>
+          <ExtensionOnly
+            fallback={
+              <CookieAdvancedFields
+                isOpen
+                onOpenChange={() => void 0}
+                cookie={{
+                  domain: "",
+                  hostOnly: false,
+                  httpOnly: false,
+                  name: "name",
+                  path: "path",
+                  sameSite: "lax",
+                  secure: false,
+                  session: true,
+                  storeId: "",
+                  value: "Value",
+                }}
+              />
+            }
+          >
             <CurrentUrlContextProvider>
               <SavedConfigsContextProvider>
                 <CookiesContextProvider>
