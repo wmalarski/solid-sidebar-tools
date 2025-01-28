@@ -33,6 +33,9 @@ const enDict = {
     delete: "Delete",
     update: "Update",
     loading: "Loading...",
+    openDatePicker: "Open date picker",
+    previous: "Previous",
+    next: "Next",
   },
   configs: {
     fields: {

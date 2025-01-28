@@ -1,16 +1,48 @@
-import { type Component, Index } from "solid-js";
+import type { DateValue } from "@ark-ui/solid";
+import { type Component, createMemo, Index } from "solid-js";
 import { Portal } from "solid-js/web";
+import { css } from "styled-system/css";
+import { useI18n } from "~/modules/common/contexts/i18n";
+import { Button } from "~/ui/button";
 import { DatePicker } from "~/ui/date-picker";
+import { IconButton } from "~/ui/icon-button";
+import { CalendarDaysIcon } from "~/ui/icons/calendar-days-icon";
+import { ChevronLeftIcon } from "~/ui/icons/chevron-left-icon";
+import { ChevronRightIcon } from "~/ui/icons/chevron-right-icon";
+import { XIcon } from "~/ui/icons/x-icon";
+import { Input } from "~/ui/input";
 
-export const ExpirationDatePicker: Component<{ value?: number }> = () => {
+export const ExpirationDatePicker: Component<{ value?: number }> = (props) => {
+  const { t } = useI18n();
+
+  const value = createMemo(() => []);
+
   return (
-    <DatePicker.Root>
-      <DatePicker.Label>Label</DatePicker.Label>
+    <DatePicker.Root name="expirationDate" value={value()}>
+      <DatePicker.Label>{t("cookies.form.expirationDate")}</DatePicker.Label>
 
       <DatePicker.Control>
-        <DatePicker.Input />
-        <DatePicker.Trigger>📅</DatePicker.Trigger>
-        <DatePicker.ClearTrigger>Clear</DatePicker.ClearTrigger>
+        <DatePicker.Input
+          asChild={(inputProps) => <Input {...inputProps()} size="xs" />}
+        />
+        <DatePicker.Trigger
+          asChild={(triggerProps) => (
+            <IconButton {...triggerProps()} variant="outline" size="xs">
+              <span class={css({ srOnly: true })}>
+                {t("common.openDatePicker")}
+              </span>
+              <CalendarDaysIcon />
+            </IconButton>
+          )}
+        />
+        <DatePicker.ClearTrigger
+          asChild={(clearProps) => (
+            <IconButton {...clearProps()} variant="outline" size="xs">
+              <span class={css({ srOnly: true })}>{t("common.clear")}</span>
+              <XIcon />
+            </IconButton>
+          )}
+        />
       </DatePicker.Control>
 
       <Portal>
@@ -22,13 +54,7 @@ export const ExpirationDatePicker: Component<{ value?: number }> = () => {
               <DatePicker.Context>
                 {(context) => (
                   <>
-                    <DatePicker.ViewControl>
-                      <DatePicker.PrevTrigger>Prev</DatePicker.PrevTrigger>
-                      <DatePicker.ViewTrigger>
-                        <DatePicker.RangeText />
-                      </DatePicker.ViewTrigger>
-                      <DatePicker.NextTrigger>Next</DatePicker.NextTrigger>
-                    </DatePicker.ViewControl>
+                    <ViewControl />
 
                     <DatePicker.Table>
                       <DatePicker.TableHead>
@@ -49,11 +75,9 @@ export const ExpirationDatePicker: Component<{ value?: number }> = () => {
                             <DatePicker.TableRow>
                               <Index each={week()}>
                                 {(day) => (
-                                  <DatePicker.TableCell value={day()}>
-                                    <DatePicker.TableCellTrigger>
-                                      {day().day}
-                                    </DatePicker.TableCellTrigger>
-                                  </DatePicker.TableCell>
+                                  <TableCell
+                                    cell={{ label: day().day, value: day() }}
+                                  />
                                 )}
                               </Index>
                             </DatePicker.TableRow>
@@ -69,40 +93,12 @@ export const ExpirationDatePicker: Component<{ value?: number }> = () => {
             <DatePicker.View view="month">
               <DatePicker.Context>
                 {(context) => (
-                  <>
-                    <DatePicker.ViewControl>
-                      <DatePicker.PrevTrigger>Prev</DatePicker.PrevTrigger>
-                      <DatePicker.ViewTrigger>
-                        <DatePicker.RangeText />
-                      </DatePicker.ViewTrigger>
-                      <DatePicker.NextTrigger>Next</DatePicker.NextTrigger>
-                    </DatePicker.ViewControl>
-
-                    <DatePicker.Table>
-                      <DatePicker.TableBody>
-                        <Index
-                          each={context().getMonthsGrid({
-                            columns: 4,
-                            format: "short",
-                          })}
-                        >
-                          {(months) => (
-                            <DatePicker.TableRow>
-                              <Index each={months()}>
-                                {(month) => (
-                                  <DatePicker.TableCell value={month().value}>
-                                    <DatePicker.TableCellTrigger>
-                                      {month().label}
-                                    </DatePicker.TableCellTrigger>
-                                  </DatePicker.TableCell>
-                                )}
-                              </Index>
-                            </DatePicker.TableRow>
-                          )}
-                        </Index>
-                      </DatePicker.TableBody>
-                    </DatePicker.Table>
-                  </>
+                  <ViewSection
+                    cells={context().getMonthsGrid({
+                      columns: 4,
+                      format: "short",
+                    })}
+                  />
                 )}
               </DatePicker.Context>
             </DatePicker.View>
@@ -110,35 +106,11 @@ export const ExpirationDatePicker: Component<{ value?: number }> = () => {
             <DatePicker.View view="year">
               <DatePicker.Context>
                 {(context) => (
-                  <>
-                    <DatePicker.ViewControl>
-                      <DatePicker.PrevTrigger>Prev</DatePicker.PrevTrigger>
-                      <DatePicker.ViewTrigger>
-                        <DatePicker.RangeText />
-                      </DatePicker.ViewTrigger>
-                      <DatePicker.NextTrigger>Next</DatePicker.NextTrigger>
-                    </DatePicker.ViewControl>
-
-                    <DatePicker.Table>
-                      <DatePicker.TableBody>
-                        <Index each={context().getYearsGrid({ columns: 4 })}>
-                          {(years) => (
-                            <DatePicker.TableRow>
-                              <Index each={years()}>
-                                {(year) => (
-                                  <DatePicker.TableCell value={year().value}>
-                                    <DatePicker.TableCellTrigger>
-                                      {year().label}
-                                    </DatePicker.TableCellTrigger>
-                                  </DatePicker.TableCell>
-                                )}
-                              </Index>
-                            </DatePicker.TableRow>
-                          )}
-                        </Index>
-                      </DatePicker.TableBody>
-                    </DatePicker.Table>
-                  </>
+                  <ViewSection
+                    cells={context().getYearsGrid({
+                      columns: 4,
+                    })}
+                  />
                 )}
               </DatePicker.Context>
             </DatePicker.View>
@@ -146,5 +118,79 @@ export const ExpirationDatePicker: Component<{ value?: number }> = () => {
         </DatePicker.Positioner>
       </Portal>
     </DatePicker.Root>
+  );
+};
+
+const ViewControl: Component = () => {
+  const { t } = useI18n();
+
+  return (
+    <DatePicker.ViewControl>
+      <DatePicker.PrevTrigger
+        asChild={(triggerProps) => (
+          <IconButton {...triggerProps} variant="ghost" size="sm">
+            <span class={css({ srOnly: true })}>{t("common.previous")}</span>
+            <ChevronLeftIcon />
+          </IconButton>
+        )}
+      />
+      <DatePicker.ViewTrigger
+        asChild={(triggerProps) => (
+          <Button {...triggerProps()} variant="ghost" size="sm">
+            <DatePicker.RangeText />
+          </Button>
+        )}
+      />
+      <DatePicker.NextTrigger
+        asChild={(triggerProps) => (
+          <IconButton {...triggerProps} variant="ghost" size="sm">
+            <span class={css({ srOnly: true })}>{t("common.next")}</span>
+            <ChevronRightIcon />
+          </IconButton>
+        )}
+      />
+    </DatePicker.ViewControl>
+  );
+};
+
+type Cell = {
+  value: DateValue | number;
+  label: string | number;
+};
+
+const TableCell: Component<{
+  cell: Cell;
+}> = (props) => {
+  return (
+    <DatePicker.TableCell value={props.cell.value}>
+      <DatePicker.TableCellTrigger
+        asChild={(triggerProps) => (
+          <IconButton {...triggerProps()} variant="ghost" size="xs">
+            {props.cell.label}
+          </IconButton>
+        )}
+      />
+    </DatePicker.TableCell>
+  );
+};
+
+const ViewSection: Component<{ cells: Cell[][] }> = (props) => {
+  return (
+    <>
+      <ViewControl />
+      <DatePicker.Table>
+        <DatePicker.TableBody>
+          <Index each={props.cells}>
+            {(row) => (
+              <DatePicker.TableRow>
+                <Index each={row()}>
+                  {(cell) => <TableCell cell={cell()} />}
+                </Index>
+              </DatePicker.TableRow>
+            )}
+          </Index>
+        </DatePicker.TableBody>
+      </DatePicker.Table>
+    </>
   );
 };
