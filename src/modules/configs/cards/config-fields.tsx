@@ -5,7 +5,7 @@ import { RadioGroup } from "~/ui/radio-group";
 
 const CUSTOM_VALUE = "__custom__";
 
-export type ConfigFieldsData = {
+type ConfigFieldsData = {
   name: string;
   values: string[];
 };

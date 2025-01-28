@@ -7,7 +7,7 @@ import { Field } from "~/ui/field";
 import { IconButton } from "~/ui/icon-button";
 import { PlusIcon } from "~/ui/icons/plus-icon";
 import { TrashIcon } from "~/ui/icons/trash-icon";
-import { SimpleTooltip } from "~/ui/styled/tooltip";
+import { Tooltip } from "~/ui/tooltip";
 
 const createConfigValuesState = (initialValues: string[] = []) => {
   const nonEmptyInitialValues =
@@ -73,7 +73,7 @@ export const ConfigValuesFields: Component<{
         fontWeight="semibold"
       >
         {t("configs.form.values")}
-        <SimpleTooltip
+        <Tooltip.SimpleTooltip
           asChild={(tooltipProps) => (
             <IconButton
               type="button"
@@ -89,7 +89,7 @@ export const ConfigValuesFields: Component<{
           )}
         >
           {t("configs.form.addValue")}
-        </SimpleTooltip>
+        </Tooltip.SimpleTooltip>
       </Grid>
       <VStack ref={setParent} gap="4" w="full">
         <For each={inputsState().entries()}>
@@ -106,7 +106,7 @@ export const ConfigValuesFields: Component<{
                   name={`values[${index()}]`}
                   autocomplete="off"
                 />
-                <SimpleTooltip
+                <Tooltip.SimpleTooltip
                   asChild={(tooltipProps) => (
                     <IconButton
                       colorPalette="red"
@@ -125,7 +125,7 @@ export const ConfigValuesFields: Component<{
                   )}
                 >
                   {t("common.delete")}
-                </SimpleTooltip>
+                </Tooltip.SimpleTooltip>
               </HStack>
             </Field.Root>
           )}

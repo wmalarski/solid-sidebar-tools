@@ -32,6 +32,7 @@ const enDict = {
     options: "Options",
     delete: "Delete",
     update: "Update",
+    loading: "Loading...",
   },
   configs: {
     fields: {

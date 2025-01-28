@@ -1,5 +1,6 @@
-import { mergeProps, splitProps } from "solid-js";
+import { createMemo, splitProps } from "solid-js";
 import { styled } from "styled-system/jsx";
+import { useI18n } from "~/modules/common/contexts/i18n";
 import {
   Spinner as StyledSpinner,
   type SpinnerProps as StyledSpinnerProps,
@@ -15,8 +16,10 @@ interface SpinnerProps extends StyledSpinnerProps {
 }
 
 export const Spinner = (props: SpinnerProps) => {
-  const [_localProps, rootProps] = splitProps(props, ["label"]);
-  const localProps = mergeProps({ label: "Loading..." }, _localProps);
+  const { t } = useI18n();
+
+  const [localProps, rootProps] = splitProps(props, ["label"]);
+  const label = createMemo(() => localProps.label ?? t("common.loading"));
 
   return (
     <StyledSpinner
@@ -24,7 +27,7 @@ export const Spinner = (props: SpinnerProps) => {
       borderLeftColor="transparent"
       {...rootProps}
     >
-      <styled.span srOnly>{localProps.label}</styled.span>
+      <styled.span srOnly>{label()}</styled.span>
     </StyledSpinner>
   );
 };

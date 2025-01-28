@@ -3,7 +3,7 @@ import { CheckIcon } from "./icons/check-icon";
 import { MinusIcon } from "./icons/minus-icon";
 import * as StyledCheckbox from "./styled/checkbox";
 
-export interface CheckboxProps extends StyledCheckbox.RootProps {}
+interface CheckboxProps extends StyledCheckbox.RootProps {}
 
 export const Checkbox = (props: CheckboxProps) => {
   const getChildren = children(() => props.children);
