@@ -1,4 +1,5 @@
 import type { DateValue } from "@ark-ui/solid";
+import * as datepicker from "@zag-js/date-picker";
 import { type Component, createMemo, Index } from "solid-js";
 import { Portal } from "solid-js/web";
 import { css } from "styled-system/css";
@@ -15,7 +16,9 @@ import { Input } from "~/ui/input";
 export const ExpirationDatePicker: Component<{ value?: number }> = (props) => {
   const { t } = useI18n();
 
-  const value = createMemo(() => []);
+  const value = createMemo(() =>
+    props.value ? [datepicker.parse(new Date(props.value))] : [],
+  );
 
   return (
     <DatePicker.Root name="expirationDate" value={value()}>
@@ -48,8 +51,6 @@ export const ExpirationDatePicker: Component<{ value?: number }> = (props) => {
       <Portal>
         <DatePicker.Positioner>
           <DatePicker.Content>
-            <DatePicker.YearSelect />
-            <DatePicker.MonthSelect />
             <DatePicker.View view="day">
               <DatePicker.Context>
                 {(context) => (

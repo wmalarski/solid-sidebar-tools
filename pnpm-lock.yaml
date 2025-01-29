@@ -14,9 +14,15 @@ importers:
       '@formkit/auto-animate':
         specifier: 1.0.0-beta.6
         version: 1.0.0-beta.6
+      '@internationalized/date':
+        specifier: ^3.7.0
+        version: 3.7.0
       '@solid-primitives/i18n':
         specifier: 2.2.0
         version: 2.2.0(solid-js@1.9.4)
+      '@zag-js/date-picker':
+        specifier: ^0.82.1
+        version: 0.82.1(@internationalized/date@3.7.0)
       decode-formdata:
         specifier: 0.8.0
         version: 0.8.0
