@@ -8,7 +8,11 @@ import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { reloadChromeTab } from "~/modules/common/services/tabs";
 import { ConfigFields } from "~/modules/configs/cards/config-fields";
-import { CookieAdvancedFields } from "~/modules/cookies/components/cookie-advanced-fields";
+import {
+  CookieAdvancedFields,
+  createCookieAdvancedFieldsParseInfo,
+  createCookieAdvancedFieldsSchema,
+} from "~/modules/cookies/components/cookie-advanced-fields";
 import { saveCookie } from "~/modules/cookies/services/cookies";
 import { Button } from "~/ui/button";
 import { Card } from "~/ui/card";
@@ -34,9 +38,17 @@ export const ConfigCard: Component<{
 
     const formData = new FormData(event.currentTarget);
 
+    const decoded = decode(
+      formData,
+      showAdvanced() ? createCookieAdvancedFieldsParseInfo() : {},
+    );
+
     const parsed = v.safeParse(
-      v.object({ value: v.string(), custom: v.optional(v.string()) }),
-      decode(formData),
+      v.intersect([
+        v.object({ value: v.string(), custom: v.optional(v.string()) }),
+        v.variant("kind", [createCookieAdvancedFieldsSchema()]),
+      ]),
+      decoded,
     );
 
     setIsDirty(false);
@@ -50,6 +62,12 @@ export const ConfigCard: Component<{
         url: currentUrlContext().url(),
         name: props.config.name,
         value: parsed.output.value,
+        domain: parsed.output.domain,
+        expirationDate: parsed.output.expirationDate ?? undefined,
+        httpOnly: parsed.output.httpOnly,
+        path: parsed.output.path,
+        sameSite: parsed.output.sameSite,
+        secure: parsed.output.secure,
       });
     }
 
@@ -75,6 +93,7 @@ export const ConfigCard: Component<{
         onChange={onFormChange}
         onSubmit={onFormSubmit}
       >
+        <input name="kind" value={props.config.kind} type="hidden" />
         <ConfigFields config={props.config} value={props.value} />
         <Show when={props.config.kind === "cookie"}>
           <CookieAdvancedFields

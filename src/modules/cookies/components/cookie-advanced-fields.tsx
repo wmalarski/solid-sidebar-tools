@@ -1,11 +1,38 @@
 import type { Component, ComponentProps } from "solid-js";
 import { Flex } from "styled-system/jsx";
+import * as v from "valibot";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Checkbox } from "~/ui/checkbox";
 import { Collapsible } from "~/ui/collapsible";
 import { Field } from "~/ui/field";
 import { ExpirationDatePicker } from "./expiration-date-picker";
 import { SameSiteSelect } from "./same-site-select";
+
+export const createCookieAdvancedFieldsSchema = () => {
+  return v.object({
+    kind: v.literal("cookie"),
+    domain: v.optional(v.string()),
+    expirationDate: v.optional(v.nullable(v.number())),
+    path: v.optional(v.string()),
+    sameSite: v.optional(
+      v.union([
+        v.literal("unspecified"),
+        v.literal("no_restriction"),
+        v.literal("lax"),
+        v.literal("strict"),
+      ]),
+    ),
+    httpOnly: v.optional(v.boolean()),
+    secure: v.optional(v.boolean()),
+  });
+};
+
+export const createCookieAdvancedFieldsParseInfo = () => {
+  return {
+    booleans: ["httpOnly", "secure"],
+    numbers: ["expirationDate"],
+  };
+};
 
 export const CookieAdvancedFields: Component<{
   isOpen: boolean;
@@ -20,7 +47,12 @@ export const CookieAdvancedFields: Component<{
     };
 
   return (
-    <Collapsible.Root open={props.isOpen} onOpenChange={onOpenChange}>
+    <Collapsible.Root
+      unmountOnExit
+      lazyMount
+      open={props.isOpen}
+      onOpenChange={onOpenChange}
+    >
       <Collapsible.Content>
         <Flex flexDirection="column" gap={4}>
           <Field.Root w="full">
@@ -34,16 +66,6 @@ export const CookieAdvancedFields: Component<{
             />
           </Field.Root>
           <ExpirationDatePicker />
-          <Field.Root w="full">
-            <Field.Label>{t("cookies.form.expirationDate")}</Field.Label>
-            <Field.Input
-              size="xs"
-              placeholder={t("cookies.form.expirationDate")}
-              value={props.cookie?.expirationDate}
-              name="expirationDate"
-              autocomplete="off"
-            />
-          </Field.Root>
           <Field.Root w="full">
             <Field.Label>{t("cookies.form.path")}</Field.Label>
             <Field.Input

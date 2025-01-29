@@ -3,9 +3,9 @@ import { css } from "styled-system/css";
 import { ExtensionOnly } from "~/modules/common/components/extension-only";
 import { CurrentUrlContextProvider } from "~/modules/common/contexts/current-url";
 import { useI18n } from "~/modules/common/contexts/i18n";
+import { ConfigCard } from "~/modules/configs/cards/config-card";
 import { ConfigsPanel } from "~/modules/configs/cards/config-panel";
 import { SavedConfigsContextProvider } from "~/modules/configs/contexts/saved-configs";
-import { CookieAdvancedFields } from "~/modules/cookies/components/cookie-advanced-fields";
 import { CookiesContextProvider } from "~/modules/cookies/contexts/cookies-context";
 import { Heading } from "~/ui/heading";
 import { PocketKnifeIcon } from "~/ui/icons/pocket-knife-icon";
@@ -45,20 +45,12 @@ export const Homepage: Component = () => {
         <Tabs.Content value="cookies">
           <ExtensionOnly
             fallback={
-              <CookieAdvancedFields
-                isOpen
-                onOpenChange={() => void 0}
-                cookie={{
-                  domain: "",
-                  hostOnly: false,
-                  httpOnly: false,
-                  name: "name",
-                  path: "path",
-                  sameSite: "lax",
-                  secure: false,
-                  session: true,
-                  storeId: "",
-                  value: "Value",
+              <ConfigCard
+                config={{
+                  id: 1,
+                  kind: "cookie",
+                  name: "Name",
+                  values: ["aa", "bbb"],
                 }}
               />
             }
