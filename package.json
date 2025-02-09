@@ -27,7 +27,7 @@
     "@biomejs/biome": "1.9.4",
     "@pandacss/dev": "^0.52.0",
     "@park-ui/panda-preset": "^0.43.1",
-    "@types/chrome": "^0.0.301",
+    "@types/chrome": "^0.0.304",
     "@types/node": "^22.13.1",
     "knip": "^5.43.6",
     "sonda": "^0.7.1",

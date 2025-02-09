@@ -1,6 +1,6 @@
 import type { DateValue } from "@ark-ui/solid";
 import * as datepicker from "@zag-js/date-picker";
-import { type Component, createMemo, Index } from "solid-js";
+import { type Component, Index, createMemo } from "solid-js";
 import { Portal } from "solid-js/web";
 import { css } from "styled-system/css";
 import { useI18n } from "~/modules/common/contexts/i18n";
