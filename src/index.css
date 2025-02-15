@@ -1,1 +1,8 @@
 @layer reset, base, tokens, recipes, utilities;
+
+.popup {
+  width: 350px;
+  height: 100%;
+  min-height: 500px;
+  padding-bottom: 0.5rem;
+}

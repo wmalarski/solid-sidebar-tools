@@ -15,7 +15,7 @@ export const manifestPlugin = (): NonNullable<UserConfig["plugins"]>[0] => {
         description: "",
         action: {
           default_title: "Click to open panel",
-          default_popup: "index.html",
+          default_popup: "popup.html",
         },
         background: {
           service_worker: workerFilename,

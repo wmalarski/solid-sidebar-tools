@@ -3,7 +3,6 @@ import { css } from "styled-system/css";
 import { ExtensionOnly } from "~/modules/common/components/extension-only";
 import { CurrentUrlContextProvider } from "~/modules/common/contexts/current-url";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import { ConfigCard } from "~/modules/configs/cards/config-card";
 import { ConfigsPanel } from "~/modules/configs/cards/config-panel";
 import { SavedConfigsContextProvider } from "~/modules/configs/contexts/saved-configs";
 import { CookiesContextProvider } from "~/modules/cookies/contexts/cookies-context";
@@ -43,18 +42,7 @@ export const Homepage: Component = () => {
           <Tabs.Indicator />
         </Tabs.List>
         <Tabs.Content value="cookies">
-          <ExtensionOnly
-            fallback={
-              <ConfigCard
-                config={{
-                  id: 1,
-                  kind: "cookie",
-                  name: "Name",
-                  values: ["aa", "bbb"],
-                }}
-              />
-            }
-          >
+          <ExtensionOnly>
             <CurrentUrlContextProvider>
               <SavedConfigsContextProvider>
                 <CookiesContextProvider>
