@@ -12,17 +12,23 @@ export type SavedConfig = {
 
 const STORAGE_CONFIG_KEY = "configs";
 
+type StorageShape = {
+  [STORAGE_CONFIG_KEY]: SavedConfig[];
+};
+
 export const getSavedConfig = async () => {
-  const data = await chrome.storage.local.get(STORAGE_CONFIG_KEY);
-  const result = objectToArray<SavedConfig>(data);
-  return result.map<SavedConfig>((entry) => ({
+  const data = await chrome.storage.local.get<StorageShape>(STORAGE_CONFIG_KEY);
+  const configs = data[STORAGE_CONFIG_KEY] ?? [];
+  return configs.map<SavedConfig>((entry) => ({
     ...entry,
     values: objectToArray(entry.values),
   }));
 };
 
 export const setSavedConfig = (configs: SavedConfig[]) => {
-  return chrome.storage.local.set({ [STORAGE_CONFIG_KEY]: configs });
+  return chrome.storage.local.set<StorageShape>({
+    [STORAGE_CONFIG_KEY]: configs,
+  });
 };
 
 export const onSavedConfigChange = (

@@ -3,11 +3,7 @@ import type { UserConfig } from "vite";
 export const manifestPlugin = (): NonNullable<UserConfig["plugins"]>[0] => {
   return {
     name: "chrome-extension-manifest-plugin",
-    generateBundle(_options, bundle) {
-      const workerFilename = Object.values(bundle).find(
-        (asset) => asset.name === "service-worker",
-      )?.fileName;
-
+    generateBundle(_options) {
       const manifest = {
         manifest_version: 3,
         name: "Solid Sidebar Tools",
@@ -16,9 +12,6 @@ export const manifestPlugin = (): NonNullable<UserConfig["plugins"]>[0] => {
         action: {
           default_title: "Click to open panel",
           default_popup: "popup.html",
-        },
-        background: {
-          service_worker: workerFilename,
         },
         side_panel: {
           default_path: "index.html",

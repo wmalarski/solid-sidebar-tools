@@ -1,6 +1,6 @@
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const objectToArray = <T>(object: any) => {
-  return Array.from<T>(Object.values(object));
+  return Array.isArray(object) ? object : Array.from<T>(Object.values(object));
 };
 
 type OnChangeListener = Parameters<

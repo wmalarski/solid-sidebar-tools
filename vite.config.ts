@@ -20,7 +20,7 @@ export default defineConfig({
     sourcemap: true,
     target: "esnext",
     rollupOptions: {
-      input: ["index.html", "popup.html", "src/service-worker.ts"],
+      input: ["index.html", "popup.html"],
     },
   },
 });
