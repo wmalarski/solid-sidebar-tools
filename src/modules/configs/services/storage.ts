@@ -10,26 +10,25 @@ export type SavedConfig = {
   values: string[];
 };
 
-export const getSavedConfig = async (url: string) => {
-  const data = await chrome.storage.local.get(url);
-  const mapping = data?.[url]?.configs ?? {};
-  const result = objectToArray<SavedConfig>(mapping);
+const STORAGE_CONFIG_KEY = "configs";
 
+export const getSavedConfig = async () => {
+  const data = await chrome.storage.local.get(STORAGE_CONFIG_KEY);
+  const result = objectToArray<SavedConfig>(data);
   return result.map<SavedConfig>((entry) => ({
     ...entry,
     values: objectToArray(entry.values),
   }));
 };
 
-export const setSavedConfig = (url: string, configs: SavedConfig[]) => {
-  return chrome.storage.local.set({ [url]: { configs } });
+export const setSavedConfig = (configs: SavedConfig[]) => {
+  return chrome.storage.local.set({ [STORAGE_CONFIG_KEY]: configs });
 };
 
 export const onSavedConfigChange = (
-  url: string,
   callback: (configs: SavedConfig[]) => void,
 ) => {
-  return onStorageChange(url, (change) => {
-    callback(change.newValue.configs as SavedConfig[]);
+  return onStorageChange(STORAGE_CONFIG_KEY, (change) => {
+    callback(change.newValue as SavedConfig[]);
   });
 };

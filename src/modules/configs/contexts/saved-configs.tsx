@@ -8,7 +8,6 @@ import {
   onCleanup,
   useContext,
 } from "solid-js";
-import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";
 import {
   type SavedConfig,
   getSavedConfig,
@@ -16,11 +15,8 @@ import {
   setSavedConfig,
 } from "../services/storage";
 
-const createSavedConfigsContext = (url: string) => {
-  const [savedConfigs, { mutate }] = createResource(
-    () => url,
-    (url) => getSavedConfig(url),
-  );
+const createSavedConfigsContext = () => {
+  const [savedConfigs, { mutate }] = createResource(() => getSavedConfig());
 
   const add = async (config: Omit<SavedConfig, "id">) => {
     const resolvedConfigs = savedConfigs() ?? [];
@@ -30,7 +26,7 @@ const createSavedConfigsContext = (url: string) => {
     );
     const newEntry = { id: maxId + 1, ...config };
     const updated = [...resolvedConfigs, newEntry];
-    await setSavedConfig(url, updated);
+    await setSavedConfig(updated);
   };
 
   const update = async (config: SavedConfig) => {
@@ -38,16 +34,16 @@ const createSavedConfigsContext = (url: string) => {
     const updated = resolvedConfigs.map((entry) =>
       entry.id === config.id ? config : entry,
     );
-    await setSavedConfig(url, updated);
+    await setSavedConfig(updated);
   };
 
   const remove = async (id: number) => {
     const resolvedConfigs = savedConfigs() ?? [];
     const updated = resolvedConfigs.filter((entry) => entry.id !== id);
-    await setSavedConfig(url, updated);
+    await setSavedConfig(updated);
   };
 
-  const subscription = onSavedConfigChange(url, mutate);
+  const subscription = onSavedConfigChange(mutate);
   onCleanup(() => subscription());
 
   return { get: savedConfigs, add, update, remove };
@@ -60,11 +56,7 @@ const SavedConfigsContext = createContext<
 });
 
 export const SavedConfigsContextProvider: Component<ParentProps> = (props) => {
-  const currentUrlContext = useCurrentUrlContext();
-
-  const value = createMemo(() =>
-    createSavedConfigsContext(currentUrlContext().url()),
-  );
+  const value = createMemo(() => createSavedConfigsContext());
 
   return (
     <SavedConfigsContext.Provider value={value}>

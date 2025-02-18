@@ -13,7 +13,10 @@ import { getChromeTabCookies } from "../services/cookies";
 const createCookiesContext = (url: string) => {
   const [cookies] = createResource(
     () => url,
-    (url) => getChromeTabCookies(url),
+    (url) => {
+      console.log("url", { url });
+      return getChromeTabCookies(url);
+    },
   );
 
   const get = createMemo(() => cookies() ?? []);

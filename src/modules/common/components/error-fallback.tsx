@@ -10,7 +10,7 @@ export const ErrorFallback = (err: unknown, reset: VoidFunction) => {
   const { t } = useI18n();
 
   onMount(() => {
-    console.error("ERROR", err);
+    console.error("ERROR", err, (err as Error).stack);
   });
 
   return (

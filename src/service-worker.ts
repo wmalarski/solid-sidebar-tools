@@ -15,3 +15,7 @@ chrome.sidePanel
     return setPoputHtml();
   })
   .catch((error) => console.error(error));
+
+// chrome.action.onClicked.addListener(() => {
+//   chrome.action.openPopup();
+// });

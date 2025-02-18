@@ -21,7 +21,7 @@
     "@zag-js/date-picker": "^0.82.1",
     "decode-formdata": "0.8.0",
     "solid-js": "^1.9.4",
-    "valibot": "1.0.0-rc.0"
+    "valibot": "1.0.0-rc.1"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -29,7 +29,7 @@
     "@park-ui/panda-preset": "^0.43.1",
     "@types/chrome": "^0.0.304",
     "@types/node": "^22.13.4",
-    "knip": "^5.44.1",
+    "knip": "^5.44.2",
     "sonda": "^0.7.1",
     "typescript": "~5.7.3",
     "vite": "^6.1.0",
@@ -41,9 +41,6 @@
     "node": ">=22"
   },
   "pnpm": {
-    "onlyBuiltDependencies": [
-      "@biomejs/biome",
-      "esbuild"
-    ]
+    "onlyBuiltDependencies": ["@biomejs/biome", "esbuild"]
   }
 }
