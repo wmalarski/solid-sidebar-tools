@@ -36,6 +36,12 @@ export const ConfigCard: Component<{
   const onFormSubmit: ComponentProps<"form">["onChange"] = async (event) => {
     event.preventDefault();
 
+    const url = currentUrlContext().url();
+
+    if (!url) {
+      return;
+    }
+
     const formData = new FormData(event.currentTarget);
 
     const decoded = decode(
@@ -59,7 +65,7 @@ export const ConfigCard: Component<{
 
     if (props.config.kind === "cookie") {
       await saveCookie({
-        url: currentUrlContext().url(),
+        url,
         name: props.config.name,
         value: parsed.output.value,
         domain: parsed.output.domain,

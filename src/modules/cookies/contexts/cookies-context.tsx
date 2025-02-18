@@ -10,13 +10,10 @@ import {
 import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";
 import { getChromeTabCookies } from "../services/cookies";
 
-const createCookiesContext = (url: string) => {
+const createCookiesContext = (url?: string) => {
   const [cookies] = createResource(
     () => url,
-    (url) => {
-      console.log("url", { url });
-      return getChromeTabCookies(url);
-    },
+    (url) => (url ? getChromeTabCookies(url) : []),
   );
 
   const get = createMemo(() => cookies() ?? []);

@@ -11,7 +11,7 @@ import {
 import { onCurrentUrlChange } from "../services/tabs";
 
 const createCurrentUrlContext = () => {
-  const [url, setUrl] = createSignal<string>("");
+  const [url, setUrl] = createSignal<string>();
 
   const subscription = onCurrentUrlChange(setUrl);
   onCleanup(() => subscription());

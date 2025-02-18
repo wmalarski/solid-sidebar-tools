@@ -8,17 +8,13 @@ const getUrlOrigin = (url: string) => {
   return new URL(url).origin;
 };
 
-const getCurrentChromeTab = async () => {
-  const [tab] = await chrome.tabs.query({
-    active: true,
-    lastFocusedWindow: true,
-  });
-  return tab;
+const getCurrentChromeTab = () => {
+  return chrome.tabs.getCurrent();
 };
 
 const getCurrentChromeTabUrl = async () => {
   const tab = await getCurrentChromeTab();
-  return tab.url;
+  return tab?.url;
 };
 
 type OnUpdatedListener = Parameters<
