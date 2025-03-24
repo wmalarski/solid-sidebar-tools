@@ -7,3 +7,7 @@ export const saveCookie = (
 ) => {
   return chrome.cookies.set(cookie);
 };
+
+export const removeCookie = (details: chrome.cookies.CookieDetails) => {
+  return chrome.cookies.remove(details);
+};

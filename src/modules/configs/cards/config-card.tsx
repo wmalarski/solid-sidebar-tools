@@ -7,13 +7,16 @@ import * as v from "valibot";
 import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { reloadChromeTab } from "~/modules/common/services/tabs";
-import { ConfigFields } from "~/modules/configs/cards/config-fields";
+import {
+  ConfigFields,
+  EMPTY_VALUE,
+} from "~/modules/configs/cards/config-fields";
 import {
   CookieAdvancedFields,
   createCookieAdvancedFieldsParseInfo,
   createCookieAdvancedFieldsSchema,
 } from "~/modules/cookies/components/cookie-advanced-fields";
-import { saveCookie } from "~/modules/cookies/services/cookies";
+import { removeCookie, saveCookie } from "~/modules/cookies/services/cookies";
 import { Button } from "~/ui/button";
 import { Card } from "~/ui/card";
 import type { SavedConfig } from "../services/storage";
@@ -59,15 +62,17 @@ export const ConfigCard: Component<{
 
     setIsDirty(false);
 
-    if (!parsed.success) {
+    if (!parsed.success || props.config.kind !== "cookie") {
       return;
     }
 
-    if (props.config.kind === "cookie") {
+    if (parsed.output.value === EMPTY_VALUE) {
+      await removeCookie({ name: props.config.name, url });
+    } else {
       await saveCookie({
         url,
         name: props.config.name,
-        value: parsed.output.value,
+        value: parsed.output.custom ?? parsed.output.value,
         domain: parsed.output.domain,
         expirationDate: parsed.output.expirationDate ?? undefined,
         httpOnly: parsed.output.httpOnly,

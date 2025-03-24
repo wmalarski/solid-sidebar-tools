@@ -41,6 +41,7 @@ const enDict = {
     fields: {
       value: "Value",
       custom: "Custom value",
+      clear: "Clear value",
     },
     dialogs: {
       addNewCookie: "Add new cookie",

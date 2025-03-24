@@ -11,6 +11,7 @@
     "=== LINTERS ===": "",
     "format-and-lint": "biome check .",
     "format-and-lint:fix": "biome check . --write",
+    "tsc": "tsc --noEmit",
     "knip": "knip"
   },
   "dependencies": {

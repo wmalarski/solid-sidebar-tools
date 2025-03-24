@@ -3,7 +3,8 @@ import { useI18n } from "~/modules/common/contexts/i18n";
 import { Field } from "~/ui/field";
 import { RadioGroup } from "~/ui/radio-group";
 
-const CUSTOM_VALUE = "__custom__";
+export const CUSTOM_VALUE = "__custom__";
+export const EMPTY_VALUE = "__empty__";
 
 type ConfigFieldsData = {
   name: string;
@@ -13,7 +14,7 @@ type ConfigFieldsData = {
 const ConfigRadioValues: Component<{
   config: ConfigFieldsData;
   value?: string;
-  onValueChange: (value: string) => void;
+  onValueChange: (value: string | null) => void;
 }> = (props) => {
   const { t } = useI18n();
 
@@ -56,6 +57,11 @@ const ConfigRadioValues: Component<{
         <RadioGroup.ItemText>{t("configs.fields.custom")}</RadioGroup.ItemText>
         <RadioGroup.ItemHiddenInput required />
       </RadioGroup.Item>
+      <RadioGroup.Item value={EMPTY_VALUE}>
+        <RadioGroup.ItemControl />
+        <RadioGroup.ItemText>{t("configs.fields.clear")}</RadioGroup.ItemText>
+        <RadioGroup.ItemHiddenInput required />
+      </RadioGroup.Item>
     </RadioGroup.Root>
   );
 };
@@ -92,7 +98,7 @@ export const ConfigFields: Component<{
 
   const [isCustomSelected, setIsCustomSelected] = createSignal(false);
 
-  const onValueChange = (value: string) => {
+  const onValueChange = (value: string | null) => {
     const isCustom = value === CUSTOM_VALUE;
     setIsCustomSelected(isCustom);
 
