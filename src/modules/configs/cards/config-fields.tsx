@@ -52,14 +52,14 @@ const ConfigRadioValues: Component<{
           <RadioGroup.ItemHiddenInput required />
         </RadioGroup.Item>
       ))}
-      <RadioGroup.Item value={CUSTOM_VALUE}>
-        <RadioGroup.ItemControl />
-        <RadioGroup.ItemText>{t("configs.fields.custom")}</RadioGroup.ItemText>
-        <RadioGroup.ItemHiddenInput required />
-      </RadioGroup.Item>
       <RadioGroup.Item value={EMPTY_VALUE}>
         <RadioGroup.ItemControl />
         <RadioGroup.ItemText>{t("configs.fields.clear")}</RadioGroup.ItemText>
+        <RadioGroup.ItemHiddenInput required />
+      </RadioGroup.Item>
+      <RadioGroup.Item value={CUSTOM_VALUE}>
+        <RadioGroup.ItemControl />
+        <RadioGroup.ItemText>{t("configs.fields.custom")}</RadioGroup.ItemText>
         <RadioGroup.ItemHiddenInput required />
       </RadioGroup.Item>
     </RadioGroup.Root>
@@ -84,7 +84,7 @@ const CustomValueField: Component<{
         autocomplete="off"
         disabled={!props.isCustom}
         required={props.isCustom}
-        value={props.isCustom ? props.value : ""}
+        value={props.isCustom && props.value ? props.value : ""}
       />
     </Field.Root>
   );
