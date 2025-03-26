@@ -1,10 +1,10 @@
 import type { Component } from "solid-js";
 import {
   type Accessor,
-  type ParentProps,
   createContext,
   createMemo,
   createResource,
+  type ParentProps,
   useContext,
 } from "solid-js";
 import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";

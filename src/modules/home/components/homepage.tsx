@@ -1,4 +1,4 @@
-import { type Component, For, createMemo } from "solid-js";
+import { type Component, createMemo, For } from "solid-js";
 import { css } from "styled-system/css";
 import { ExtensionOnly } from "~/modules/common/components/extension-only";
 import { CurrentUrlContextProvider } from "~/modules/common/contexts/current-url";
@@ -22,14 +22,14 @@ export const Homepage: Component = () => {
       <Tabs.Root defaultValue="cookies" pt={2}>
         <Tabs.List>
           <Heading
-            as="h1"
-            flexGrow={1}
-            display="flex"
-            gap={2}
-            pl={2}
-            pb={2}
             alignItems="center"
+            as="h1"
+            display="flex"
+            flexGrow={1}
             fontSize="xl"
+            gap={2}
+            pb={2}
+            pl={2}
           >
             <PocketKnifeIcon class={css({ color: "colorPalette.default" })} />
             {t("info.title")}

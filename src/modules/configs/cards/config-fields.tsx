@@ -1,4 +1,4 @@
-import { type Component, createMemo, createSignal } from "solid-js";
+import { type Component, createMemo, createSignal, For } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Field } from "~/ui/field";
 import { RadioGroup } from "~/ui/radio-group";
@@ -35,23 +35,25 @@ const ConfigRadioValues: Component<{
   return (
     <RadioGroup.Root
       name="value"
+      onValueChange={onValueChange}
       size="sm"
       value={value()}
-      onValueChange={onValueChange}
     >
-      {props.config.values.map((option) => (
-        <RadioGroup.Item value={option}>
-          <RadioGroup.ItemControl minW="4" />
-          <RadioGroup.ItemText
-            whiteSpace="nowrap"
-            overflow="hidden"
-            textOverflow="ellipsis"
-          >
-            {option}
-          </RadioGroup.ItemText>
-          <RadioGroup.ItemHiddenInput required />
-        </RadioGroup.Item>
-      ))}
+      <For each={props.config.values}>
+        {(option) => (
+          <RadioGroup.Item value={option}>
+            <RadioGroup.ItemControl minW="4" />
+            <RadioGroup.ItemText
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+            >
+              {option}
+            </RadioGroup.ItemText>
+            <RadioGroup.ItemHiddenInput required />
+          </RadioGroup.Item>
+        )}
+      </For>
       <RadioGroup.Item value={EMPTY_VALUE}>
         <RadioGroup.ItemControl />
         <RadioGroup.ItemText>{t("configs.fields.clear")}</RadioGroup.ItemText>
@@ -76,14 +78,14 @@ const CustomValueField: Component<{
   return (
     <Field.Root required w="full">
       <Field.Input
-        ref={props.ref}
-        placeholder={t("configs.fields.value")}
-        name="custom"
-        size="xs"
         aria-label={t("configs.fields.custom")}
         autocomplete="off"
         disabled={!props.isCustom}
+        name="custom"
+        placeholder={t("configs.fields.value")}
+        ref={props.ref}
         required={props.isCustom}
+        size="xs"
         value={props.isCustom && props.value ? props.value : ""}
       />
     </Field.Root>
@@ -111,12 +113,12 @@ export const ConfigFields: Component<{
     <>
       <ConfigRadioValues
         config={props.config}
-        value={props.value}
         onValueChange={onValueChange}
+        value={props.value}
       />
       <CustomValueField
-        ref={setInputRef}
         isCustom={isCustomSelected()}
+        ref={setInputRef}
         value={props.value}
       />
     </>

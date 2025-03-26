@@ -1,6 +1,6 @@
 import { decode } from "decode-formdata";
 import type { Component, ComponentProps, ParentProps } from "solid-js";
-import { Show, createMemo, createSignal } from "solid-js";
+import { createMemo, createSignal, Show } from "solid-js";
 import { Flex } from "styled-system/jsx";
 import { flex } from "styled-system/patterns";
 import * as v from "valibot";
@@ -54,7 +54,7 @@ export const ConfigCard: Component<{
 
     const parsed = v.safeParse(
       v.intersect([
-        v.object({ value: v.string(), custom: v.optional(v.string()) }),
+        v.object({ custom: v.optional(v.string()), value: v.string() }),
         v.variant("kind", [createCookieAdvancedFieldsSchema()]),
       ]),
       decoded,
@@ -70,15 +70,15 @@ export const ConfigCard: Component<{
       await removeCookie({ name: props.config.name, url });
     } else {
       await saveCookie({
-        url,
-        name: props.config.name,
-        value: parsed.output.custom ?? parsed.output.value,
         domain: parsed.output.domain,
         expirationDate: parsed.output.expirationDate ?? undefined,
         httpOnly: parsed.output.httpOnly,
+        name: props.config.name,
         path: parsed.output.path,
         sameSite: parsed.output.sameSite,
         secure: parsed.output.secure,
+        url,
+        value: parsed.output.custom ?? parsed.output.value,
       });
     }
 
@@ -104,7 +104,7 @@ export const ConfigCard: Component<{
         onChange={onFormChange}
         onSubmit={onFormSubmit}
       >
-        <input name="kind" value={props.config.kind} type="hidden" />
+        <input name="kind" type="hidden" value={props.config.kind} />
         <ConfigFields config={props.config} value={props.value} />
         <Show when={props.config.kind === "cookie"}>
           <CookieAdvancedFields
@@ -120,7 +120,7 @@ export const ConfigCard: Component<{
 
 const ConfigCardForm: Component<ComponentProps<"form">> = (props) => {
   return (
-    <Card.Body px={3} pb={2}>
+    <Card.Body pb={2} px={3}>
       <form class={flex({ flexDirection: "column", gap: 4 })} {...props} />
     </Card.Body>
   );
@@ -128,7 +128,7 @@ const ConfigCardForm: Component<ComponentProps<"form">> = (props) => {
 
 const ConfigCardHeader: Component<ParentProps> = (props) => {
   return (
-    <Card.Header p={3} display="grid" gridTemplateColumns="1fr auto">
+    <Card.Header display="grid" gridTemplateColumns="1fr auto" p={3}>
       {props.children}
     </Card.Header>
   );
@@ -141,8 +141,8 @@ const ConfigCardFooter: Component<{
   const { t } = useI18n();
 
   return (
-    <Card.Footer px={3} pt={1} pb={3} gap="3">
-      <Button size="xs" disabled={!props.isDirty} form={props.formId}>
+    <Card.Footer gap="3" pb={3} pt={1} px={3}>
+      <Button disabled={!props.isDirty} form={props.formId} size="xs">
         {t("common.save")}
       </Button>
     </Card.Footer>

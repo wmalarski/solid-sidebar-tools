@@ -1,8 +1,8 @@
 import {
   type Component,
   type ComponentProps,
-  Show,
   createSignal,
+  Show,
 } from "solid-js";
 import { HStack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
@@ -62,7 +62,7 @@ export const ConfigCardMenu: Component<{
 
   return (
     <>
-      <Menu.Root onSelect={onSelect} lazyMount unmountOnExit>
+      <Menu.Root lazyMount onSelect={onSelect} unmountOnExit>
         <Menu.IconTrigger />
         <Menu.Positioner>
           <Menu.Content>
@@ -100,11 +100,11 @@ export const ConfigCardMenu: Component<{
         onSubmit={onUpdateSubmit}
       />
       <AlertDialog
+        colorPalette="red"
         description={t("configs.card.deleteDescription")}
         isOpen={isDeleteOpen()}
         onConfirm={onDeleteConfirm}
         onIsOpenChange={setIsDeleteOpen}
-        colorPalette="red"
         title={t("common.delete")}
       />
     </>

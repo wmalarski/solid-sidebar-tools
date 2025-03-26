@@ -1,6 +1,6 @@
 import type { DateValue } from "@ark-ui/solid";
 import * as datepicker from "@zag-js/date-picker";
-import { type Component, Index, createMemo } from "solid-js";
+import { type Component, createMemo, Index } from "solid-js";
 import { Portal } from "solid-js/web";
 import { css } from "styled-system/css";
 import { useI18n } from "~/modules/common/contexts/i18n";
@@ -30,7 +30,7 @@ export const ExpirationDatePicker: Component<{ value?: number }> = (props) => {
         />
         <DatePicker.Trigger
           asChild={(triggerProps) => (
-            <IconButton {...triggerProps()} variant="outline" size="xs">
+            <IconButton {...triggerProps()} size="xs" variant="outline">
               <span class={css({ srOnly: true })}>
                 {t("common.openDatePicker")}
               </span>
@@ -40,7 +40,7 @@ export const ExpirationDatePicker: Component<{ value?: number }> = (props) => {
         />
         <DatePicker.ClearTrigger
           asChild={(clearProps) => (
-            <IconButton {...clearProps()} variant="outline" size="xs">
+            <IconButton {...clearProps()} size="xs" variant="outline">
               <span class={css({ srOnly: true })}>{t("common.clear")}</span>
               <XIcon />
             </IconButton>
@@ -129,7 +129,7 @@ const ViewControl: Component = () => {
     <DatePicker.ViewControl>
       <DatePicker.PrevTrigger
         asChild={(triggerProps) => (
-          <IconButton {...triggerProps} variant="ghost" size="sm">
+          <IconButton {...triggerProps} size="sm" variant="ghost">
             <span class={css({ srOnly: true })}>{t("common.previous")}</span>
             <ChevronLeftIcon />
           </IconButton>
@@ -137,14 +137,14 @@ const ViewControl: Component = () => {
       />
       <DatePicker.ViewTrigger
         asChild={(triggerProps) => (
-          <Button {...triggerProps()} variant="ghost" size="sm">
+          <Button {...triggerProps()} size="sm" variant="ghost">
             <DatePicker.RangeText />
           </Button>
         )}
       />
       <DatePicker.NextTrigger
         asChild={(triggerProps) => (
-          <IconButton {...triggerProps} variant="ghost" size="sm">
+          <IconButton {...triggerProps} size="sm" variant="ghost">
             <span class={css({ srOnly: true })}>{t("common.next")}</span>
             <ChevronRightIcon />
           </IconButton>
@@ -166,7 +166,7 @@ const TableCell: Component<{
     <DatePicker.TableCell value={props.cell.value}>
       <DatePicker.TableCellTrigger
         asChild={(triggerProps) => (
-          <IconButton {...triggerProps()} variant="ghost" size="xs">
+          <IconButton {...triggerProps()} size="xs" variant="ghost">
             {props.cell.label}
           </IconButton>
         )}

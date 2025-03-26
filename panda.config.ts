@@ -4,6 +4,15 @@ import amber from "@park-ui/panda-preset/colors/amber";
 import sand from "@park-ui/panda-preset/colors/sand";
 
 export default defineConfig({
+  conditions: {
+    extend: {
+      dark: '.dark &, [data-theme="dark"] &',
+      light: ".light &",
+    },
+  },
+  include: ["./src/**/*.{js,jsx,ts,tsx,vue}"],
+  jsxFramework: "solid",
+  outdir: "styled-system",
   preflight: true,
   presets: [
     createPreset({
@@ -12,13 +21,4 @@ export default defineConfig({
       radius: "sm",
     }),
   ],
-  include: ["./src/**/*.{js,jsx,ts,tsx,vue}"],
-  jsxFramework: "solid",
-  outdir: "styled-system",
-  conditions: {
-    extend: {
-      dark: '.dark &, [data-theme="dark"] &',
-      light: ".light &",
-    },
-  },
 });

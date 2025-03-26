@@ -6,6 +6,13 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import { manifestPlugin } from "./src/build/manifest-plugin";
 
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      input: ["index.html", "popup.html"],
+    },
+    sourcemap: true,
+    target: "esnext",
+  },
   plugins: [
     tsconfigPaths(),
     solidPlugin(),
@@ -15,12 +22,5 @@ export default defineConfig({
   ],
   server: {
     port: 3000,
-  },
-  build: {
-    sourcemap: true,
-    target: "esnext",
-    rollupOptions: {
-      input: ["index.html", "popup.html"],
-    },
   },
 });

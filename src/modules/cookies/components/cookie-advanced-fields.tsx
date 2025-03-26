@@ -10,9 +10,10 @@ import { SameSiteSelect } from "./same-site-select";
 
 export const createCookieAdvancedFieldsSchema = () => {
   return v.object({
-    kind: v.literal("cookie"),
     domain: v.optional(v.string()),
     expirationDate: v.optional(v.nullable(v.number())),
+    httpOnly: v.optional(v.boolean()),
+    kind: v.literal("cookie"),
     path: v.optional(v.string()),
     sameSite: v.optional(
       v.union([
@@ -22,7 +23,6 @@ export const createCookieAdvancedFieldsSchema = () => {
         v.literal("strict"),
       ]),
     ),
-    httpOnly: v.optional(v.boolean()),
     secure: v.optional(v.boolean()),
   });
 };
@@ -48,32 +48,32 @@ export const CookieAdvancedFields: Component<{
 
   return (
     <Collapsible.Root
-      unmountOnExit
       lazyMount
-      open={props.isOpen}
       onOpenChange={onOpenChange}
+      open={props.isOpen}
+      unmountOnExit
     >
       <Collapsible.Content>
         <Flex flexDirection="column" gap={4}>
           <Field.Root w="full">
             <Field.Label>{t("cookies.form.domain")}</Field.Label>
             <Field.Input
-              size="xs"
-              placeholder={t("cookies.form.domain")}
-              value={props.cookie?.domain}
-              name="domain"
               autocomplete="off"
+              name="domain"
+              placeholder={t("cookies.form.domain")}
+              size="xs"
+              value={props.cookie?.domain}
             />
           </Field.Root>
           <ExpirationDatePicker />
           <Field.Root w="full">
             <Field.Label>{t("cookies.form.path")}</Field.Label>
             <Field.Input
-              size="xs"
-              placeholder={t("cookies.form.path")}
-              value={props.cookie?.path}
-              name="path"
               autocomplete="off"
+              name="path"
+              placeholder={t("cookies.form.path")}
+              size="xs"
+              value={props.cookie?.path}
             />
           </Field.Root>
           <SameSiteSelect />

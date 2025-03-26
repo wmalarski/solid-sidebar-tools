@@ -6,8 +6,8 @@
     "panda.config.ts",
     "src/ui/**/*.tsx"
   ],
-  "project": ["src/**/*.{ts,tsx}"],
   "ignoreExportsUsedInFile": true,
-  "vite": true,
-  "postcss": true
+  "postcss": true,
+  "project": ["src/**/*.{ts,tsx}"],
+  "vite": true
 }

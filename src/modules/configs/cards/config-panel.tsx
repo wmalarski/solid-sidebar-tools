@@ -1,4 +1,4 @@
-import { type Component, For, createMemo } from "solid-js";
+import { type Component, createMemo, For } from "solid-js";
 import { Flex, Grid } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
@@ -23,8 +23,8 @@ export const ConfigsPanel: Component = () => {
   });
 
   return (
-    <Flex flexDirection="column" px={2} gap={4}>
-      <Grid gridTemplateColumns="1fr auto" gap={4} alignItems="center">
+    <Flex flexDirection="column" gap={4} px={2}>
+      <Grid alignItems="center" gap={4} gridTemplateColumns="1fr auto">
         <Heading fontSize="lg">{t("configs.list.heading")}</Heading>
         <IconButtonAddConfigDialog kind="cookie" />
       </Grid>

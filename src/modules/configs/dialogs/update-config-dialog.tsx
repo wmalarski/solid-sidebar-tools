@@ -30,11 +30,11 @@ export const UpdateConfigDialog: Component<{
 
   return (
     <Drawer.Root
-      open={props.isOpen}
-      onOpenChange={onOpenChange}
       closeOnInteractOutside={false}
-      unmountOnExit
       lazyMount
+      onOpenChange={onOpenChange}
+      open={props.isOpen}
+      unmountOnExit
     >
       <Drawer.Backdrop />
       <Drawer.Positioner>
@@ -45,14 +45,14 @@ export const UpdateConfigDialog: Component<{
           </Drawer.Header>
           <Drawer.Body>
             <ConfigForm
-              initialData={props.initialData}
-              onSubmit={props.onSubmit}
               configValues={
                 props.initialData.kind === "cookie"
                   ? cookiesContext().get()
                   : []
               }
               id={formId()}
+              initialData={props.initialData}
+              onSubmit={props.onSubmit}
             />
           </Drawer.Body>
           <Drawer.Footer gap="3">

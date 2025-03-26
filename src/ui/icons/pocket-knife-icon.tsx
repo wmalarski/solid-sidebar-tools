@@ -3,15 +3,15 @@ import type { Component, ComponentProps } from "solid-js";
 export const PocketKnifeIcon: Component<ComponentProps<"svg">> = (props) => {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
       fill="none"
+      height="24"
       stroke="currentColor"
-      stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path d="M3 2v1c0 1 2 1 2 2S3 6 3 7s2 1 2 2-2 1-2 2 2 1 2 2" />

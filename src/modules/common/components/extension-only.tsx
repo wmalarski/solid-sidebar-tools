@@ -7,7 +7,7 @@ export const ExtensionOnly: Component<
   const isExtension = isChromeExtension();
 
   return (
-    <Show when={isExtension} fallback={props.fallback}>
+    <Show fallback={props.fallback} when={isExtension}>
       {props.children}
     </Show>
   );

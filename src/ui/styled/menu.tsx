@@ -97,19 +97,19 @@ export const IconTrigger: Component = () => {
         <IconButton
           {...triggerProps({
             class: css({
-              "& svg": {
-                transitionDuration: "100ms",
-                transitionProperty: "rotate",
-              },
               _open: {
                 "& svg": {
                   rotate: "90deg",
                 },
               },
+              "& svg": {
+                transitionDuration: "100ms",
+                transitionProperty: "rotate",
+              },
             }),
           })}
-          variant="ghost"
           size="xs"
+          variant="ghost"
         >
           <span class={css({ srOnly: true })}>{t("common.options")}</span>
           <EllipsisVertical />

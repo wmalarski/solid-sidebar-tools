@@ -2,7 +2,7 @@ import { type Component, For } from "solid-js";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { CheckIcon } from "~/ui/icons/check-icon";
 import { ChevronsUpDownIcon } from "~/ui/icons/chevrons-up-down-icon";
-import { Select, createListCollection } from "~/ui/select";
+import { createListCollection, Select } from "~/ui/select";
 
 const collection = createListCollection({
   items: [
@@ -20,12 +20,12 @@ export const SameSiteSelect: Component<{
 
   return (
     <Select.Root
+      collection={collection}
       name="sameSite"
       positioning={{ sameWidth: true }}
       size="sm"
-      width="2xs"
       value={props.value ? [props.value] : []}
-      collection={collection}
+      width="2xs"
     >
       <Select.Label>{t("cookies.form.sameSite")}</Select.Label>
       <Select.Control>

@@ -1,11 +1,11 @@
 import type { Component } from "solid-js";
 import {
   type Accessor,
-  type ParentProps,
   createContext,
   createMemo,
   createSignal,
   onCleanup,
+  type ParentProps,
   useContext,
 } from "solid-js";
 import { onCurrentUrlChange } from "../services/tabs";

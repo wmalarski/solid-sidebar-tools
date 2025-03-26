@@ -1,4 +1,4 @@
-import { Show, children } from "solid-js";
+import { children, Show } from "solid-js";
 import { CheckIcon } from "./icons/check-icon";
 import { MinusIcon } from "./icons/minus-icon";
 import * as StyledCheckbox from "./styled/checkbox";

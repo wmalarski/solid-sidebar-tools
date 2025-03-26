@@ -1,21 +1,21 @@
 {
-  "include": ["src", "styled-system"],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
     "esModuleInterop": true,
-    "skipLibCheck": true,
+    "isolatedModules": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
-    "strict": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "noEmit": true,
-    "types": ["vite/client", "chrome"],
-    "isolatedModules": true,
-    "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]
-    }
-  }
+    },
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNext",
+    "types": ["vite/client", "chrome"]
+  },
+  "include": ["src", "styled-system"]
 }

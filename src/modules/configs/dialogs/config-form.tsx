@@ -52,14 +52,14 @@ export const ConfigForm: Component<{
 
   return (
     <form
-      onSubmit={onSubmit}
-      id={props.id}
       class={flex({ flexDirection: "column", gap: 4 })}
+      id={props.id}
+      onSubmit={onSubmit}
     >
       <ConfigNameTagInput
+        configValues={props.configValues}
         initialValue={props.initialData?.name}
         onValueChange={onValueChange}
-        configValues={props.configValues}
       />
       <ConfigValuesFields initialValues={initialValues().get()} />
     </form>

@@ -24,11 +24,11 @@ export const AlertDialog: Component<{
 
   return (
     <Drawer.Root
-      open={props.isOpen}
-      onOpenChange={onOpenChange}
       closeOnInteractOutside={false}
-      unmountOnExit
       lazyMount
+      onOpenChange={onOpenChange}
+      open={props.isOpen}
+      unmountOnExit
     >
       <Drawer.Backdrop />
       <Drawer.Positioner>
@@ -41,10 +41,10 @@ export const AlertDialog: Component<{
           <Drawer.Footer gap="3">
             <Drawer.Cancel />
             <Button
+              colorPalette={props.colorPalette}
+              onClick={onConfirm}
               size="xs"
               type="button"
-              onClick={onConfirm}
-              colorPalette={props.colorPalette}
             >
               {t("common.confirm")}
             </Button>

@@ -14,11 +14,11 @@ export const ErrorFallback = (err: unknown, reset: VoidFunction) => {
   });
 
   return (
-    <div class={flex({ pt: "8", justifyContent: "center", width: "full" })}>
+    <div class={flex({ justifyContent: "center", pt: "8", width: "full" })}>
       <Card.Root maxW="md" w="full">
         <Card.Header alignItems="center">
           <XCircleIcon
-            class={css({ width: 10, height: 10, color: "colorPalette.error" })}
+            class={css({ color: "colorPalette.error", height: 10, width: 10 })}
           />
           <Card.Title>{t("error.title")}</Card.Title>
         </Card.Header>
@@ -29,7 +29,7 @@ export const ErrorFallback = (err: unknown, reset: VoidFunction) => {
           </span>
         </Card.Body>
         <Card.Footer>
-          <Button size="xs" onClick={reset}>
+          <Button onClick={reset} size="xs">
             {t("error.reload")}
           </Button>
         </Card.Footer>

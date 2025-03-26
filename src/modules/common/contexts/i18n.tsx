@@ -2,64 +2,54 @@ import { flatten, resolveTemplate, translator } from "@solid-primitives/i18n";
 import {
   type Accessor,
   type Component,
-  type ParentProps,
   createContext,
   createMemo,
   createSignal,
+  type ParentProps,
   useContext,
 } from "solid-js";
 
 const enDict = {
-  error: {
-    description: "Something went wrong: {{message}}",
-    home: "Home",
-    reload: "Reload",
-    title: "Error",
-  },
-  info: {
-    madeBy: "Made by wmalarski",
-    title: "Sidebar Tools",
-  },
   common: {
-    closeDialog: "Close dialog",
-    clear: "Clear",
-    open: "Open",
     cancel: "Cancel",
+    clear: "Clear",
+    closeDialog: "Close dialog",
     confirm: "Confirm",
-    save: "Save",
-    reset: "Reset",
-    success: "Success",
-    options: "Options",
     delete: "Delete",
-    update: "Update",
     loading: "Loading...",
-    openDatePicker: "Open date picker",
-    previous: "Previous",
     next: "Next",
+    open: "Open",
+    openDatePicker: "Open date picker",
+    options: "Options",
+    previous: "Previous",
+    reset: "Reset",
+    save: "Save",
+    success: "Success",
+    update: "Update",
   },
   configs: {
-    fields: {
-      value: "Value",
-      custom: "Custom value",
-      clear: "Clear value",
+    card: {
+      deleteDescription: "Delete config",
+      description: "Set '{{name}}' value",
+      hideAdvanced: "Hide advanced",
+      showAdvanced: "Show advanced",
     },
     dialogs: {
       addNewCookie: "Add new cookie",
       addNewLocal: "Add new localStorage config",
       updateConfig: "Update",
     },
-    form: {
-      values: "Values",
-      addValue: "Add value",
+    fields: {
+      clear: "Clear value",
+      custom: "Custom value",
       value: "Value",
+    },
+    form: {
+      addValue: "Add value",
       name: "Name",
       selectName: "Select name",
-    },
-    card: {
-      showAdvanced: "Show advanced",
-      hideAdvanced: "Hide advanced",
-      deleteDescription: "Delete config",
-      description: "Set '{{name}}' value",
+      value: "Value",
+      values: "Values",
     },
     list: {
       heading: "Configs",
@@ -74,6 +64,16 @@ const enDict = {
       sameSite: "SameSite",
       secure: "Secure",
     },
+  },
+  error: {
+    description: "Something went wrong: {{message}}",
+    home: "Home",
+    reload: "Reload",
+    title: "Error",
+  },
+  info: {
+    madeBy: "Made by wmalarski",
+    title: "Sidebar Tools",
   },
 };
 

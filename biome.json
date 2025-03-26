@@ -1,10 +1,17 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "files": {
-    "ignore": ["src/ui/styled/utils/create-style-context.tsx"]
+  "$schema": "https://biomejs.dev/schemas/2.0.0-beta.1/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on",
+        "useSortedAttributes": "on",
+        "useSortedKeys": "on",
+        "useSortedProperties": "on"
+      }
+    }
   },
-  "organizeImports": {
-    "enabled": true
+  "files": {
+    "includes": ["**", "!**/src/ui/styled/utils/create-style-context.tsx"]
   },
   "formatter": {
     "enabled": true,
@@ -15,49 +22,57 @@
     "globals": ["chrome"]
   },
   "linter": {
+    "domains": {
+      "solid": "all"
+    },
     "enabled": true,
     "rules": {
-      "all": true,
       "a11y": {
         "noSvgWithoutTitle": "off"
       },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": "error",
+        "noUselessStringConcat": "error",
+        "noUselessUndefinedInitialization": "error",
+        "useDateNow": "error",
+        "useSimplifiedLogicExpression": "error"
+      },
       "correctness": {
-        "useHookAtTopLevel": "off",
-        "useImportExtensions": "off",
-        "useJsxKeyInIterable": "off",
-        "noUndeclaredDependencies": "off"
+        "noConstantMathMinMaxClamp": "error",
+        "noUndeclaredDependencies": "off",
+        "noUndeclaredVariables": "error",
+        "noUnusedFunctionParameters": "error",
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error",
+        "useArrayLiterals": "error"
       },
-      "suspicious": {
-        "noConsole": "off"
+      "nursery": {
+        "noDuplicateElseIf": "error",
+        "noEnum": "error",
+        "noExportedImports": "error",
+        "noNestedTernary": "error",
+        "useSortedClasses": "error"
       },
-      "performance": {
-        "noBarrelFile": "off",
-        "noReExportAll": "off"
-      },
+      "recommended": true,
       "style": {
         "noDefaultExport": "off",
-        "noNamespaceImport": "off",
-        "noImplicitBoolean": "off",
+        "noNonNullAssertion": "error",
         "useFilenamingConvention": {
           "level": "error",
           "options": {
             "filenameCases": ["kebab-case"],
             "requireAscii": true
           }
-        },
-        "useNamingConvention": "off"
+        }
       },
-      "complexity": {
-        "noVoid": "off"
-      },
-      "nursery": {
-        "useSortedClasses": "error"
+      "suspicious": {
+        "noConsole": "off"
       }
     }
   },
   "vcs": {
-    "enabled": true,
     "clientKind": "git",
+    "enabled": true,
     "useIgnoreFile": true
   }
 }

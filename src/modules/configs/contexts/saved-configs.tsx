@@ -1,17 +1,17 @@
 import type { Component } from "solid-js";
 import {
   type Accessor,
-  type ParentProps,
   createContext,
   createMemo,
   createResource,
   onCleanup,
+  type ParentProps,
   useContext,
 } from "solid-js";
 import {
-  type SavedConfig,
   getSavedConfig,
   onSavedConfigChange,
+  type SavedConfig,
   setSavedConfig,
 } from "../services/storage";
 
@@ -46,7 +46,7 @@ const createSavedConfigsContext = () => {
   const subscription = onSavedConfigChange(mutate);
   onCleanup(() => subscription());
 
-  return { get: savedConfigs, add, update, remove };
+  return { add, get: savedConfigs, remove, update };
 };
 
 const SavedConfigsContext = createContext<

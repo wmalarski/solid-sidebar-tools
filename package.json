@@ -1,19 +1,4 @@
 {
-  "name": "solid-sidebar-tools",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "prepare": "panda codegen",
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "=== LINTERS ===": "",
-    "format-and-lint": "biome check .",
-    "format-and-lint:fix": "biome check . --write",
-    "tsc": "tsc --noEmit",
-    "knip": "knip"
-  },
   "dependencies": {
     "@ark-ui/solid": "^5.3.1",
     "@formkit/auto-animate": "1.0.0-beta.6",
@@ -25,7 +10,7 @@
     "valibot": "1.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "2.0.0-beta.1",
     "@pandacss/dev": "^0.53.3",
     "@park-ui/panda-preset": "^0.43.1",
     "@types/chrome": "^0.0.312",
@@ -41,7 +26,25 @@
   "engines": {
     "node": ">=22"
   },
+  "name": "solid-sidebar-tools",
   "pnpm": {
-    "onlyBuiltDependencies": ["@biomejs/biome", "esbuild"]
-  }
+    "onlyBuiltDependencies": [
+      "@biomejs/biome",
+      "esbuild"
+    ]
+  },
+  "private": true,
+  "scripts": {
+    "=== LINTERS ===": "",
+    "build": "tsc -b && vite build",
+    "dev": "vite",
+    "format-and-lint": "biome check .",
+    "format-and-lint:fix": "biome check . --write",
+    "knip": "knip",
+    "prepare": "panda codegen",
+    "preview": "vite preview",
+    "tsc": "tsc --noEmit"
+  },
+  "type": "module",
+  "version": "0.0.0"
 }

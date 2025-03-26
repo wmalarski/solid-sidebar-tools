@@ -1,4 +1,4 @@
-import { type Component, type ParentProps, createSignal } from "solid-js";
+import { type Component, createSignal, type ParentProps } from "solid-js";
 import { css } from "styled-system/css";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { useSavedConfigsContext } from "~/modules/configs/contexts/saved-configs";
@@ -45,8 +45,8 @@ export const CardButtonAddConfigDialog: Component<{
       <Drawer.Trigger
         asChild={(triggerProps) => (
           <Button
-            variant="subtle"
             size="xs"
+            variant="subtle"
             {...triggerProps({ class: css({ h: "32" }) })}
           >
             <PlusIcon />
@@ -82,11 +82,11 @@ const ConfigDialogNoTrigger: Component<
 
   return (
     <Drawer.Root
-      open={isOpen()}
-      onOpenChange={onOpenChange}
       closeOnInteractOutside={false}
-      unmountOnExit
       lazyMount
+      onOpenChange={onOpenChange}
+      open={isOpen()}
+      unmountOnExit
     >
       {props.children}
       <Drawer.Backdrop />
@@ -103,8 +103,8 @@ const ConfigDialogNoTrigger: Component<
               configValues={
                 props.kind === "cookie" ? cookiesContext().get() : []
               }
-              onSubmit={onSubmit}
               id={props.formId}
+              onSubmit={onSubmit}
             />
           </Drawer.Body>
           <Drawer.Footer gap="3">

@@ -1,5 +1,5 @@
 import { createAutoAnimate } from "@formkit/auto-animate/solid";
-import { type Component, For, createMemo, createSignal } from "solid-js";
+import { type Component, createMemo, createSignal, For } from "solid-js";
 import { css } from "styled-system/css";
 import { Grid, HStack, VStack } from "styled-system/jsx";
 import { useI18n } from "~/modules/common/contexts/i18n";
@@ -16,7 +16,7 @@ const createConfigValuesState = (initialValues: string[] = []) => {
   const [inputId, setInputId] = createSignal(nonEmptyInitialValues.length);
 
   const [entries, setEntries] = createSignal(
-    nonEmptyInitialValues.map((value, index) => ({ value, id: index })),
+    nonEmptyInitialValues.map((value, index) => ({ id: index, value })),
   );
 
   const addInput = () => {
@@ -29,7 +29,7 @@ const createConfigValuesState = (initialValues: string[] = []) => {
     setEntries((current) => current.filter((entry) => entry.id !== id));
   };
 
-  return { entries, addInput, removeInput };
+  return { addInput, entries, removeInput };
 };
 
 export const ConfigValuesFields: Component<{
@@ -66,19 +66,19 @@ export const ConfigValuesFields: Component<{
   return (
     <VStack ref={setListRef} w="full">
       <Grid
-        gap="4"
-        w="full"
-        gridTemplateColumns="1fr auto"
         alignItems="center"
         fontWeight="semibold"
+        gap="4"
+        gridTemplateColumns="1fr auto"
+        w="full"
       >
         {t("configs.form.values")}
         <Tooltip.SimpleTooltip
           asChild={(tooltipProps) => (
             <IconButton
-              type="button"
-              size="xs"
               disabled={shouldDisableAdd()}
+              size="xs"
+              type="button"
               {...tooltipProps({ onClick: onAddValueClick })}
             >
               <span class={css({ srOnly: true })}>
@@ -91,7 +91,7 @@ export const ConfigValuesFields: Component<{
           {t("configs.form.addValue")}
         </Tooltip.SimpleTooltip>
       </Grid>
-      <VStack ref={setParent} gap="4" w="full">
+      <VStack gap="4" ref={setParent} w="full">
         <For each={inputsState().entries()}>
           {(entry, index) => (
             <Field.Root required w="full">
@@ -100,19 +100,19 @@ export const ConfigValuesFields: Component<{
               </Field.Label>
               <HStack alignItems="center" justifyContent="center">
                 <Field.Input
-                  size="xs"
-                  placeholder={t("configs.form.value")}
-                  value={entry.value}
-                  name={`values[${index()}]`}
                   autocomplete="off"
+                  name={`values[${index()}]`}
+                  placeholder={t("configs.form.value")}
+                  size="xs"
+                  value={entry.value}
                 />
                 <Tooltip.SimpleTooltip
                   asChild={(tooltipProps) => (
                     <IconButton
                       colorPalette="red"
-                      type="button"
-                      size="xs"
                       disabled={shouldDisableDelete()}
+                      size="xs"
+                      type="button"
                       {...tooltipProps({
                         onClick: onDeleteClickFactory(entry.id),
                       })}

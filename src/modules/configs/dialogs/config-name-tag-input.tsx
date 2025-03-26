@@ -1,4 +1,4 @@
-import { type Component, For, createMemo, createSignal } from "solid-js";
+import { type Component, createMemo, createSignal, For } from "solid-js";
 import { css } from "styled-system/css";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { Combobox, createListCollection } from "~/ui/combobox";
@@ -58,26 +58,26 @@ export const ConfigNameTagInput: Component<{
 
   return (
     <Combobox.Root
-      width="2xs"
-      size="sm"
+      allowCustomValue
+      collection={collection()}
+      inputValue={props.initialValue}
       onInputValueChange={onInputValueChange}
       onValueChange={onValueChange}
-      collection={collection()}
-      allowCustomValue
-      inputValue={props.initialValue}
+      size="sm"
+      width="2xs"
     >
       <Combobox.Label>{t("configs.form.name")}</Combobox.Label>
       <Combobox.Control>
         <Combobox.Input
-          size="xs"
-          placeholder={t("configs.form.selectName")}
           asChild={(inputProps) => <Input {...inputProps()} />}
-          name="name"
           autofocus
+          name="name"
+          placeholder={t("configs.form.selectName")}
+          size="xs"
         />
         <Combobox.Trigger
           asChild={(triggerProps) => (
-            <IconButton variant="link" size="xs" {...triggerProps()}>
+            <IconButton size="xs" variant="link" {...triggerProps()}>
               <span class={css({ srOnly: true })}>{t("common.open")}</span>
               <ChevronsUpDownIcon />
             </IconButton>
