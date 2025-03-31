@@ -7,12 +7,17 @@ import {
   type ParentProps,
   useContext,
 } from "solid-js";
+import { onCurrentUrlChange } from "~/modules/common/services/tabs";
 import { getChromeTabCookies } from "../services/cookies";
 
 const createCookiesContext = () => {
-  const [cookies] = createResource(() => getChromeTabCookies());
+  const [cookies, { refetch }] = createResource(() => getChromeTabCookies());
 
   const get = createMemo(() => cookies() ?? []);
+
+  onCurrentUrlChange(() => {
+    refetch();
+  });
 
   return { get };
 };

@@ -43,7 +43,7 @@ export const ConfigCard: Component<{
       return;
     }
 
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData(event.target as HTMLFormElement);
 
     const decoded = decode(
       formData,

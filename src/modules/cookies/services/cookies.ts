@@ -2,7 +2,8 @@ import { getCurrentUrl } from "~/modules/common/services/tabs";
 
 export const getChromeTabCookies = async () => {
   const url = await getCurrentUrl();
-  return url ? chrome.cookies.getAll({ url }) : [];
+  const cookies = url ? await chrome.cookies.getAll({ url }) : [];
+  return cookies;
 };
 
 export const saveCookie = (
