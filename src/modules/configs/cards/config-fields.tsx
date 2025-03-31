@@ -18,17 +18,21 @@ const ConfigRadioValues: Component<{
 }> = (props) => {
   const { t } = useI18n();
 
-  const value = createMemo(() => {
-    const value = props?.value;
-    if (!value) {
-      return null;
+  const getInitialValue = (value?: string) => {
+    if (!value || value.length === 0) {
+      return EMPTY_VALUE;
     }
-
     const isPredefined = props.config.values.includes(value);
     return isPredefined ? value : CUSTOM_VALUE;
+  };
+
+  const value = createMemo(() => {
+    const [get, set] = createSignal(getInitialValue(props.value));
+    return { get, set };
   });
 
   const onValueChange: RadioGroup.RootProps["onValueChange"] = (details) => {
+    details.value && value()?.set(details.value);
     props.onValueChange(details.value);
   };
 
@@ -37,7 +41,7 @@ const ConfigRadioValues: Component<{
       name="value"
       onValueChange={onValueChange}
       size="sm"
-      value={value()}
+      value={value()?.get()}
     >
       <For each={props.config.values}>
         {(option) => (
