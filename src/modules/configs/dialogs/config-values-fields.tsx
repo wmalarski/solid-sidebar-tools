@@ -1,4 +1,3 @@
-import { createAutoAnimate } from "@formkit/auto-animate/solid";
 import { type Component, createMemo, createSignal, For } from "solid-js";
 import { css } from "styled-system/css";
 import { Grid, HStack, VStack } from "styled-system/jsx";
@@ -36,8 +35,6 @@ export const ConfigValuesFields: Component<{
   initialValues?: string[];
 }> = (props) => {
   const { t } = useI18n();
-
-  const [setParent] = createAutoAnimate({ duration: 150 });
 
   const [listRef, setListRef] = createSignal<HTMLElement>();
 
@@ -91,7 +88,7 @@ export const ConfigValuesFields: Component<{
           {t("configs.form.addValue")}
         </Tooltip.SimpleTooltip>
       </Grid>
-      <VStack gap="4" ref={setParent} w="full">
+      <VStack gap="4" w="full">
         <For each={inputsState().entries()}>
           {(entry, index) => (
             <Field.Root required w="full">

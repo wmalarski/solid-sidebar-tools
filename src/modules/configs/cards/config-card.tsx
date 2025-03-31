@@ -4,9 +4,8 @@ import { createMemo, createSignal, Show } from "solid-js";
 import { Flex } from "styled-system/jsx";
 import { flex } from "styled-system/patterns";
 import * as v from "valibot";
-import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";
 import { useI18n } from "~/modules/common/contexts/i18n";
-import { reloadChromeTab } from "~/modules/common/services/tabs";
+import { getCurrentUrl, reloadChromeTab } from "~/modules/common/services/tabs";
 import {
   ConfigFields,
   EMPTY_VALUE,
@@ -26,7 +25,6 @@ export const ConfigCard: Component<{
   config: SavedConfig;
   value?: string;
 }> = (props) => {
-  const currentUrlContext = useCurrentUrlContext();
   const formId = createMemo(() => `config-form-${props.config.name}`);
 
   const [isDirty, setIsDirty] = createSignal(false);
@@ -39,7 +37,7 @@ export const ConfigCard: Component<{
   const onFormSubmit: ComponentProps<"form">["onChange"] = async (event) => {
     event.preventDefault();
 
-    const url = currentUrlContext().url();
+    const url = await getCurrentUrl();
 
     if (!url) {
       return;
@@ -59,6 +57,8 @@ export const ConfigCard: Component<{
       ]),
       decoded,
     );
+
+    console.log("onFormSubmit", { parsed });
 
     setIsDirty(false);
 

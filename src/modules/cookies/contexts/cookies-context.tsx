@@ -7,14 +7,10 @@ import {
   type ParentProps,
   useContext,
 } from "solid-js";
-import { useCurrentUrlContext } from "~/modules/common/contexts/current-url";
 import { getChromeTabCookies } from "../services/cookies";
 
-const createCookiesContext = (url?: string) => {
-  const [cookies] = createResource(
-    () => url,
-    (url) => (url ? getChromeTabCookies(url) : []),
-  );
+const createCookiesContext = () => {
+  const [cookies] = createResource(() => getChromeTabCookies());
 
   const get = createMemo(() => cookies() ?? []);
 
@@ -28,11 +24,7 @@ const CookiesContext = createContext<
 });
 
 export const CookiesContextProvider: Component<ParentProps> = (props) => {
-  const currentUrlContext = useCurrentUrlContext();
-
-  const value = createMemo(() =>
-    createCookiesContext(currentUrlContext().url()),
-  );
+  const value = createMemo(() => createCookiesContext());
 
   return (
     <CookiesContext.Provider value={value}>

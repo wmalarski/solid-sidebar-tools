@@ -1,7 +1,6 @@
 import { type Component, createMemo, For } from "solid-js";
 import { css } from "styled-system/css";
 import { ExtensionOnly } from "~/modules/common/components/extension-only";
-import { CurrentUrlContextProvider } from "~/modules/common/contexts/current-url";
 import { useI18n } from "~/modules/common/contexts/i18n";
 import { ConfigsPanel } from "~/modules/configs/cards/config-panel";
 import { SavedConfigsContextProvider } from "~/modules/configs/contexts/saved-configs";
@@ -43,13 +42,11 @@ export const Homepage: Component = () => {
         </Tabs.List>
         <Tabs.Content value="cookies">
           <ExtensionOnly>
-            <CurrentUrlContextProvider>
-              <SavedConfigsContextProvider>
-                <CookiesContextProvider>
-                  <ConfigsPanel />
-                </CookiesContextProvider>
-              </SavedConfigsContextProvider>
-            </CurrentUrlContextProvider>
+            <SavedConfigsContextProvider>
+              <CookiesContextProvider>
+                <ConfigsPanel />
+              </CookiesContextProvider>
+            </SavedConfigsContextProvider>
           </ExtensionOnly>
         </Tabs.Content>
       </Tabs.Root>
