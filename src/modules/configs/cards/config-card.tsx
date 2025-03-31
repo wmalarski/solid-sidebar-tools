@@ -58,8 +58,6 @@ export const ConfigCard: Component<{
       decoded,
     );
 
-    console.log("onFormSubmit", { parsed });
-
     setIsDirty(false);
 
     if (!parsed.success || props.config.kind !== "cookie") {
