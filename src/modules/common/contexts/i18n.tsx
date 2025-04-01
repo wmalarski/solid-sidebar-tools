@@ -40,7 +40,7 @@ const enDict = {
       updateConfig: "Update",
     },
     fields: {
-      clear: "Clear value",
+      clear: "Empty",
       custom: "Custom value",
       value: "Value",
     },

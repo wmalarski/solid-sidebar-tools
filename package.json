@@ -13,7 +13,7 @@
     "@pandacss/dev": "^0.53.3",
     "@park-ui/panda-preset": "^0.43.1",
     "@types/chrome": "^0.0.313",
-    "@types/node": "^22.13.14",
+    "@types/node": "^22.13.17",
     "knip": "^5.46.4",
     "sonda": "^0.7.1",
     "typescript": "~5.8.2",

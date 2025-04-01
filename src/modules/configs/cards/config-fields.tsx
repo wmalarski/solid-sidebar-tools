@@ -43,6 +43,12 @@ const ConfigRadioValues: Component<{
       size="sm"
       value={value()?.get()}
     >
+      <RadioGroup.Item value={EMPTY_VALUE}>
+        <RadioGroup.ItemControl />
+        <RadioGroup.ItemText>{t("configs.fields.clear")}</RadioGroup.ItemText>
+        <RadioGroup.ItemHiddenInput required />
+      </RadioGroup.Item>
+
       <For each={props.config.values}>
         {(option) => (
           <RadioGroup.Item value={option}>
@@ -58,11 +64,7 @@ const ConfigRadioValues: Component<{
           </RadioGroup.Item>
         )}
       </For>
-      <RadioGroup.Item value={EMPTY_VALUE}>
-        <RadioGroup.ItemControl />
-        <RadioGroup.ItemText>{t("configs.fields.clear")}</RadioGroup.ItemText>
-        <RadioGroup.ItemHiddenInput required />
-      </RadioGroup.Item>
+
       <RadioGroup.Item value={CUSTOM_VALUE}>
         <RadioGroup.ItemControl />
         <RadioGroup.ItemText>{t("configs.fields.custom")}</RadioGroup.ItemText>
